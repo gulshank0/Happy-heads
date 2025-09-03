@@ -65,11 +65,14 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-
         {/* Links Grid */}
+
+        {/* White thin horizontal line */}
+        <div className="w-full h-px bg-white/20 mb-12"></div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Platform */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="backdrop-blur-md ">
             <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Platform</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">How it Works</a></li>
@@ -80,7 +83,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Support */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="backdrop-blur-md ">
             <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Support</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">Help Center</a></li>
@@ -91,7 +94,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Community */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="backdrop-blur-md ">
             <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Community</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">College Partners</a></li>
@@ -102,7 +105,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Follow Our Journey */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="backdrop-blur-md ">
             <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Follow Our Journey</h3>
             <p className="text-white/60 mb-4 text-sm">
               Stay updated with the latest features, success stories, and college events
@@ -119,7 +122,7 @@ const Footer: React.FC = () => {
               </a>
             </div>
             <div className="text-sm text-white/40">
-              <div>@cufy_official</div>
+              <div>@happyheads</div>
             </div>
           </div>
         </div>
@@ -148,15 +151,16 @@ const Footer: React.FC = () => {
       <div className="border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex justify-between items-center mb-6">
-            <div className="text-white/40 text-sm mb-4 md:mb-0 items-center space-x-2">
-              © 2024 Cufy. All rights reserved.
-          </div>
-          </div>
-          <div className="text-center">
+ <div className="text-center pb-10">
             <p className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent font-medium text-lg">
               Matches are meant to meet. ✨
             </p>
           </div>
+            <div className="text-white/40 text-sm">
+              © 2024 Cufy. All rights reserved.
+          </div>
+          </div>
+         
         </div>
       </div>
       <br />

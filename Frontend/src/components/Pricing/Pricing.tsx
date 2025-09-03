@@ -5,7 +5,7 @@ export default function Pricing() {
     <section className="min-h-screen bg-black text-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 ">
           <h2 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
               Premium Plans for College Boys
@@ -19,7 +19,7 @@ export default function Pricing() {
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Starter Plan */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 relative">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 relative hover:scale-105 transition-transform duration-400">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold mb-2">Starter</h3>
               <div className="text-4xl font-bold mb-2">
@@ -51,7 +51,7 @@ export default function Pricing() {
           </div>
 
           {/* Premium Plan */}
-          <div className="backdrop-blur-md bg-gradient-to-b from-pink-500/20 to-purple-500/20 border-2 border-pink-500/30 rounded-xl p-8 relative">
+          <div className="backdrop-blur-md bg-gradient-to-b from-pink-500/20 to-purple-500/20 border-2 border-pink-500/30 rounded-xl p-8 relative hover:scale-105 transition-transform duration-400">
             {/* Popular Badge */}
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
               <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-medium">

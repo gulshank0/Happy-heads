@@ -19,7 +19,7 @@ export default function About() {
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Smart Matching */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-500">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-400">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-violet-500/20 to-pink-500/20 rounded-lg border border-violet-500/30">
                 <Brain className="h-6 w-6 text-violet-400" />
@@ -32,7 +32,7 @@ export default function About() {
           </div>
 
           {/* Safe & Secure */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-500">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-400">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg border border-green-500/30">
                 <Shield className="h-6 w-6 text-green-400" />
@@ -45,7 +45,7 @@ export default function About() {
           </div>
 
           {/* Meaningful Connections */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:bg-white/8 transition-all duration-300">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-400">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-pink-500/20 to-red-500/20 rounded-lg border border-pink-500/30">
                 <Users className="h-6 w-6 text-pink-400" />
@@ -58,7 +58,7 @@ export default function About() {
           </div>
 
           {/* Real-time Chat */}
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:bg-white/8 transition-all duration-300">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 hover:scale-105 transition-transform duration-400">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg border border-blue-500/30">
                 <MessageCircle className="h-6 w-6 text-blue-400" />
