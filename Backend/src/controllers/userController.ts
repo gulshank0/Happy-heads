@@ -1,29 +1,28 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '../../generated/prisma'; // Adjust the import path as necessary
+import { PrismaClient } from '../../generated/client'; // Adjust the import path as necessary
 
 const prisma = new PrismaClient();
 
 export class UserController {
   async createUser(req: Request, res: Response) {
     try {
-      const { name, email, avatar } = req.body;
+      const { name, email, age, bio, phone } = req.body;
       
-      // Validate required fields
       if (!name || !email) {
         return res.status(400).json({ error: 'Name and email are required' });
       }
 
       const existingUser = await prisma.user.findUnique({
         where: { email }
-      })
+      });
       if (existingUser) {
         return res.status(400).json(
           { message: 'User already exists' }
-        )
+        );
       }
 
       const user = await prisma.user.create({
-        data: { name, email, avatar, createdAt: new Date(), updatedAt: new Date() }
+        data: { name, email, age, bio, phone, createdAt: new Date(), updatedAt: new Date() }
       });
 
       res.status(201).json(user);
@@ -38,7 +37,7 @@ export class UserController {
       const { id } = req.params;
       
       const user = await prisma.user.findUnique({
-        where: { id: Number(id) },
+        where: { id: id },
       });
 
       if (!user) {
@@ -55,7 +54,7 @@ export class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const userId = (req.user as any)?.id;
-      const { name, avatar } = req.body;
+      const { name } = req.body;
 
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
@@ -65,7 +64,7 @@ export class UserController {
         where: { id: userId },
         data: {
           ...(name && { name }),
-          ...(avatar && { avatar })
+          updatedAt: new Date()
         }
       });
 
