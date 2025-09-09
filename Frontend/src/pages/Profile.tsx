@@ -174,19 +174,22 @@ const Profile: React.FC = () => {
   ].filter(value => value && value.trim() !== '').length;
 
   const completionPercentage = Math.round((completedFields / 6) * 100);
+  const handleNext = () => {
+    window.location.href = '/home';
+  }
 
   return (
     <div>
       <Navbar />
-      <div className="min-h-screen bg-black text-white relative pt-32 pb-20 px-6">
+      <div className="min-h-screen bg-black text-white relative pt-20 pb-20 px-6">
         {/* Decorative Emojis */}
         <div className="absolute -left-10 top-20 text-4xl sm:text-6xl opacity-20 transform skew-y-12">💕</div>
         <div className="absolute -right-10 top-40 text-2xl sm:text-4xl opacity-20 transform -skew-y-12">✨</div>
         
         <div className="max-w-4xl mx-auto relative z-10">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
+          <div className="text-center mb-6">
+            <h1 className="font-poppins text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-2">
               <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
                 Your Profile
               </span>
@@ -418,7 +421,22 @@ const Profile: React.FC = () => {
               Complete your profile to increase your chances of finding the perfect match!
             </p>
           </div>
-
+<div className="mt-8 text-center">
+  <button 
+    onClick={handleNext}
+    className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white font-semibold rounded-2xl hover:from-violet-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-300 shadow-lg shadow-violet-500/25 group"
+  >
+    <span className="mr-2">Continue to Home</span>
+    <svg 
+      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" 
+      fill="none" 
+      stroke="currentColor" 
+      viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </button>
+</div>
           {/* Decorative elements */}
           <div className="absolute right-10 bottom-20 text-3xl opacity-10 transform -rotate-12">💖</div>
           <div className="absolute left-20 bottom-40 text-2xl opacity-10 transform rotate-12">⭐</div>

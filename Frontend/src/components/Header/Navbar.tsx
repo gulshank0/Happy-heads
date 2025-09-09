@@ -127,7 +127,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent hover:cursor-pointer" onClick={() => navigate('/')}>
               Happy Heads
             </h1>
           </div>
@@ -136,24 +136,13 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               <a
-                href="/"
+                href="/home"
                 className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
               >
                 Home
               </a>
-              <a
-                href="#about"
-                className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
-              >
-                About
-              </a>
-              <a
-                href="#services"
-                className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
-              >
-                Services
-              </a>
-              <a
+              
+                           <a
                 href="#contact"
                 className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
               >
