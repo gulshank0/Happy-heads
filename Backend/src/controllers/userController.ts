@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export class UserController {
   async createUser(req: Request, res: Response) {
     try {
-      const { name, email, age, bio, phone } = req.body;
+      const { name, email, age, bio, phone, gender, googleId } = req.body;
       
       if (!name || !email) {
         return res.status(400).json({ error: 'Name and email are required' });
@@ -22,7 +22,7 @@ export class UserController {
       }
 
       const user = await prisma.user.create({
-        data: { name, email, age, bio, phone, createdAt: new Date(), updatedAt: new Date() }
+        data: { name, email, age: Number(age), bio, phone, gender,googleId, createdAt: new Date(), updatedAt: new Date() }
       });
 
       res.status(201).json(user);
@@ -54,23 +54,35 @@ export class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const userId = (req.user as any)?.id;
-      const { name } = req.body;
+      const { name, email, age, phone, bio, gender } = req.body;
 
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
       }
 
+      // Prepare update data
+      const updateData: any = {
+        updatedAt: new Date()
+      };
+
+      if (name !== undefined) updateData.name = name;
+      if (email !== undefined) updateData.email = email;
+      if (age !== undefined) updateData.age = age;
+      if (phone !== undefined) updateData.phone = phone;
+      if (bio !== undefined) updateData.bio = bio;
+      if (gender !== undefined) updateData.gender = gender;
+
       const updatedUser = await prisma.user.update({
         where: { id: userId },
-        data: {
-          ...(name && { name }),
-          updatedAt: new Date()
-        }
+        data: updateData
       });
 
       res.json(updatedUser);
     } catch (error) {
       console.error('Update user error:', error);
+      if (error && typeof error === 'object' && 'code' in error && (error as any).code === 'P2002') {
+        return res.status(400).json({ error: 'Email already exists' });
+      }
       res.status(500).json({ error: 'Failed to update user' });
     }
   }
@@ -81,6 +93,14 @@ export class UserController {
 
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId }
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
       }
 
       await prisma.user.delete({

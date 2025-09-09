@@ -48,7 +48,7 @@ export default function Index() {
 
         {/* Statistics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-12 max-w-4xl mx-auto">
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400" >
             <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
               1,600+
             </div>
@@ -56,7 +56,7 @@ export default function Index() {
               Happy Students
             </div>
           </div>
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400">
             <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
               32+
             </div>
@@ -64,7 +64,7 @@ export default function Index() {
               Colleges Connected
             </div>
           </div>
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400" >
             <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
               643+
             </div>
@@ -72,7 +72,7 @@ export default function Index() {
               Successful Matches
             </div>
           </div>
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400">
             <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
               4.1/5
             </div>
@@ -117,13 +117,13 @@ export default function Index() {
 
           {/* Join Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 max-w-md w-full">
-            <div className="flex-1">
-              <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-red-500 to-pink-600 rounded-lg text-base sm:text-lg font-medium text-white shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-all duration-300 min-h-12">
+            <div className="flex-1 hover:scale-105 transition-transform duration-400">
+              <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-red-500 to-pink-600 rounded-lg text-base sm:text-lg font-medium text-white shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-all duration-300 min-h-12" onClick={()=>window.location.href='/profile'}>
                 <Heart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 College Girl
               </button>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 hover:scale-105 transition-transform duration-400">
               <button
                 disabled
                 className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 backdrop-blur-md bg-slate-600 border border-white/20 rounded-lg text-base sm:text-lg font-medium text-white opacity-50 cursor-not-allowed pointer-events-none min-h-12"

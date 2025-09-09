@@ -1,14 +1,12 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../config/database'; // Use the correct import
 
 export class UserController {
   static async createUser(req: Request, res: Response) {
-    const { avatar, name, email, age, phone, bio } = req.body;
+    const { name, email, age, phone, bio, gender, googleId } = req.body;
 
-    if (!avatar || !name || !email) {
-      return res.status(400).json({ error: "Avatar, name, and email are required" });
+    if (!name || !email) {
+      return res.status(400).json({ error: "Name and email are required" });
     }
 
     try {
@@ -21,7 +19,7 @@ export class UserController {
       }
 
       const user = await prisma.user.create({
-        data: { avatar, name, email, googleId: ''}
+        data: { name, email, age, phone, bio, gender, googleId }
       });
 
       console.log("User data saved:", user);

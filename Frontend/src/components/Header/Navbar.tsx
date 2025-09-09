@@ -1,34 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogIn } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, User, LogIn, LogOut } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const useGoogleCallback = () => {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
-
-      if (token) {
-        // Store token in localStorage or context
-        localStorage.setItem("authToken", token);
-
-        // Clear URL parameters
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname,
-        );
-
-        // Redirect to dashboard or home
-        navigate("/dashboard");
-      }
-    }, [navigate]);
-  };
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,13 +19,102 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Function to check authentication status
+  const checkAuthStatus = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8000/auth/me', {
+        method: 'GET',
+        credentials: 'include', // Important: include cookies
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+          // Store user data in localStorage for persistence
+          localStorage.setItem("user", JSON.stringify(data.user));
+        } else {
+          setUser(null);
+          localStorage.removeItem("user");
+        }
+      } else {
+        setUser(null);
+        localStorage.removeItem("user");
+      }
+    } catch (error) {
+      console.error("Error checking auth status:", error);
+      setUser(null);
+      localStorage.removeItem("user");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Check authentication on component mount and after login redirect
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get("success");
+
+    if (success === "true") {
+      // Clear URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Check auth status after successful login
+      setTimeout(() => {
+        checkAuthStatus();
+      }, 500);
+      
+      // Navigate to profile
+      navigate("/profile");
+    } else {
+      // Check auth status on component mount
+      checkAuthStatus();
+    }
+  }, [navigate]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:8000/auth/google";
   };
-  useGoogleCallback();
+  
+  const handleLogout = async () => {
+    try {
+      // Call logout endpoint to clear server-side session
+      const response = await fetch('http://localhost:8000/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        console.log('Server logout successful');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+
+    // Clear client-side data
+    localStorage.removeItem("user");
+    setUser(null);
+    
+    // Navigate to home
+    navigate("/");
+    
+    // Optional: reload to clear any cached data
+    window.location.reload();
+  };
+
+  const isLoggedIn = user !== null;
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b backdrop-blur-md ${
@@ -68,7 +136,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               <a
-                href="#home"
+                href="/"
                 className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
               >
                 Home
@@ -91,22 +159,44 @@ const Navbar = () => {
               >
                 Contact
               </a>
+              {isLoggedIn && (
+                <a
+                  href="/profile"
+                  className="text-white/70 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
+                >
+                  Profile
+                </a>
+              )}
             </div>
           </div>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
-              className="flex items-center space-x-2 text-white/70 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/10 rounded-lg border border-white/20 backdrop-blur-md"
-              onClick={handleGoogleLogin}
-            >
-              <LogIn size={16} />
-              <span>Login</span>
-            </button>
-            <button className="flex items-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transform hover:scale-105" onClick={useGoogleCallback}>
-              <User size={16} />
-              <span>Sign Up</span>
-            </button> </div>
+            {isLoading ? (
+              <div className="text-white/70 text-sm">Loading...</div>
+            ) : isLoggedIn ? (
+              <>
+                <span className="text-white/70 text-sm">
+                  Hi, {user?.name || user?.email?.split('@')[0] || "User"}!
+                </span>
+                <button 
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2 text-white/70 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/10 rounded-lg border border-white/20"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={handleGoogleLogin}
+                className="flex items-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25"
+              >
+                <LogIn size={16} />
+                <span>Login with Google</span>
+              </button>
+            )}
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -129,7 +219,7 @@ const Navbar = () => {
         >
           <div className="px-2 pt-2 pb-3 space-y-1 backdrop-blur-md bg-white/5 border border-white/10 rounded-lg mt-2 shadow-lg">
             <a
-              href="#home"
+              href="/"
               className="block text-white/70 hover:text-white px-3 py-2 text-base font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -156,20 +246,42 @@ const Navbar = () => {
             >
               Contact
             </a>
+            {isLoggedIn && (
+              <a
+                href="/profile"
+                className="block text-white/70 hover:text-white px-3 py-2 text-base font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Profile
+              </a>
+            )}
 
             {/* Mobile Auth Buttons */}
             <div className="pt-4 space-y-2">
-              <button
-                className="w-full flex items-center justify-center space-x-2 text-white/70 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/10 rounded-lg border border-white/20"
-                onClick={handleGoogleLogin}
-              >
-                <LogIn size={16} />
-                <span>Login</span>
-              </button>
-              <button className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25">
-                <User size={16} />
-                <span>Sign Up</span>
-              </button>
+              {isLoading ? (
+                <div className="text-white/70 text-sm text-center">Loading...</div>
+              ) : isLoggedIn ? (
+                <>
+                  <div className="text-white/70 text-sm text-center pb-2">
+                    Hi, {user?.name || user?.email?.split('@')[0] || "User"}!
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center space-x-2 text-white/70 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/10 rounded-lg border border-white/20"
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25"
+                  onClick={handleGoogleLogin}
+                >
+                  <LogIn size={16} />
+                  <span>Login with Google</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

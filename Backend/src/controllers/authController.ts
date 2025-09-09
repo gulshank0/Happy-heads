@@ -26,7 +26,7 @@ class AuthController {
         if (err) {
           return res.status(500).json({ error: 'Login failed' });
         }
-        return res.redirect('/user/data'); // Redirect to user data page after successful login
+        return res.redirect('/users/data'); // Redirect to user data page after successful login
       });
     })(req, res);
   }

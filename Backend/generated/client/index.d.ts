@@ -880,9 +880,11 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    gender: string | null
     age: number | null
     phone: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -891,9 +893,11 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    gender: string | null
     age: number | null
     phone: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -902,9 +906,11 @@ export namespace Prisma {
     id: number
     email: number
     name: number
+    gender: number
     age: number
     phone: number
     bio: number
+    googleId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -923,9 +929,11 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    gender?: true
     age?: true
     phone?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -934,9 +942,11 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    gender?: true
     age?: true
     phone?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -945,9 +955,11 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    gender?: true
     age?: true
     phone?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1043,9 +1055,11 @@ export namespace Prisma {
     id: string
     email: string
     name: string | null
+    gender: string | null
     age: number | null
     phone: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1073,9 +1087,11 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    gender?: boolean
     age?: boolean
     phone?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1084,9 +1100,11 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    gender?: boolean
     age?: boolean
     phone?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1095,9 +1113,11 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    gender?: boolean
     age?: boolean
     phone?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1106,14 +1126,16 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    gender?: boolean
     age?: boolean
     phone?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "age" | "phone" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "gender" | "age" | "phone" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1122,9 +1144,11 @@ export namespace Prisma {
       id: string
       email: string
       name: string | null
+      gender: string | null
       age: number | null
       phone: string | null
       bio: string | null
+      googleId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1553,9 +1577,11 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly gender: FieldRef<"User", 'String'>
     readonly age: FieldRef<"User", 'Int'>
     readonly phone: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
+    readonly googleId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -1942,9 +1968,11 @@ export namespace Prisma {
     id: 'id',
     email: 'email',
     name: 'name',
+    gender: 'gender',
     age: 'age',
     phone: 'phone',
     bio: 'bio',
+    googleId: 'googleId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2047,9 +2075,11 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    gender?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     phone?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -2058,9 +2088,11 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2068,24 +2100,28 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    googleId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
+    gender?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     phone?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-  }, "id" | "email">
+  }, "id" | "email" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -2102,9 +2138,11 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     age?: IntNullableWithAggregatesFilter<"User"> | number | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -2113,9 +2151,11 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    gender?: string | null
     age?: number | null
     phone?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2124,9 +2164,11 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    gender?: string | null
     age?: number | null
     phone?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2135,9 +2177,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2146,9 +2190,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2157,9 +2203,11 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    gender?: string | null
     age?: number | null
     phone?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2168,9 +2216,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2179,9 +2229,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2247,9 +2299,11 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2262,9 +2316,11 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2273,9 +2329,11 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

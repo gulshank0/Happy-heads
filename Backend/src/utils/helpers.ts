@@ -2,20 +2,23 @@ interface User {
   id: string | number;
   name: string;
   email: string;
-  avatar?: string;
+  gender?: string;
+
   age?: number;
   phone?: string;
   bio?: string;
+  googleId?: string;
 }
 
 interface FormattedUserData {
   id: string | number;
   name: string;
   email: string;
-  avatar?: string;
+  gender?: string;
   age?: number;
   phone?: string;
   bio?: string;
+  googleId?: string;
 }
 
 export const formatUserData = (user: User): FormattedUserData => {
@@ -23,10 +26,11 @@ export const formatUserData = (user: User): FormattedUserData => {
       id: user.id,
       name: user.name,
       email: user.email,
-      avatar: user.avatar,
+      gender: user.gender,
       age: user.age,
       phone: user.phone,
       bio: user.bio,
+      googleId: user.googleId,
     };
   };
   

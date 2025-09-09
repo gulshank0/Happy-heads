@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
           </p>
           
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-2xl mx-auto">
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
               <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
                 1.6K+
               </div>
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
                 Students
               </div>
             </div>
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
               <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
                 32+
               </div>
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
                 Colleges
               </div>
             </div>
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
               <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
                 643+
               </div>
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
                 Matches Made
               </div>
             </div>
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
               <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
                 4.9/5
               </div>

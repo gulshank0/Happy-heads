@@ -11,13 +11,11 @@ router.get('/google',
 );
 
 // Google OAuth callback
-router.get('/google/callback',
-  passport.authenticate('google', { 
-    failureRedirect: `${process.env.FRONTEND_URL}/login?error=auth_failed`
-  }),
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'http://localhost:8080/?success=false' }),
   (req, res) => {
-    // Successful authentication, redirect to frontend
-    res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+    // Successful authentication, redirect to frontend with success flag
+    res.redirect('http://localhost:8080/?success=true');
   }
 );
 
@@ -27,13 +25,23 @@ router.post('/logout', (req, res) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to logout' });
     }
-    res.json({ message: 'Logged out successfully' });
+    
+    // Clear session
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to clear session' });
+      }
+      
+      // Clear session cookie
+      res.clearCookie('connect.sid');
+      res.json({ message: 'Logged out successfully' });
+    });
   });
 });
 
 // Get current authenticated user
 router.get('/me', (req, res) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user) {
     res.json({
       user: req.user,
       authenticated: true
