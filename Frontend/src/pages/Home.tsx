@@ -63,6 +63,7 @@ const Home: React.FC = () => {
     messages: 0,
     profileViews: 0
   });
+  const [activeTab, setActiveTab] = useState<'swipe' | 'messages' | 'profile'>('swipe');
 
   const navigate = useNavigate();
 

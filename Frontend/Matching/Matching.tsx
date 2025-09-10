@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, MapPin, GraduationCap, Calendar, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
-// Types and Interfaces
+// Types and Interfaces (move these to the top)
 interface UserProfile {
   id: string;
   name: string;
@@ -70,7 +70,7 @@ interface ScoreBreakdown {
   totalScore: number;
 }
 
-// Matching Algorithm Class
+// Matching Algorithm Class (keep this outside the component)
 class MatchingAlgorithm {
   // Calculate distance between two coordinates using Haversine formula
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -248,8 +248,12 @@ class MatchingAlgorithm {
   }
 }
 
-// React Component
+// React Component - Move all hooks inside here
 const Matching: React.FC = () => {
+  // Move all useState hooks inside the component
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [candidates, setCandidates] = useState<UserProfile[]>([]);
   const [matches, setMatches] = useState<MatchResult[]>([]);
@@ -257,6 +261,55 @@ const Matching: React.FC = () => {
   const [showBreakdown, setShowBreakdown] = useState<{ [key: string]: boolean }>({});
 
   const matchingAlgorithm = new MatchingAlgorithm();
+
+  // Helper functions
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return 'from-green-400 to-emerald-500';
+    if (score >= 60) return 'from-yellow-400 to-orange-500';
+    if (score >= 40) return 'from-orange-400 to-red-500';
+    return 'from-red-400 to-red-600';
+  };
+
+  const getScoreTextColor = (score: number) => {
+    if (score >= 80) return 'text-green-400';
+    if (score >= 60) return 'text-yellow-400';
+    if (score >= 40) return 'text-orange-400';
+    return 'text-red-400';
+  };
+
+  // Check authentication status
+  const checkAuthStatus = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8000/auth/me', { // Changed from /auth/me to /auth/status
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        } else {
+          setUser(null);
+          localStorage.removeItem("user");
+        }
+      } else {
+        setUser(null);
+        localStorage.removeItem("user");
+      }
+    } catch (error) {
+      console.error("Error checking auth status:", error);
+      setUser(null);
+      localStorage.removeItem("user");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Mock data for demonstration
   const mockCurrentUser: UserProfile = {
@@ -298,6 +351,7 @@ const Matching: React.FC = () => {
   };
 
   const mockCandidates: UserProfile[] = [
+    // ... your existing mock candidates data ...
     {
       id: "user2",
       name: "Bob Smith",
@@ -334,88 +388,18 @@ const Matching: React.FC = () => {
         agreeableness: 8,
         neuroticism: 3
       }
-    },
-    {
-      id: "user3",
-      name: "Charlie Davis",
-      age: 21,
-      gender: "male",
-      college: "UC Berkeley",
-      major: "Mathematics",
-      year: 3,
-      bio: "Math nerd who loves coffee and deep conversations. Philosophy enthusiast seeking meaningful connections.",
-      profilePicture: "/images/charlie.jpg",
-      location: { latitude: 37.8719, longitude: -122.2585 },
-      interests: ["mathematics", "coffee", "reading", "chess", "philosophy"],
-      preferences: {
-        ageRange: { min: 19, max: 23 },
-        preferredGenders: ["female"],
-        maxDistance: 40,
-        collegePreference: "any",
-        majorPreference: "different",
-        yearPreference: { min: 2, max: 4 },
-        importanceWeights: {
-          age: 0.12,
-          distance: 0.08,
-          interests: 0.30,
-          college: 0.05,
-          major: 0.10,
-          year: 0.15,
-          personality: 0.20
-        }
-      },
-      personality: {
-        extroversion: 5,
-        openness: 9,
-        conscientiousness: 8,
-        agreeableness: 6,
-        neuroticism: 5
-      }
-    },
-    {
-      id: "user4",
-      name: "David Wilson",
-      age: 23,
-      gender: "male",
-      college: "Stanford University",
-      major: "Engineering",
-      year: 4,
-      bio: "Engineering student passionate about sustainability and innovation. Love cooking and exploring new music genres.",
-      profilePicture: "/images/david.jpg",
-      location: { latitude: 37.4275, longitude: -122.1697 },
-      interests: ["engineering", "sustainability", "hiking", "music", "cooking"],
-      preferences: {
-        ageRange: { min: 19, max: 24 },
-        preferredGenders: ["female"],
-        maxDistance: 25,
-        collegePreference: "same",
-        majorPreference: "any",
-        yearPreference: { min: 1, max: 4 },
-        importanceWeights: {
-          age: 0.18,
-          distance: 0.12,
-          interests: 0.22,
-          college: 0.18,
-          major: 0.08,
-          year: 0.12,
-          personality: 0.10
-        }
-      },
-      personality: {
-        extroversion: 6,
-        openness: 7,
-        conscientiousness: 8,
-        agreeableness: 9,
-        neuroticism: 2
-      }
     }
+    // Add other candidates here...
   ];
 
+  // Effects
   useEffect(() => {
+    checkAuthStatus();
     setCurrentUser(mockCurrentUser);
     setCandidates(mockCandidates);
   }, []);
 
+  // Event handlers
   const handleFindMatches = () => {
     if (!currentUser) return;
     
@@ -432,20 +416,6 @@ const Matching: React.FC = () => {
       ...prev,
       [userId]: !prev[userId]
     }));
-  };
-
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'from-green-400 to-emerald-500';
-    if (score >= 60) return 'from-yellow-400 to-orange-500';
-    if (score >= 40) return 'from-orange-400 to-red-500';
-    return 'from-red-400 to-red-600';
-  };
-
-  const getScoreTextColor = (score: number) => {
-    if (score >= 80) return 'text-green-400';
-    if (score >= 60) return 'text-yellow-400';
-    if (score >= 40) return 'text-orange-400';
-    return 'text-red-400';
   };
 
   const renderScoreBreakdown = (breakdown: ScoreBreakdown) => (
@@ -506,6 +476,18 @@ const Matching: React.FC = () => {
       </div>
     </div>
   );
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-violet-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white relative">

@@ -4,6 +4,7 @@ import session from "express-session";
 import passport from "passport";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
+import messageRoutes from "./routes/messages"; // Add this import
 import "./config/passport"; // Import passport configuration
 import cors from "cors";
 import multer from "multer";
@@ -46,34 +47,78 @@ const upload = multer({
 
 const app = express();
 
-app.use(express.json());
+// CORS configuration - This must come before other middleware
+const corsOptions = {
+  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:8080',
+      'http://localhost:5173',
+      process.env.FRONTEND_URL
+    ].filter(Boolean);
 
-app.use(cors({
-  origin: "http://localhost:8080", // Adjust as necessary
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log(`❌ CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cookie'
+  ],
+  optionsSuccessStatus: 200
+};
 
-// Serve static files from uploads directory
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Static file serving for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your_secret_key',
+  secret: process.env.SESSION_SECRET || 'fallback-secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: {
     secure: false, // Set to true in production with HTTPS
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: 'lax' // Important for cross-origin cookies
   }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Add request logging middleware for debugging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`, {
+    origin: req.headers.origin,
+    userAgent: req.headers['user-agent']?.substring(0, 100),
+    authenticated: !!req.user
+  });
+  next();
+});
+
+// Routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/messages", messageRoutes); // Add this line
 
 app.get("/users/data", (req, res) => {
   res.json({ message: "User data endpoint" });
@@ -131,6 +176,22 @@ app.use((error: any, req: any, res: any, next: any) => {
   next(error);
 });
 
-app.listen(process.env.PORT || 8000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 8000}`);
+// Error handling middleware
+app.use((error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Error:', error);
+  res.status(500).json({ error: 'Internal server error' });
 });
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🌍 CORS enabled for multiple origins including http://localhost:8080`);
+});
+
+export default app;

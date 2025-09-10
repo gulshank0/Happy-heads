@@ -1,126 +1,289 @@
-import { MessageCircle, Send, Search, MoreVertical, Phone, Video } from "lucide-react";
-import { useState } from "react";
-
-interface User {
-  id: string;
-  name: string;
-  avatar: string;
-  lastSeen: string;
-  isOnline: boolean;
-}
-
-interface Message {
-  id: string;
-  senderId: string;
-  content: string;
-  timestamp: string;
-  isRead: boolean;
-}
-
-interface Conversation {
-  id: string;
-  user: User;
-  lastMessage: Message;
-  unreadCount: number;
-  messages: Message[];
-}
+import { MessageCircle, Send, Search, MoreVertical, Phone, Video, Trash2, AlertCircle, Plus } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { messageService, Conversation, Message } from "../../services/messageService";
+import StartConversation from './StartConversation';
 
 export default function Messenger() {
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [showStartConversation, setShowStartConversation] = useState(false);
+  
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Mock data - replace with real data from your API
-  const conversations: Conversation[] = [
-    {
-      id: "1",
-      user: {
-        id: "user1",
-        name: "Emma Wilson",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150",
-        lastSeen: "2 min ago",
-        isOnline: true
-      },
-      lastMessage: {
-        id: "msg1",
-        senderId: "user1",
-        content: "Hey! How are you doing?",
-        timestamp: "10:30 AM",
-        isRead: false
-      },
-      unreadCount: 2,
-      messages: [
-        {
-          id: "msg1",
-          senderId: "user1",
-          content: "Hey! How are you doing?",
-          timestamp: "10:30 AM",
-          isRead: false
-        },
-        {
-          id: "msg2",
-          senderId: "me",
-          content: "Hi Emma! I'm doing great, thanks for asking!",
-          timestamp: "10:25 AM",
-          isRead: true
+  // Get current user info
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      try {
+        // Try different possible endpoints
+        const possibleEndpoints = [
+          'http://localhost:8000/auth/me',
+          'http://localhost:8000/api/auth/me', 
+          'http://localhost:8000/user/me',
+          'http://localhost:8000/auth/profile'
+        ];
+        
+        let userData = null;
+        
+        for (const endpoint of possibleEndpoints) {
+          try {
+            console.log(`🔍 Trying endpoint: ${endpoint}`);
+            const response = await fetch(endpoint, {
+              credentials: 'include'
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+              console.log(`✅ Success with ${endpoint}:`, data);
+              userData = data.user || data; // Handle different response formats
+              break;
+            } else {
+              console.log(`❌ ${endpoint} returned ${response.status}`);
+            }
+          } catch (err) {
+            console.log(`❌ ${endpoint} failed:`, err);
+          }
         }
-      ]
-    },
-    {
-      id: "2",
-      user: {
-        id: "user2",
-        name: "Alex Johnson",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-        lastSeen: "1 hour ago",
-        isOnline: false
-      },
-      lastMessage: {
-        id: "msg3",
-        senderId: "me",
-        content: "See you tomorrow!",
-        timestamp: "Yesterday",
-        isRead: true
-      },
-      unreadCount: 0,
-      messages: [
-        {
-          id: "msg3",
-          senderId: "me",
-          content: "See you tomorrow!",
-          timestamp: "Yesterday",
-          isRead: true
+        
+        if (userData) {
+          setCurrentUser(userData);
+          console.log('✅ Current user set:', userData);
+        } else {
+          console.error('❌ No valid endpoint found for current user');
+          setError('Failed to get user information. Please log in again.');
         }
-      ]
+      } catch (error) {
+        console.error('Failed to get current user:', error);
+        setError('Failed to get user information');
+      }
+    };
+    getCurrentUser();
+  }, []);
+
+  // Load conversations on mount
+  useEffect(() => {
+    loadConversations();
+  }, []);
+
+  // Load messages when conversation is selected
+  useEffect(() => {
+    if (selectedConversation) {
+      loadMessages(selectedConversation);
+      markConversationAsRead(selectedConversation);
     }
-  ];
+  }, [selectedConversation]);
+
+  // Auto scroll to bottom when new messages arrive
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Add this useEffect for debugging
+  useEffect(() => {
+    console.log('🔍 Current state:', {
+      selectedConversation,
+      currentUser,
+      conversationsCount: conversations.length,
+      messagesCount: messages.length,
+      sendingMessage
+    });
+  }, [selectedConversation, currentUser, conversations.length, messages.length, sendingMessage]);
+
+  const loadConversations = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await messageService.getConversations();
+      setConversations(data);
+    } catch (error) {
+      console.error('Failed to load conversations:', error);
+      setError('Failed to load conversations');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadMessages = async (conversationId: string) => {
+    try {
+      const data = await messageService.getMessages(conversationId);
+      setMessages(data);
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+      setError('Failed to load messages');
+    }
+  };
+
+  const markConversationAsRead = async (conversationId: string) => {
+    try {
+      await messageService.markAsRead(conversationId);
+      // Update conversation unread count
+      setConversations(prev => 
+        prev.map(conv => 
+          conv.id === conversationId 
+            ? { ...conv, unreadCount: 0 }
+            : conv
+        )
+      );
+    } catch (error) {
+      console.error('Failed to mark as read:', error);
+    }
+  };
+
+  const handleSendMessage = async () => {
+    console.log('🚀 handleSendMessage called');
+    
+    if (!newMessage.trim() || !selectedConversation || !currentUser || sendingMessage) {
+      console.log('❌ Send message blocked:', {
+        hasMessage: !!newMessage.trim(),
+        hasConversation: !!selectedConversation,
+        hasCurrentUser: !!currentUser,
+        isSending: sendingMessage
+      });
+      return;
+    }
+    
+    const currentConversation = conversations.find(conv => conv.id === selectedConversation);
+    if (!currentConversation) {
+      console.error('❌ No current conversation found');
+      setError('No conversation selected');
+      return;
+    }
+
+    const receiverId = currentConversation.user.id;
+    
+    console.log('🔍 Sending message with data:', {
+      conversationId: selectedConversation,
+      receiverId: receiverId,
+      senderId: currentUser.id,
+      content: newMessage.trim(),
+      currentConversation
+    });
+
+    try {
+      setSendingMessage(true);
+      setError(null);
+      
+      // Store message content before clearing
+      const messageToSend = newMessage.trim();
+      setNewMessage(""); // Clear input immediately
+      
+      console.log('📤 Calling messageService.sendMessage...');
+      
+      // Send message to server (no optimistic update for now to debug)
+      const sentMessage = await messageService.sendMessage(receiverId, messageToSend);
+      
+      console.log('✅ Message sent successfully:', sentMessage);
+      
+      // Add the sent message to the UI
+      setMessages(prev => [...prev, sentMessage]);
+      
+      // Update conversation's last message
+      setConversations(prev => 
+        prev.map(conv => 
+          conv.id === selectedConversation 
+            ? {
+                ...conv,
+                lastMessage: {
+                  id: sentMessage.id,
+                  senderId: sentMessage.senderId || sentMessage.sender?.id,
+                  content: sentMessage.content,
+                  timestamp: sentMessage.timestamp,
+                  isRead: sentMessage.isRead
+                }
+              }
+            : conv
+        )
+      );
+      
+    } catch (error: any) {
+      console.error('❌ Failed to send message:', error);
+      
+      // Restore the message in input on error
+      setNewMessage(messageToSend);
+      
+      setError(error.message || 'Failed to send message. Please try again.');
+    } finally {
+      setSendingMessage(false);
+    }
+  };
+
+  const handleDeleteConversation = async (conversationId: string) => {
+    if (!confirm('Are you sure you want to delete this conversation?')) return;
+    
+    try {
+      await messageService.deleteConversation(conversationId);
+      setConversations(prev => prev.filter(conv => conv.id !== conversationId));
+      if (selectedConversation === conversationId) {
+        setSelectedConversation(null);
+        setMessages([]);
+      }
+    } catch (error) {
+      console.error('Failed to delete conversation:', error);
+      setError('Failed to delete conversation');
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleConversationCreated = (conversationId: string) => {
+    loadConversations();
+    setSelectedConversation(conversationId);
+  };
 
   const currentConversation = conversations.find(conv => conv.id === selectedConversation);
-
-  const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedConversation) return;
-    
-    // Add message sending logic here
-    console.log("Sending message:", newMessage);
-    setNewMessage("");
-  };
 
   const filteredConversations = conversations.filter(conv =>
     conv.user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  if (loading) {
+    return (
+      <div className="h-[calc(100vh-100px)] flex items-center justify-center bg-white/10 rounded-xl">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-violet-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white">Loading conversations...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-[calc(100vh-100px)] flex bg-white/10 rounded-xl overflow-hidden">
+      {/* Error Message */}
+      {error && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg flex items-center z-50">
+          <AlertCircle className="w-4 h-4 mr-2" />
+          {error}
+          <button onClick={() => setError(null)} className="ml-2 text-white hover:text-gray-200">×</button>
+        </div>
+      )}
+
       {/* Conversations List */}
       <div className="w-1/3 border-r border-gray-700 flex flex-col">
         {/* Header */}
         <div className="p-4 border-b border-gray-700">
-          <h1 className="text-xl font-bold text-white mb-4 flex items-center">
-            <MessageCircle className="w-6 h-6 mr-2 text-pink-400" />
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-              Messages
-            </span>
-          </h1>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-xl font-bold text-white flex items-center">
+              <MessageCircle className="w-6 h-6 mr-2 text-pink-400" />
+              <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                Messages
+              </span>
+            </h1>
+            <button
+              onClick={() => setShowStartConversation(true)}
+              className="p-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+            </button>
+          </div>
           
           {/* Search */}
           <div className="relative">
@@ -149,15 +312,14 @@ export default function Messenger() {
             filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
-                onClick={() => setSelectedConversation(conversation.id)}
-                className={`p-4 border-b border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors ${
+                className={`p-4 border-b border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors group ${
                   selectedConversation === conversation.id ? 'bg-gray-800' : ''
                 }`}
               >
                 <div className="flex items-start space-x-3">
-                  <div className="relative">
+                  <div className="relative flex-shrink-0">
                     <img
-                      src={conversation.user.avatar}
+                      src={conversation.user.avatar || '/default-avatar.png'}
                       alt={conversation.user.name}
                       className="w-12 h-12 rounded-full object-cover"
                     />
@@ -166,18 +328,38 @@ export default function Messenger() {
                     )}
                   </div>
                   
-                  <div className="flex-1 min-w-0">
+                  <div 
+                    className="flex-1 min-w-0"
+                    onClick={() => setSelectedConversation(conversation.id)}
+                  >
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="font-semibold text-white truncate">{conversation.user.name}</h3>
-                      <span className="text-xs text-gray-400">{conversation.lastMessage.timestamp}</span>
+                      <div className="flex items-center space-x-2">
+                        {conversation.lastMessage && (
+                          <span className="text-xs text-gray-400">{conversation.lastMessage.timestamp}</span>
+                        )}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteConversation(conversation.id);
+                          }}
+                          className="opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-300 transition-opacity"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-300 truncate">
-                        {conversation.lastMessage.content}
-                      </p>
+                      {conversation.lastMessage ? (
+                        <p className="text-sm text-gray-300 truncate">
+                          {conversation.lastMessage.content}
+                        </p>
+                      ) : (
+                        <p className="text-sm text-gray-500 italic">No messages yet</p>
+                      )}
                       {conversation.unreadCount > 0 && (
-                        <span className="bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center ml-2">
+                        <span className="bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center ml-2 flex-shrink-0">
                           {conversation.unreadCount}
                         </span>
                       )}
@@ -199,7 +381,7 @@ export default function Messenger() {
               <div className="flex items-center space-x-3">
                 <div className="relative">
                   <img
-                    src={currentConversation.user.avatar}
+                    src={currentConversation.user.avatar || '/default-avatar.png'}
                     alt={currentConversation.user.name}
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -230,27 +412,36 @@ export default function Messenger() {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {currentConversation.messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}
-                >
+              {messages.map((message) => {
+                const messageSenderId = message.senderId || message.sender?.id;
+                const isMyMessage = messageSenderId === currentUser?.id;
+                
+                return (
                   <div
-                    className={`max-w-[70%] px-4 py-2 rounded-lg ${
-                      message.senderId === 'me'
-                        ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white'
-                        : 'bg-gray-700 text-white'
-                    }`}
+                    key={message.id}
+                    className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}
                   >
-                    <p>{message.content}</p>
-                    <p className={`text-xs mt-1 ${
-                      message.senderId === 'me' ? 'text-white/70' : 'text-gray-400'
-                    }`}>
-                      {message.timestamp}
-                    </p>
+                    <div
+                      className={`max-w-[70%] px-4 py-2 rounded-lg ${
+                        isMyMessage
+                          ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white'
+                          : 'bg-gray-700 text-white'
+                      }`}
+                    >
+                      <p>{message.content}</p>
+                      <p className={`text-xs mt-1 ${
+                        isMyMessage ? 'text-white/70' : 'text-gray-400'
+                      }`}>
+                        {new Date(message.timestamp).toLocaleTimeString([], { 
+                          hour: '2-digit', 
+                          minute: '2-digit' 
+                        })}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Message Input */}
@@ -261,15 +452,25 @@ export default function Messenger() {
                   placeholder="Type a message..."
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault(); // Prevent form submission
+                      handleSendMessage();
+                    }
+                  }}
                   className="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-400"
+                  disabled={sendingMessage}
                 />
                 <button
                   onClick={handleSendMessage}
-                  disabled={!newMessage.trim()}
+                  disabled={!newMessage.trim() || sendingMessage}
                   className="p-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-5 h-5" />
+                  {sendingMessage ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -287,6 +488,13 @@ export default function Messenger() {
           </div>
         )}
       </div>
+
+      {/* Start Conversation Modal */}
+      <StartConversation
+        isOpen={showStartConversation}
+        onClose={() => setShowStartConversation(false)}
+        onConversationCreated={handleConversationCreated}
+      />
     </div>
   );
 }

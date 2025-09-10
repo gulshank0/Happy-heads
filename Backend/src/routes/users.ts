@@ -52,12 +52,15 @@ router.get('/verify', (req: Request, res: Response) => {
 });
 
 // Protected routes
-router.get('/profile', requireAuth, (req, res) => {
-  res.json(req.user);
-});
-
+router.get('/profile', requireAuth, userController.getUserProfile.bind(userController));
 router.put('/profile', requireAuth, userController.updateUser.bind(userController));
 router.delete('/profile', requireAuth, userController.deleteUser.bind(userController));
+
+// Get all users (with optional search)
+router.get('/', requireAuth, userController.getAllUsers.bind(userController));
+
+// Search users for messaging
+router.get('/search', requireAuth, userController.searchUsersForMessaging.bind(userController));
 
 // File upload route
 router.post('/upload', requireAuth, upload.single('file'), (req, res) => {

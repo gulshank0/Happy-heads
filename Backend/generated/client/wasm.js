@@ -160,6 +160,28 @@ exports.Prisma.ScoreCardScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastMessageAt: 'lastMessageAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  content: 'content',
+  messageType: 'messageType',
+  isRead: 'isRead',
+  isDelivered: 'isDelivered',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -174,12 +196,19 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.MessageType = exports.$Enums.MessageType = {
+  TEXT: 'TEXT',
+  IMAGE: 'IMAGE',
+  FILE: 'FILE',
+  EMOJI: 'EMOJI'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
-  ScoreCard: 'ScoreCard'
+  ScoreCard: 'ScoreCard',
+  Conversation: 'Conversation',
+  Message: 'Message'
 };
 
 /**

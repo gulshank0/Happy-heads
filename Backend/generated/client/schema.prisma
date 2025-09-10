@@ -24,6 +24,12 @@ model User {
   posts     Post[]
   scoreCard ScoreCard?
 
+  // Messaging relationships
+  sentMessages     Message[]      @relation("SentMessages")
+  receivedMessages Message[]      @relation("ReceivedMessages")
+  conversations1   Conversation[] @relation("User1Conversations")
+  conversations2   Conversation[] @relation("User2Conversations")
+
   @@map("users")
 }
 
@@ -33,7 +39,7 @@ model Post {
   content   String?
   published Boolean  @default(false)
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -43,17 +49,59 @@ model Post {
 model ScoreCard {
   id          String   @id @default(cuid())
   userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
-  college     String
-  major       String
-  year        Int
+  college     String?
+  major       String?
+  year        String?
   location    String?
   interests   String[]
-  preferences String?
+  preferences String[]
   personality String?
-  score       Int      @default(0)
+  score       Int?     @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("scorecards")
+}
+
+model Conversation {
+  id            String    @id @default(cuid())
+  user1Id       String
+  user2Id       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastMessageAt DateTime?
+
+  user1    User      @relation("User1Conversations", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2    User      @relation("User2Conversations", fields: [user2Id], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([user1Id, user2Id])
+  @@map("conversations")
+}
+
+model Message {
+  id             String      @id @default(cuid())
+  conversationId String
+  senderId       String
+  receiverId     String
+  content        String
+  messageType    MessageType @default(TEXT)
+  isRead         Boolean     @default(false)
+  isDelivered    Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver     User         @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  EMOJI
 }
