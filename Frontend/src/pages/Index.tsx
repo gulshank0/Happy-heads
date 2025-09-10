@@ -5,7 +5,12 @@ import Navbar from "@/components/Header/Navbar";
 import Pricing from "@/components/Pricing/Pricing";
 import { Shield, Heart, Star, TriangleAlert, Users, Sparkles } from "lucide-react";
 
+
+
 export default function Index() {
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8000/auth/google";
+  };
   return (
     <>
     <Navbar />
@@ -104,7 +109,7 @@ export default function Index() {
 
           {/* Google Login Button */}
           <div className="max-w-sm w-full">
-            <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 backdrop-blur-md bg-white/12 border border-white/20 rounded-lg text-base sm:text-lg font-medium text-white hover:bg-white/16 transition-all duration-300">
+            <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 backdrop-blur-md bg-white/12 border border-white/20 rounded-lg text-base sm:text-lg font-medium text-white hover:bg-white/16 transition-all duration-300" onClick={handleGoogleLogin}>
               <Users className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
               Login with Google
             </button>

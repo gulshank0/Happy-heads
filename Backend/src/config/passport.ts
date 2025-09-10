@@ -20,6 +20,7 @@ passport.use(new GoogleStrategy({
         data: {
           name: profile.displayName || user.name,
           email: profile.emails?.[0]?.value || user.email,
+          avatar: profile.photos?.[0]?.value || user.avatar,
           updatedAt: new Date()
         }
       });
@@ -32,6 +33,7 @@ passport.use(new GoogleStrategy({
         googleId: profile.id,
         email: profile.emails?.[0]?.value || '',
         name: profile.displayName || '',
+        avatar: profile.photos?.[0]?.value || null,
         createdAt: new Date(),
         updatedAt: new Date()
       }

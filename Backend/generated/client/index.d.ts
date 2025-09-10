@@ -880,6 +880,8 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    avatar: string | null
+    url: string | null
     gender: string | null
     age: number | null
     phone: string | null
@@ -893,6 +895,8 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    avatar: string | null
+    url: string | null
     gender: string | null
     age: number | null
     phone: string | null
@@ -906,6 +910,8 @@ export namespace Prisma {
     id: number
     email: number
     name: number
+    avatar: number
+    url: number
     gender: number
     age: number
     phone: number
@@ -929,6 +935,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    avatar?: true
+    url?: true
     gender?: true
     age?: true
     phone?: true
@@ -942,6 +950,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    avatar?: true
+    url?: true
     gender?: true
     age?: true
     phone?: true
@@ -955,6 +965,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    avatar?: true
+    url?: true
     gender?: true
     age?: true
     phone?: true
@@ -1055,6 +1067,8 @@ export namespace Prisma {
     id: string
     email: string
     name: string | null
+    avatar: string | null
+    url: string | null
     gender: string | null
     age: number | null
     phone: string | null
@@ -1087,6 +1101,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    avatar?: boolean
+    url?: boolean
     gender?: boolean
     age?: boolean
     phone?: boolean
@@ -1100,6 +1116,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    avatar?: boolean
+    url?: boolean
     gender?: boolean
     age?: boolean
     phone?: boolean
@@ -1113,6 +1131,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    avatar?: boolean
+    url?: boolean
     gender?: boolean
     age?: boolean
     phone?: boolean
@@ -1126,6 +1146,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    avatar?: boolean
+    url?: boolean
     gender?: boolean
     age?: boolean
     phone?: boolean
@@ -1135,7 +1157,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "gender" | "age" | "phone" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "url" | "gender" | "age" | "phone" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1144,6 +1166,8 @@ export namespace Prisma {
       id: string
       email: string
       name: string | null
+      avatar: string | null
+      url: string | null
       gender: string | null
       age: number | null
       phone: string | null
@@ -1577,6 +1601,8 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly avatar: FieldRef<"User", 'String'>
+    readonly url: FieldRef<"User", 'String'>
     readonly gender: FieldRef<"User", 'String'>
     readonly age: FieldRef<"User", 'Int'>
     readonly phone: FieldRef<"User", 'String'>
@@ -1968,6 +1994,8 @@ export namespace Prisma {
     id: 'id',
     email: 'email',
     name: 'name',
+    avatar: 'avatar',
+    url: 'url',
     gender: 'gender',
     age: 'age',
     phone: 'phone',
@@ -2075,6 +2103,8 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    avatar?: StringNullableFilter<"User"> | string | null
+    url?: StringNullableFilter<"User"> | string | null
     gender?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     phone?: StringNullableFilter<"User"> | string | null
@@ -2088,6 +2118,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    avatar?: SortOrderInput | SortOrder
+    url?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
@@ -2105,6 +2137,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
+    avatar?: StringNullableFilter<"User"> | string | null
+    url?: StringNullableFilter<"User"> | string | null
     gender?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     phone?: StringNullableFilter<"User"> | string | null
@@ -2117,6 +2151,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    avatar?: SortOrderInput | SortOrder
+    url?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
@@ -2138,6 +2174,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    url?: StringNullableWithAggregatesFilter<"User"> | string | null
     gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     age?: IntNullableWithAggregatesFilter<"User"> | number | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -2151,6 +2189,8 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    avatar?: string | null
+    url?: string | null
     gender?: string | null
     age?: number | null
     phone?: string | null
@@ -2164,6 +2204,8 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    avatar?: string | null
+    url?: string | null
     gender?: string | null
     age?: number | null
     phone?: string | null
@@ -2177,6 +2219,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2190,6 +2234,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2203,6 +2249,8 @@ export namespace Prisma {
     id?: string
     email: string
     name?: string | null
+    avatar?: string | null
+    url?: string | null
     gender?: string | null
     age?: number | null
     phone?: string | null
@@ -2216,6 +2264,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2229,6 +2279,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2299,6 +2351,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    avatar?: SortOrder
+    url?: SortOrder
     gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder
@@ -2316,6 +2370,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    avatar?: SortOrder
+    url?: SortOrder
     gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder
@@ -2329,6 +2385,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    avatar?: SortOrder
+    url?: SortOrder
     gender?: SortOrder
     age?: SortOrder
     phone?: SortOrder

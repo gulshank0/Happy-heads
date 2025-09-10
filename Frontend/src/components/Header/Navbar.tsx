@@ -166,7 +166,7 @@ const Navbar = () => {
             ) : isLoggedIn ? (
               <>
                 <span className="text-white/70 text-sm">
-                  Hi, {user?.name || user?.email?.split('@')[0] || "User"}!
+                  Hi, {user?.name || user?.email?.split('@')[0] || "User"} {user.avatar && <img src={user.avatar} alt="User Avatar" className="inline-block w-8 h-8 rounded-full ml-2 hover:cursor-pointer" />}
                 </span>
                 <button 
                   onClick={handleLogout}

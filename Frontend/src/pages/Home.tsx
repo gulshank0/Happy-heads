@@ -12,6 +12,7 @@ interface UserProfile {
   bio?: string;
   gender?: string;
   googleId?: string;
+  avatar?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -240,10 +241,11 @@ const Home: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
+                  {user.avatar && <img src={user.avatar} alt="User Avatar" className="inline-block w-15 h-15 rounded-full hover:cursor-pointer" />}
+                  
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">{firstName}</h3>
-                  <p className="text-sm text-white/60">Premium Member</p>
+                  <h3 className="font-semibold text-white">{user.name || user.email?.split('@')[0] || 'User'}</h3>
                 </div>
               </div>
             </div>
