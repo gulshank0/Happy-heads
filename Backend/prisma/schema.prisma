@@ -9,26 +9,40 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  email     String     @unique
+  id        String   @id @default(cuid())
+  email     String   @unique
   name      String?
   avatar    String?
-  url       String?  
+  url       String?
   gender    String?
   age       Int?
   phone     String?
   bio       String?
-  googleId  String?    @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  posts     Post[]
-  scoreCard ScoreCard?
+  googleId  String?
+  college   String?
+  major     String?
+  year      Int?
+  location  Json?    // {latitude: number, longitude: number}
+  interests String[] // Array of interests
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // Messaging relationships
-  sentMessages     Message[] @relation("SentMessages")
-  receivedMessages Message[] @relation("ReceivedMessages")
-  conversations1   Conversation[] @relation("User1Conversations")
-  conversations2   Conversation[] @relation("User2Conversations")
+  // Relations
+  posts              Post[]
+  scoreCard          ScoreCard?
+  userPreferences    UserPreferences?
+  personalityTraits  PersonalityTraits?
+  sentMessages       Message[] @relation("SentMessages")
+  receivedMessages   Message[] @relation("ReceivedMessages")
+  conversations1     Conversation[] @relation("User1Conversations")
+  conversations2     Conversation[] @relation("User2Conversations")
+  
+  // Matching relations
+  sentLikes      Like[] @relation("LikeSender")
+  receivedLikes  Like[] @relation("LikeReceiver")
+  matches        Match[] @relation("MatchUser1")
+  matchedBy      Match[] @relation("MatchUser2")
 
   @@map("users")
 }
@@ -37,6 +51,7 @@ model Post {
   id        String   @id @default(cuid())
   title     String
   content   String?
+  image     String?  // Add this field for post images
   published Boolean  @default(false)
   authorId  String
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -97,6 +112,71 @@ model Message {
   receiver       User         @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
 
   @@map("messages")
+}
+
+model UserPreferences {
+  id                 String @id @default(cuid())
+  userId             String @unique
+  user               User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  minAge             Int    @default(18)
+  maxAge             Int    @default(35)
+  preferredGenders   String[] // ["male", "female", "other"]
+  maxDistance        Int    @default(50) // in kilometers
+  collegePreference  String @default("any") // "same", "different", "any"
+  majorPreference    String @default("any") // "same", "different", "any"
+  minYear            Int    @default(1)
+  maxYear            Int    @default(4)
+  
+  // Importance weights (0-1)
+  ageWeight          Float  @default(0.15)
+  distanceWeight     Float  @default(0.10)
+  interestsWeight    Float  @default(0.25)
+  collegeWeight      Float  @default(0.10)
+  majorWeight        Float  @default(0.15)
+  yearWeight         Float  @default(0.10)
+  personalityWeight  Float  @default(0.15)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PersonalityTraits {
+  id               String @id @default(cuid())
+  userId           String @unique
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  extroversion     Int    @default(5) // 1-10
+  openness         Int    @default(5) // 1-10
+  conscientiousness Int   @default(5) // 1-10
+  agreeableness    Int    @default(5) // 1-10
+  neuroticism      Int    @default(5) // 1-10
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  sender     User     @relation("LikeSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("LikeReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  
+  @@unique([senderId, receiverId])
+}
+
+model Match {
+  id         String   @id @default(cuid())
+  user1Id    String
+  user2Id    String
+  user1      User     @relation("MatchUser1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2      User     @relation("MatchUser2", fields: [user2Id], references: [id], onDelete: Cascade)
+  score      Float    // Compatibility score
+  createdAt  DateTime @default(now())
+  
+  @@unique([user1Id, user2Id])
 }
 
 enum MessageType {

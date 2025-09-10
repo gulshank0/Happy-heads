@@ -38,6 +38,26 @@ export type Conversation = $Result.DefaultSelection<Prisma.$ConversationPayload>
  * 
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
+ * Model UserPreferences
+ * 
+ */
+export type UserPreferences = $Result.DefaultSelection<Prisma.$UserPreferencesPayload>
+/**
+ * Model PersonalityTraits
+ * 
+ */
+export type PersonalityTraits = $Result.DefaultSelection<Prisma.$PersonalityTraitsPayload>
+/**
+ * Model Like
+ * 
+ */
+export type Like = $Result.DefaultSelection<Prisma.$LikePayload>
+/**
+ * Model Match
+ * 
+ */
+export type Match = $Result.DefaultSelection<Prisma.$MatchPayload>
 
 /**
  * Enums
@@ -225,6 +245,46 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userPreferences`: Exposes CRUD operations for the **UserPreferences** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserPreferences
+    * const userPreferences = await prisma.userPreferences.findMany()
+    * ```
+    */
+  get userPreferences(): Prisma.UserPreferencesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.personalityTraits`: Exposes CRUD operations for the **PersonalityTraits** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PersonalityTraits
+    * const personalityTraits = await prisma.personalityTraits.findMany()
+    * ```
+    */
+  get personalityTraits(): Prisma.PersonalityTraitsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.like`: Exposes CRUD operations for the **Like** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Likes
+    * const likes = await prisma.like.findMany()
+    * ```
+    */
+  get like(): Prisma.LikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.match`: Exposes CRUD operations for the **Match** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Matches
+    * const matches = await prisma.match.findMany()
+    * ```
+    */
+  get match(): Prisma.MatchDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -283,8 +343,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.15.0
-   * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+   * Prisma Client JS version: 6.16.0
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -669,7 +729,11 @@ export namespace Prisma {
     Post: 'Post',
     ScoreCard: 'ScoreCard',
     Conversation: 'Conversation',
-    Message: 'Message'
+    Message: 'Message',
+    UserPreferences: 'UserPreferences',
+    PersonalityTraits: 'PersonalityTraits',
+    Like: 'Like',
+    Match: 'Match'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -688,7 +752,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "scoreCard" | "conversation" | "message"
+      modelProps: "user" | "post" | "scoreCard" | "conversation" | "message" | "userPreferences" | "personalityTraits" | "like" | "match"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1062,6 +1126,302 @@ export namespace Prisma {
           }
         }
       }
+      UserPreferences: {
+        payload: Prisma.$UserPreferencesPayload<ExtArgs>
+        fields: Prisma.UserPreferencesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserPreferencesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserPreferencesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          findFirst: {
+            args: Prisma.UserPreferencesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserPreferencesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          findMany: {
+            args: Prisma.UserPreferencesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>[]
+          }
+          create: {
+            args: Prisma.UserPreferencesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          createMany: {
+            args: Prisma.UserPreferencesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserPreferencesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>[]
+          }
+          delete: {
+            args: Prisma.UserPreferencesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          update: {
+            args: Prisma.UserPreferencesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserPreferencesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserPreferencesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserPreferencesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserPreferencesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPreferencesPayload>
+          }
+          aggregate: {
+            args: Prisma.UserPreferencesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserPreferences>
+          }
+          groupBy: {
+            args: Prisma.UserPreferencesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserPreferencesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserPreferencesCountArgs<ExtArgs>
+            result: $Utils.Optional<UserPreferencesCountAggregateOutputType> | number
+          }
+        }
+      }
+      PersonalityTraits: {
+        payload: Prisma.$PersonalityTraitsPayload<ExtArgs>
+        fields: Prisma.PersonalityTraitsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PersonalityTraitsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PersonalityTraitsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          findFirst: {
+            args: Prisma.PersonalityTraitsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PersonalityTraitsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          findMany: {
+            args: Prisma.PersonalityTraitsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>[]
+          }
+          create: {
+            args: Prisma.PersonalityTraitsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          createMany: {
+            args: Prisma.PersonalityTraitsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PersonalityTraitsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>[]
+          }
+          delete: {
+            args: Prisma.PersonalityTraitsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          update: {
+            args: Prisma.PersonalityTraitsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          deleteMany: {
+            args: Prisma.PersonalityTraitsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PersonalityTraitsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PersonalityTraitsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>[]
+          }
+          upsert: {
+            args: Prisma.PersonalityTraitsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalityTraitsPayload>
+          }
+          aggregate: {
+            args: Prisma.PersonalityTraitsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePersonalityTraits>
+          }
+          groupBy: {
+            args: Prisma.PersonalityTraitsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PersonalityTraitsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PersonalityTraitsCountArgs<ExtArgs>
+            result: $Utils.Optional<PersonalityTraitsCountAggregateOutputType> | number
+          }
+        }
+      }
+      Like: {
+        payload: Prisma.$LikePayload<ExtArgs>
+        fields: Prisma.LikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          findFirst: {
+            args: Prisma.LikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          findMany: {
+            args: Prisma.LikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>[]
+          }
+          create: {
+            args: Prisma.LikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          createMany: {
+            args: Prisma.LikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>[]
+          }
+          delete: {
+            args: Prisma.LikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          update: {
+            args: Prisma.LikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          deleteMany: {
+            args: Prisma.LikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>[]
+          }
+          upsert: {
+            args: Prisma.LikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikePayload>
+          }
+          aggregate: {
+            args: Prisma.LikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLike>
+          }
+          groupBy: {
+            args: Prisma.LikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LikeCountArgs<ExtArgs>
+            result: $Utils.Optional<LikeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Match: {
+        payload: Prisma.$MatchPayload<ExtArgs>
+        fields: Prisma.MatchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MatchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MatchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          findFirst: {
+            args: Prisma.MatchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MatchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          findMany: {
+            args: Prisma.MatchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>[]
+          }
+          create: {
+            args: Prisma.MatchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          createMany: {
+            args: Prisma.MatchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MatchCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>[]
+          }
+          delete: {
+            args: Prisma.MatchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          update: {
+            args: Prisma.MatchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          deleteMany: {
+            args: Prisma.MatchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MatchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MatchUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>[]
+          }
+          upsert: {
+            args: Prisma.MatchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatchPayload>
+          }
+          aggregate: {
+            args: Prisma.MatchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMatch>
+          }
+          groupBy: {
+            args: Prisma.MatchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MatchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MatchCountArgs<ExtArgs>
+            result: $Utils.Optional<MatchCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1138,6 +1498,10 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
+    /**
      * Global configuration for omitting model fields by default.
      * 
      * @example
@@ -1159,6 +1523,10 @@ export namespace Prisma {
     scoreCard?: ScoreCardOmit
     conversation?: ConversationOmit
     message?: MessageOmit
+    userPreferences?: UserPreferencesOmit
+    personalityTraits?: PersonalityTraitsOmit
+    like?: LikeOmit
+    match?: MatchOmit
   }
 
   /* Types for Logging */
@@ -1244,6 +1612,10 @@ export namespace Prisma {
     receivedMessages: number
     conversations1: number
     conversations2: number
+    sentLikes: number
+    receivedLikes: number
+    matches: number
+    matchedBy: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1252,6 +1624,10 @@ export namespace Prisma {
     receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
     conversations1?: boolean | UserCountOutputTypeCountConversations1Args
     conversations2?: boolean | UserCountOutputTypeCountConversations2Args
+    sentLikes?: boolean | UserCountOutputTypeCountSentLikesArgs
+    receivedLikes?: boolean | UserCountOutputTypeCountReceivedLikesArgs
+    matches?: boolean | UserCountOutputTypeCountMatchesArgs
+    matchedBy?: boolean | UserCountOutputTypeCountMatchedByArgs
   }
 
   // Custom InputTypes
@@ -1298,6 +1674,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountConversations2Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ConversationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSentLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReceivedLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatchWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMatchedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatchWhereInput
   }
 
 
@@ -1350,10 +1754,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     age: number | null
+    year: number | null
   }
 
   export type UserSumAggregateOutputType = {
     age: number | null
+    year: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1367,6 +1773,9 @@ export namespace Prisma {
     phone: string | null
     bio: string | null
     googleId: string | null
+    college: string | null
+    major: string | null
+    year: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1382,6 +1791,9 @@ export namespace Prisma {
     phone: string | null
     bio: string | null
     googleId: string | null
+    college: string | null
+    major: string | null
+    year: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1397,6 +1809,11 @@ export namespace Prisma {
     phone: number
     bio: number
     googleId: number
+    college: number
+    major: number
+    year: number
+    location: number
+    interests: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1405,10 +1822,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     age?: true
+    year?: true
   }
 
   export type UserSumAggregateInputType = {
     age?: true
+    year?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1422,6 +1841,9 @@ export namespace Prisma {
     phone?: true
     bio?: true
     googleId?: true
+    college?: true
+    major?: true
+    year?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1437,6 +1859,9 @@ export namespace Prisma {
     phone?: true
     bio?: true
     googleId?: true
+    college?: true
+    major?: true
+    year?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1452,6 +1877,11 @@ export namespace Prisma {
     phone?: true
     bio?: true
     googleId?: true
+    college?: true
+    major?: true
+    year?: true
+    location?: true
+    interests?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1554,6 +1984,11 @@ export namespace Prisma {
     phone: string | null
     bio: string | null
     googleId: string | null
+    college: string | null
+    major: string | null
+    year: number | null
+    location: JsonValue | null
+    interests: string[]
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1588,14 +2023,25 @@ export namespace Prisma {
     phone?: boolean
     bio?: boolean
     googleId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
     scoreCard?: boolean | User$scoreCardArgs<ExtArgs>
+    userPreferences?: boolean | User$userPreferencesArgs<ExtArgs>
+    personalityTraits?: boolean | User$personalityTraitsArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
     conversations1?: boolean | User$conversations1Args<ExtArgs>
     conversations2?: boolean | User$conversations2Args<ExtArgs>
+    sentLikes?: boolean | User$sentLikesArgs<ExtArgs>
+    receivedLikes?: boolean | User$receivedLikesArgs<ExtArgs>
+    matches?: boolean | User$matchesArgs<ExtArgs>
+    matchedBy?: boolean | User$matchedByArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1610,6 +2056,11 @@ export namespace Prisma {
     phone?: boolean
     bio?: boolean
     googleId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1625,6 +2076,11 @@ export namespace Prisma {
     phone?: boolean
     bio?: boolean
     googleId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1640,18 +2096,29 @@ export namespace Prisma {
     phone?: boolean
     bio?: boolean
     googleId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "url" | "gender" | "age" | "phone" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "url" | "gender" | "age" | "phone" | "bio" | "googleId" | "college" | "major" | "year" | "location" | "interests" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     scoreCard?: boolean | User$scoreCardArgs<ExtArgs>
+    userPreferences?: boolean | User$userPreferencesArgs<ExtArgs>
+    personalityTraits?: boolean | User$personalityTraitsArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
     conversations1?: boolean | User$conversations1Args<ExtArgs>
     conversations2?: boolean | User$conversations2Args<ExtArgs>
+    sentLikes?: boolean | User$sentLikesArgs<ExtArgs>
+    receivedLikes?: boolean | User$receivedLikesArgs<ExtArgs>
+    matches?: boolean | User$matchesArgs<ExtArgs>
+    matchedBy?: boolean | User$matchedByArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1662,10 +2129,16 @@ export namespace Prisma {
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[]
       scoreCard: Prisma.$ScoreCardPayload<ExtArgs> | null
+      userPreferences: Prisma.$UserPreferencesPayload<ExtArgs> | null
+      personalityTraits: Prisma.$PersonalityTraitsPayload<ExtArgs> | null
       sentMessages: Prisma.$MessagePayload<ExtArgs>[]
       receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
       conversations1: Prisma.$ConversationPayload<ExtArgs>[]
       conversations2: Prisma.$ConversationPayload<ExtArgs>[]
+      sentLikes: Prisma.$LikePayload<ExtArgs>[]
+      receivedLikes: Prisma.$LikePayload<ExtArgs>[]
+      matches: Prisma.$MatchPayload<ExtArgs>[]
+      matchedBy: Prisma.$MatchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1678,6 +2151,11 @@ export namespace Prisma {
       phone: string | null
       bio: string | null
       googleId: string | null
+      college: string | null
+      major: string | null
+      year: number | null
+      location: Prisma.JsonValue | null
+      interests: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2076,10 +2554,16 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     scoreCard<T extends User$scoreCardArgs<ExtArgs> = {}>(args?: Subset<T, User$scoreCardArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    userPreferences<T extends User$userPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, User$userPreferencesArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    personalityTraits<T extends User$personalityTraitsArgs<ExtArgs> = {}>(args?: Subset<T, User$personalityTraitsArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedMessages<T extends User$receivedMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations1<T extends User$conversations1Args<ExtArgs> = {}>(args?: Subset<T, User$conversations1Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations2<T extends User$conversations2Args<ExtArgs> = {}>(args?: Subset<T, User$conversations2Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sentLikes<T extends User$sentLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receivedLikes<T extends User$receivedLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    matches<T extends User$matchesArgs<ExtArgs> = {}>(args?: Subset<T, User$matchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    matchedBy<T extends User$matchedByArgs<ExtArgs> = {}>(args?: Subset<T, User$matchedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2119,6 +2603,11 @@ export namespace Prisma {
     readonly phone: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
     readonly googleId: FieldRef<"User", 'String'>
+    readonly college: FieldRef<"User", 'String'>
+    readonly major: FieldRef<"User", 'String'>
+    readonly year: FieldRef<"User", 'Int'>
+    readonly location: FieldRef<"User", 'Json'>
+    readonly interests: FieldRef<"User", 'String[]'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2552,6 +3041,44 @@ export namespace Prisma {
   }
 
   /**
+   * User.userPreferences
+   */
+  export type User$userPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    where?: UserPreferencesWhereInput
+  }
+
+  /**
+   * User.personalityTraits
+   */
+  export type User$personalityTraitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    where?: PersonalityTraitsWhereInput
+  }
+
+  /**
    * User.sentMessages
    */
   export type User$sentMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2648,6 +3175,102 @@ export namespace Prisma {
   }
 
   /**
+   * User.sentLikes
+   */
+  export type User$sentLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    where?: LikeWhereInput
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    cursor?: LikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.receivedLikes
+   */
+  export type User$receivedLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    where?: LikeWhereInput
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    cursor?: LikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.matches
+   */
+  export type User$matchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    where?: MatchWhereInput
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    cursor?: MatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
+   * User.matchedBy
+   */
+  export type User$matchedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    where?: MatchWhereInput
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    cursor?: MatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2680,6 +3303,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     content: string | null
+    image: string | null
     published: boolean | null
     authorId: string | null
     createdAt: Date | null
@@ -2690,6 +3314,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     content: string | null
+    image: string | null
     published: boolean | null
     authorId: string | null
     createdAt: Date | null
@@ -2700,6 +3325,7 @@ export namespace Prisma {
     id: number
     title: number
     content: number
+    image: number
     published: number
     authorId: number
     createdAt: number
@@ -2712,6 +3338,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
+    image?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2722,6 +3349,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
+    image?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2732,6 +3360,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
+    image?: true
     published?: true
     authorId?: true
     createdAt?: true
@@ -2815,6 +3444,7 @@ export namespace Prisma {
     id: string
     title: string
     content: string | null
+    image: string | null
     published: boolean
     authorId: string
     createdAt: Date
@@ -2842,6 +3472,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    image?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
@@ -2853,6 +3484,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    image?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
@@ -2864,6 +3496,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    image?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
@@ -2875,13 +3508,14 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    image?: boolean
     published?: boolean
     authorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "image" | "published" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2901,6 +3535,7 @@ export namespace Prisma {
       id: string
       title: string
       content: string | null
+      image: string | null
       published: boolean
       authorId: string
       createdAt: Date
@@ -3332,6 +3967,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
+    readonly image: FieldRef<"Post", 'String'>
     readonly published: FieldRef<"Post", 'Boolean'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
@@ -7174,6 +7810,4633 @@ export namespace Prisma {
 
 
   /**
+   * Model UserPreferences
+   */
+
+  export type AggregateUserPreferences = {
+    _count: UserPreferencesCountAggregateOutputType | null
+    _avg: UserPreferencesAvgAggregateOutputType | null
+    _sum: UserPreferencesSumAggregateOutputType | null
+    _min: UserPreferencesMinAggregateOutputType | null
+    _max: UserPreferencesMaxAggregateOutputType | null
+  }
+
+  export type UserPreferencesAvgAggregateOutputType = {
+    minAge: number | null
+    maxAge: number | null
+    maxDistance: number | null
+    minYear: number | null
+    maxYear: number | null
+    ageWeight: number | null
+    distanceWeight: number | null
+    interestsWeight: number | null
+    collegeWeight: number | null
+    majorWeight: number | null
+    yearWeight: number | null
+    personalityWeight: number | null
+  }
+
+  export type UserPreferencesSumAggregateOutputType = {
+    minAge: number | null
+    maxAge: number | null
+    maxDistance: number | null
+    minYear: number | null
+    maxYear: number | null
+    ageWeight: number | null
+    distanceWeight: number | null
+    interestsWeight: number | null
+    collegeWeight: number | null
+    majorWeight: number | null
+    yearWeight: number | null
+    personalityWeight: number | null
+  }
+
+  export type UserPreferencesMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    minAge: number | null
+    maxAge: number | null
+    maxDistance: number | null
+    collegePreference: string | null
+    majorPreference: string | null
+    minYear: number | null
+    maxYear: number | null
+    ageWeight: number | null
+    distanceWeight: number | null
+    interestsWeight: number | null
+    collegeWeight: number | null
+    majorWeight: number | null
+    yearWeight: number | null
+    personalityWeight: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserPreferencesMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    minAge: number | null
+    maxAge: number | null
+    maxDistance: number | null
+    collegePreference: string | null
+    majorPreference: string | null
+    minYear: number | null
+    maxYear: number | null
+    ageWeight: number | null
+    distanceWeight: number | null
+    interestsWeight: number | null
+    collegeWeight: number | null
+    majorWeight: number | null
+    yearWeight: number | null
+    personalityWeight: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserPreferencesCountAggregateOutputType = {
+    id: number
+    userId: number
+    minAge: number
+    maxAge: number
+    preferredGenders: number
+    maxDistance: number
+    collegePreference: number
+    majorPreference: number
+    minYear: number
+    maxYear: number
+    ageWeight: number
+    distanceWeight: number
+    interestsWeight: number
+    collegeWeight: number
+    majorWeight: number
+    yearWeight: number
+    personalityWeight: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserPreferencesAvgAggregateInputType = {
+    minAge?: true
+    maxAge?: true
+    maxDistance?: true
+    minYear?: true
+    maxYear?: true
+    ageWeight?: true
+    distanceWeight?: true
+    interestsWeight?: true
+    collegeWeight?: true
+    majorWeight?: true
+    yearWeight?: true
+    personalityWeight?: true
+  }
+
+  export type UserPreferencesSumAggregateInputType = {
+    minAge?: true
+    maxAge?: true
+    maxDistance?: true
+    minYear?: true
+    maxYear?: true
+    ageWeight?: true
+    distanceWeight?: true
+    interestsWeight?: true
+    collegeWeight?: true
+    majorWeight?: true
+    yearWeight?: true
+    personalityWeight?: true
+  }
+
+  export type UserPreferencesMinAggregateInputType = {
+    id?: true
+    userId?: true
+    minAge?: true
+    maxAge?: true
+    maxDistance?: true
+    collegePreference?: true
+    majorPreference?: true
+    minYear?: true
+    maxYear?: true
+    ageWeight?: true
+    distanceWeight?: true
+    interestsWeight?: true
+    collegeWeight?: true
+    majorWeight?: true
+    yearWeight?: true
+    personalityWeight?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserPreferencesMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    minAge?: true
+    maxAge?: true
+    maxDistance?: true
+    collegePreference?: true
+    majorPreference?: true
+    minYear?: true
+    maxYear?: true
+    ageWeight?: true
+    distanceWeight?: true
+    interestsWeight?: true
+    collegeWeight?: true
+    majorWeight?: true
+    yearWeight?: true
+    personalityWeight?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserPreferencesCountAggregateInputType = {
+    id?: true
+    userId?: true
+    minAge?: true
+    maxAge?: true
+    preferredGenders?: true
+    maxDistance?: true
+    collegePreference?: true
+    majorPreference?: true
+    minYear?: true
+    maxYear?: true
+    ageWeight?: true
+    distanceWeight?: true
+    interestsWeight?: true
+    collegeWeight?: true
+    majorWeight?: true
+    yearWeight?: true
+    personalityWeight?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserPreferencesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserPreferences to aggregate.
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPreferences to fetch.
+     */
+    orderBy?: UserPreferencesOrderByWithRelationInput | UserPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserPreferences
+    **/
+    _count?: true | UserPreferencesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserPreferencesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserPreferencesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserPreferencesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserPreferencesMaxAggregateInputType
+  }
+
+  export type GetUserPreferencesAggregateType<T extends UserPreferencesAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserPreferences]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserPreferences[P]>
+      : GetScalarType<T[P], AggregateUserPreferences[P]>
+  }
+
+
+
+
+  export type UserPreferencesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserPreferencesWhereInput
+    orderBy?: UserPreferencesOrderByWithAggregationInput | UserPreferencesOrderByWithAggregationInput[]
+    by: UserPreferencesScalarFieldEnum[] | UserPreferencesScalarFieldEnum
+    having?: UserPreferencesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserPreferencesCountAggregateInputType | true
+    _avg?: UserPreferencesAvgAggregateInputType
+    _sum?: UserPreferencesSumAggregateInputType
+    _min?: UserPreferencesMinAggregateInputType
+    _max?: UserPreferencesMaxAggregateInputType
+  }
+
+  export type UserPreferencesGroupByOutputType = {
+    id: string
+    userId: string
+    minAge: number
+    maxAge: number
+    preferredGenders: string[]
+    maxDistance: number
+    collegePreference: string
+    majorPreference: string
+    minYear: number
+    maxYear: number
+    ageWeight: number
+    distanceWeight: number
+    interestsWeight: number
+    collegeWeight: number
+    majorWeight: number
+    yearWeight: number
+    personalityWeight: number
+    createdAt: Date
+    updatedAt: Date
+    _count: UserPreferencesCountAggregateOutputType | null
+    _avg: UserPreferencesAvgAggregateOutputType | null
+    _sum: UserPreferencesSumAggregateOutputType | null
+    _min: UserPreferencesMinAggregateOutputType | null
+    _max: UserPreferencesMaxAggregateOutputType | null
+  }
+
+  type GetUserPreferencesGroupByPayload<T extends UserPreferencesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserPreferencesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserPreferencesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserPreferencesGroupByOutputType[P]>
+            : GetScalarType<T[P], UserPreferencesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserPreferencesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    minAge?: boolean
+    maxAge?: boolean
+    preferredGenders?: boolean
+    maxDistance?: boolean
+    collegePreference?: boolean
+    majorPreference?: boolean
+    minYear?: boolean
+    maxYear?: boolean
+    ageWeight?: boolean
+    distanceWeight?: boolean
+    interestsWeight?: boolean
+    collegeWeight?: boolean
+    majorWeight?: boolean
+    yearWeight?: boolean
+    personalityWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userPreferences"]>
+
+  export type UserPreferencesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    minAge?: boolean
+    maxAge?: boolean
+    preferredGenders?: boolean
+    maxDistance?: boolean
+    collegePreference?: boolean
+    majorPreference?: boolean
+    minYear?: boolean
+    maxYear?: boolean
+    ageWeight?: boolean
+    distanceWeight?: boolean
+    interestsWeight?: boolean
+    collegeWeight?: boolean
+    majorWeight?: boolean
+    yearWeight?: boolean
+    personalityWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userPreferences"]>
+
+  export type UserPreferencesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    minAge?: boolean
+    maxAge?: boolean
+    preferredGenders?: boolean
+    maxDistance?: boolean
+    collegePreference?: boolean
+    majorPreference?: boolean
+    minYear?: boolean
+    maxYear?: boolean
+    ageWeight?: boolean
+    distanceWeight?: boolean
+    interestsWeight?: boolean
+    collegeWeight?: boolean
+    majorWeight?: boolean
+    yearWeight?: boolean
+    personalityWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userPreferences"]>
+
+  export type UserPreferencesSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    minAge?: boolean
+    maxAge?: boolean
+    preferredGenders?: boolean
+    maxDistance?: boolean
+    collegePreference?: boolean
+    majorPreference?: boolean
+    minYear?: boolean
+    maxYear?: boolean
+    ageWeight?: boolean
+    distanceWeight?: boolean
+    interestsWeight?: boolean
+    collegeWeight?: boolean
+    majorWeight?: boolean
+    yearWeight?: boolean
+    personalityWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserPreferencesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "minAge" | "maxAge" | "preferredGenders" | "maxDistance" | "collegePreference" | "majorPreference" | "minYear" | "maxYear" | "ageWeight" | "distanceWeight" | "interestsWeight" | "collegeWeight" | "majorWeight" | "yearWeight" | "personalityWeight" | "createdAt" | "updatedAt", ExtArgs["result"]["userPreferences"]>
+  export type UserPreferencesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserPreferencesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserPreferencesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserPreferencesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserPreferences"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      minAge: number
+      maxAge: number
+      preferredGenders: string[]
+      maxDistance: number
+      collegePreference: string
+      majorPreference: string
+      minYear: number
+      maxYear: number
+      ageWeight: number
+      distanceWeight: number
+      interestsWeight: number
+      collegeWeight: number
+      majorWeight: number
+      yearWeight: number
+      personalityWeight: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userPreferences"]>
+    composites: {}
+  }
+
+  type UserPreferencesGetPayload<S extends boolean | null | undefined | UserPreferencesDefaultArgs> = $Result.GetResult<Prisma.$UserPreferencesPayload, S>
+
+  type UserPreferencesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserPreferencesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserPreferencesCountAggregateInputType | true
+    }
+
+  export interface UserPreferencesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserPreferences'], meta: { name: 'UserPreferences' } }
+    /**
+     * Find zero or one UserPreferences that matches the filter.
+     * @param {UserPreferencesFindUniqueArgs} args - Arguments to find a UserPreferences
+     * @example
+     * // Get one UserPreferences
+     * const userPreferences = await prisma.userPreferences.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserPreferencesFindUniqueArgs>(args: SelectSubset<T, UserPreferencesFindUniqueArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserPreferences that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserPreferencesFindUniqueOrThrowArgs} args - Arguments to find a UserPreferences
+     * @example
+     * // Get one UserPreferences
+     * const userPreferences = await prisma.userPreferences.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserPreferencesFindUniqueOrThrowArgs>(args: SelectSubset<T, UserPreferencesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserPreferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesFindFirstArgs} args - Arguments to find a UserPreferences
+     * @example
+     * // Get one UserPreferences
+     * const userPreferences = await prisma.userPreferences.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserPreferencesFindFirstArgs>(args?: SelectSubset<T, UserPreferencesFindFirstArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserPreferences that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesFindFirstOrThrowArgs} args - Arguments to find a UserPreferences
+     * @example
+     * // Get one UserPreferences
+     * const userPreferences = await prisma.userPreferences.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserPreferencesFindFirstOrThrowArgs>(args?: SelectSubset<T, UserPreferencesFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserPreferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserPreferences
+     * const userPreferences = await prisma.userPreferences.findMany()
+     * 
+     * // Get first 10 UserPreferences
+     * const userPreferences = await prisma.userPreferences.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userPreferencesWithIdOnly = await prisma.userPreferences.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserPreferencesFindManyArgs>(args?: SelectSubset<T, UserPreferencesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserPreferences.
+     * @param {UserPreferencesCreateArgs} args - Arguments to create a UserPreferences.
+     * @example
+     * // Create one UserPreferences
+     * const UserPreferences = await prisma.userPreferences.create({
+     *   data: {
+     *     // ... data to create a UserPreferences
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserPreferencesCreateArgs>(args: SelectSubset<T, UserPreferencesCreateArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserPreferences.
+     * @param {UserPreferencesCreateManyArgs} args - Arguments to create many UserPreferences.
+     * @example
+     * // Create many UserPreferences
+     * const userPreferences = await prisma.userPreferences.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserPreferencesCreateManyArgs>(args?: SelectSubset<T, UserPreferencesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserPreferences and returns the data saved in the database.
+     * @param {UserPreferencesCreateManyAndReturnArgs} args - Arguments to create many UserPreferences.
+     * @example
+     * // Create many UserPreferences
+     * const userPreferences = await prisma.userPreferences.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserPreferences and only return the `id`
+     * const userPreferencesWithIdOnly = await prisma.userPreferences.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserPreferencesCreateManyAndReturnArgs>(args?: SelectSubset<T, UserPreferencesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserPreferences.
+     * @param {UserPreferencesDeleteArgs} args - Arguments to delete one UserPreferences.
+     * @example
+     * // Delete one UserPreferences
+     * const UserPreferences = await prisma.userPreferences.delete({
+     *   where: {
+     *     // ... filter to delete one UserPreferences
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserPreferencesDeleteArgs>(args: SelectSubset<T, UserPreferencesDeleteArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserPreferences.
+     * @param {UserPreferencesUpdateArgs} args - Arguments to update one UserPreferences.
+     * @example
+     * // Update one UserPreferences
+     * const userPreferences = await prisma.userPreferences.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserPreferencesUpdateArgs>(args: SelectSubset<T, UserPreferencesUpdateArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserPreferences.
+     * @param {UserPreferencesDeleteManyArgs} args - Arguments to filter UserPreferences to delete.
+     * @example
+     * // Delete a few UserPreferences
+     * const { count } = await prisma.userPreferences.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserPreferencesDeleteManyArgs>(args?: SelectSubset<T, UserPreferencesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserPreferences
+     * const userPreferences = await prisma.userPreferences.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserPreferencesUpdateManyArgs>(args: SelectSubset<T, UserPreferencesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserPreferences and returns the data updated in the database.
+     * @param {UserPreferencesUpdateManyAndReturnArgs} args - Arguments to update many UserPreferences.
+     * @example
+     * // Update many UserPreferences
+     * const userPreferences = await prisma.userPreferences.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserPreferences and only return the `id`
+     * const userPreferencesWithIdOnly = await prisma.userPreferences.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserPreferencesUpdateManyAndReturnArgs>(args: SelectSubset<T, UserPreferencesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserPreferences.
+     * @param {UserPreferencesUpsertArgs} args - Arguments to update or create a UserPreferences.
+     * @example
+     * // Update or create a UserPreferences
+     * const userPreferences = await prisma.userPreferences.upsert({
+     *   create: {
+     *     // ... data to create a UserPreferences
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserPreferences we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserPreferencesUpsertArgs>(args: SelectSubset<T, UserPreferencesUpsertArgs<ExtArgs>>): Prisma__UserPreferencesClient<$Result.GetResult<Prisma.$UserPreferencesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesCountArgs} args - Arguments to filter UserPreferences to count.
+     * @example
+     * // Count the number of UserPreferences
+     * const count = await prisma.userPreferences.count({
+     *   where: {
+     *     // ... the filter for the UserPreferences we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserPreferencesCountArgs>(
+      args?: Subset<T, UserPreferencesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserPreferencesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserPreferencesAggregateArgs>(args: Subset<T, UserPreferencesAggregateArgs>): Prisma.PrismaPromise<GetUserPreferencesAggregateType<T>>
+
+    /**
+     * Group by UserPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPreferencesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserPreferencesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserPreferencesGroupByArgs['orderBy'] }
+        : { orderBy?: UserPreferencesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserPreferencesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserPreferencesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserPreferences model
+   */
+  readonly fields: UserPreferencesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserPreferences.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserPreferencesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserPreferences model
+   */
+  interface UserPreferencesFieldRefs {
+    readonly id: FieldRef<"UserPreferences", 'String'>
+    readonly userId: FieldRef<"UserPreferences", 'String'>
+    readonly minAge: FieldRef<"UserPreferences", 'Int'>
+    readonly maxAge: FieldRef<"UserPreferences", 'Int'>
+    readonly preferredGenders: FieldRef<"UserPreferences", 'String[]'>
+    readonly maxDistance: FieldRef<"UserPreferences", 'Int'>
+    readonly collegePreference: FieldRef<"UserPreferences", 'String'>
+    readonly majorPreference: FieldRef<"UserPreferences", 'String'>
+    readonly minYear: FieldRef<"UserPreferences", 'Int'>
+    readonly maxYear: FieldRef<"UserPreferences", 'Int'>
+    readonly ageWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly distanceWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly interestsWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly collegeWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly majorWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly yearWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly personalityWeight: FieldRef<"UserPreferences", 'Float'>
+    readonly createdAt: FieldRef<"UserPreferences", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserPreferences", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserPreferences findUnique
+   */
+  export type UserPreferencesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPreferences to fetch.
+     */
+    where: UserPreferencesWhereUniqueInput
+  }
+
+  /**
+   * UserPreferences findUniqueOrThrow
+   */
+  export type UserPreferencesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPreferences to fetch.
+     */
+    where: UserPreferencesWhereUniqueInput
+  }
+
+  /**
+   * UserPreferences findFirst
+   */
+  export type UserPreferencesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPreferences to fetch.
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPreferences to fetch.
+     */
+    orderBy?: UserPreferencesOrderByWithRelationInput | UserPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserPreferences.
+     */
+    cursor?: UserPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserPreferences.
+     */
+    distinct?: UserPreferencesScalarFieldEnum | UserPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * UserPreferences findFirstOrThrow
+   */
+  export type UserPreferencesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPreferences to fetch.
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPreferences to fetch.
+     */
+    orderBy?: UserPreferencesOrderByWithRelationInput | UserPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserPreferences.
+     */
+    cursor?: UserPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserPreferences.
+     */
+    distinct?: UserPreferencesScalarFieldEnum | UserPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * UserPreferences findMany
+   */
+  export type UserPreferencesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPreferences to fetch.
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPreferences to fetch.
+     */
+    orderBy?: UserPreferencesOrderByWithRelationInput | UserPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserPreferences.
+     */
+    cursor?: UserPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPreferences.
+     */
+    skip?: number
+    distinct?: UserPreferencesScalarFieldEnum | UserPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * UserPreferences create
+   */
+  export type UserPreferencesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserPreferences.
+     */
+    data: XOR<UserPreferencesCreateInput, UserPreferencesUncheckedCreateInput>
+  }
+
+  /**
+   * UserPreferences createMany
+   */
+  export type UserPreferencesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserPreferences.
+     */
+    data: UserPreferencesCreateManyInput | UserPreferencesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserPreferences createManyAndReturn
+   */
+  export type UserPreferencesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserPreferences.
+     */
+    data: UserPreferencesCreateManyInput | UserPreferencesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserPreferences update
+   */
+  export type UserPreferencesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserPreferences.
+     */
+    data: XOR<UserPreferencesUpdateInput, UserPreferencesUncheckedUpdateInput>
+    /**
+     * Choose, which UserPreferences to update.
+     */
+    where: UserPreferencesWhereUniqueInput
+  }
+
+  /**
+   * UserPreferences updateMany
+   */
+  export type UserPreferencesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserPreferences.
+     */
+    data: XOR<UserPreferencesUpdateManyMutationInput, UserPreferencesUncheckedUpdateManyInput>
+    /**
+     * Filter which UserPreferences to update
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * Limit how many UserPreferences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserPreferences updateManyAndReturn
+   */
+  export type UserPreferencesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * The data used to update UserPreferences.
+     */
+    data: XOR<UserPreferencesUpdateManyMutationInput, UserPreferencesUncheckedUpdateManyInput>
+    /**
+     * Filter which UserPreferences to update
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * Limit how many UserPreferences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserPreferences upsert
+   */
+  export type UserPreferencesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserPreferences to update in case it exists.
+     */
+    where: UserPreferencesWhereUniqueInput
+    /**
+     * In case the UserPreferences found by the `where` argument doesn't exist, create a new UserPreferences with this data.
+     */
+    create: XOR<UserPreferencesCreateInput, UserPreferencesUncheckedCreateInput>
+    /**
+     * In case the UserPreferences was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserPreferencesUpdateInput, UserPreferencesUncheckedUpdateInput>
+  }
+
+  /**
+   * UserPreferences delete
+   */
+  export type UserPreferencesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter which UserPreferences to delete.
+     */
+    where: UserPreferencesWhereUniqueInput
+  }
+
+  /**
+   * UserPreferences deleteMany
+   */
+  export type UserPreferencesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserPreferences to delete
+     */
+    where?: UserPreferencesWhereInput
+    /**
+     * Limit how many UserPreferences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserPreferences without action
+   */
+  export type UserPreferencesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPreferences
+     */
+    select?: UserPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserPreferences
+     */
+    omit?: UserPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPreferencesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PersonalityTraits
+   */
+
+  export type AggregatePersonalityTraits = {
+    _count: PersonalityTraitsCountAggregateOutputType | null
+    _avg: PersonalityTraitsAvgAggregateOutputType | null
+    _sum: PersonalityTraitsSumAggregateOutputType | null
+    _min: PersonalityTraitsMinAggregateOutputType | null
+    _max: PersonalityTraitsMaxAggregateOutputType | null
+  }
+
+  export type PersonalityTraitsAvgAggregateOutputType = {
+    extroversion: number | null
+    openness: number | null
+    conscientiousness: number | null
+    agreeableness: number | null
+    neuroticism: number | null
+  }
+
+  export type PersonalityTraitsSumAggregateOutputType = {
+    extroversion: number | null
+    openness: number | null
+    conscientiousness: number | null
+    agreeableness: number | null
+    neuroticism: number | null
+  }
+
+  export type PersonalityTraitsMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    extroversion: number | null
+    openness: number | null
+    conscientiousness: number | null
+    agreeableness: number | null
+    neuroticism: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersonalityTraitsMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    extroversion: number | null
+    openness: number | null
+    conscientiousness: number | null
+    agreeableness: number | null
+    neuroticism: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersonalityTraitsCountAggregateOutputType = {
+    id: number
+    userId: number
+    extroversion: number
+    openness: number
+    conscientiousness: number
+    agreeableness: number
+    neuroticism: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PersonalityTraitsAvgAggregateInputType = {
+    extroversion?: true
+    openness?: true
+    conscientiousness?: true
+    agreeableness?: true
+    neuroticism?: true
+  }
+
+  export type PersonalityTraitsSumAggregateInputType = {
+    extroversion?: true
+    openness?: true
+    conscientiousness?: true
+    agreeableness?: true
+    neuroticism?: true
+  }
+
+  export type PersonalityTraitsMinAggregateInputType = {
+    id?: true
+    userId?: true
+    extroversion?: true
+    openness?: true
+    conscientiousness?: true
+    agreeableness?: true
+    neuroticism?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersonalityTraitsMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    extroversion?: true
+    openness?: true
+    conscientiousness?: true
+    agreeableness?: true
+    neuroticism?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersonalityTraitsCountAggregateInputType = {
+    id?: true
+    userId?: true
+    extroversion?: true
+    openness?: true
+    conscientiousness?: true
+    agreeableness?: true
+    neuroticism?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PersonalityTraitsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersonalityTraits to aggregate.
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalityTraits to fetch.
+     */
+    orderBy?: PersonalityTraitsOrderByWithRelationInput | PersonalityTraitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PersonalityTraitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalityTraits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalityTraits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PersonalityTraits
+    **/
+    _count?: true | PersonalityTraitsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PersonalityTraitsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PersonalityTraitsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PersonalityTraitsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PersonalityTraitsMaxAggregateInputType
+  }
+
+  export type GetPersonalityTraitsAggregateType<T extends PersonalityTraitsAggregateArgs> = {
+        [P in keyof T & keyof AggregatePersonalityTraits]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePersonalityTraits[P]>
+      : GetScalarType<T[P], AggregatePersonalityTraits[P]>
+  }
+
+
+
+
+  export type PersonalityTraitsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonalityTraitsWhereInput
+    orderBy?: PersonalityTraitsOrderByWithAggregationInput | PersonalityTraitsOrderByWithAggregationInput[]
+    by: PersonalityTraitsScalarFieldEnum[] | PersonalityTraitsScalarFieldEnum
+    having?: PersonalityTraitsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PersonalityTraitsCountAggregateInputType | true
+    _avg?: PersonalityTraitsAvgAggregateInputType
+    _sum?: PersonalityTraitsSumAggregateInputType
+    _min?: PersonalityTraitsMinAggregateInputType
+    _max?: PersonalityTraitsMaxAggregateInputType
+  }
+
+  export type PersonalityTraitsGroupByOutputType = {
+    id: string
+    userId: string
+    extroversion: number
+    openness: number
+    conscientiousness: number
+    agreeableness: number
+    neuroticism: number
+    createdAt: Date
+    updatedAt: Date
+    _count: PersonalityTraitsCountAggregateOutputType | null
+    _avg: PersonalityTraitsAvgAggregateOutputType | null
+    _sum: PersonalityTraitsSumAggregateOutputType | null
+    _min: PersonalityTraitsMinAggregateOutputType | null
+    _max: PersonalityTraitsMaxAggregateOutputType | null
+  }
+
+  type GetPersonalityTraitsGroupByPayload<T extends PersonalityTraitsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PersonalityTraitsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PersonalityTraitsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PersonalityTraitsGroupByOutputType[P]>
+            : GetScalarType<T[P], PersonalityTraitsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PersonalityTraitsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    extroversion?: boolean
+    openness?: boolean
+    conscientiousness?: boolean
+    agreeableness?: boolean
+    neuroticism?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalityTraits"]>
+
+  export type PersonalityTraitsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    extroversion?: boolean
+    openness?: boolean
+    conscientiousness?: boolean
+    agreeableness?: boolean
+    neuroticism?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalityTraits"]>
+
+  export type PersonalityTraitsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    extroversion?: boolean
+    openness?: boolean
+    conscientiousness?: boolean
+    agreeableness?: boolean
+    neuroticism?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalityTraits"]>
+
+  export type PersonalityTraitsSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    extroversion?: boolean
+    openness?: boolean
+    conscientiousness?: boolean
+    agreeableness?: boolean
+    neuroticism?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PersonalityTraitsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "extroversion" | "openness" | "conscientiousness" | "agreeableness" | "neuroticism" | "createdAt" | "updatedAt", ExtArgs["result"]["personalityTraits"]>
+  export type PersonalityTraitsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PersonalityTraitsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PersonalityTraitsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PersonalityTraitsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PersonalityTraits"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      extroversion: number
+      openness: number
+      conscientiousness: number
+      agreeableness: number
+      neuroticism: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["personalityTraits"]>
+    composites: {}
+  }
+
+  type PersonalityTraitsGetPayload<S extends boolean | null | undefined | PersonalityTraitsDefaultArgs> = $Result.GetResult<Prisma.$PersonalityTraitsPayload, S>
+
+  type PersonalityTraitsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PersonalityTraitsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PersonalityTraitsCountAggregateInputType | true
+    }
+
+  export interface PersonalityTraitsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PersonalityTraits'], meta: { name: 'PersonalityTraits' } }
+    /**
+     * Find zero or one PersonalityTraits that matches the filter.
+     * @param {PersonalityTraitsFindUniqueArgs} args - Arguments to find a PersonalityTraits
+     * @example
+     * // Get one PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PersonalityTraitsFindUniqueArgs>(args: SelectSubset<T, PersonalityTraitsFindUniqueArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PersonalityTraits that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PersonalityTraitsFindUniqueOrThrowArgs} args - Arguments to find a PersonalityTraits
+     * @example
+     * // Get one PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PersonalityTraitsFindUniqueOrThrowArgs>(args: SelectSubset<T, PersonalityTraitsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PersonalityTraits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsFindFirstArgs} args - Arguments to find a PersonalityTraits
+     * @example
+     * // Get one PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PersonalityTraitsFindFirstArgs>(args?: SelectSubset<T, PersonalityTraitsFindFirstArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PersonalityTraits that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsFindFirstOrThrowArgs} args - Arguments to find a PersonalityTraits
+     * @example
+     * // Get one PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PersonalityTraitsFindFirstOrThrowArgs>(args?: SelectSubset<T, PersonalityTraitsFindFirstOrThrowArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PersonalityTraits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findMany()
+     * 
+     * // Get first 10 PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const personalityTraitsWithIdOnly = await prisma.personalityTraits.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PersonalityTraitsFindManyArgs>(args?: SelectSubset<T, PersonalityTraitsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PersonalityTraits.
+     * @param {PersonalityTraitsCreateArgs} args - Arguments to create a PersonalityTraits.
+     * @example
+     * // Create one PersonalityTraits
+     * const PersonalityTraits = await prisma.personalityTraits.create({
+     *   data: {
+     *     // ... data to create a PersonalityTraits
+     *   }
+     * })
+     * 
+     */
+    create<T extends PersonalityTraitsCreateArgs>(args: SelectSubset<T, PersonalityTraitsCreateArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PersonalityTraits.
+     * @param {PersonalityTraitsCreateManyArgs} args - Arguments to create many PersonalityTraits.
+     * @example
+     * // Create many PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PersonalityTraitsCreateManyArgs>(args?: SelectSubset<T, PersonalityTraitsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PersonalityTraits and returns the data saved in the database.
+     * @param {PersonalityTraitsCreateManyAndReturnArgs} args - Arguments to create many PersonalityTraits.
+     * @example
+     * // Create many PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PersonalityTraits and only return the `id`
+     * const personalityTraitsWithIdOnly = await prisma.personalityTraits.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PersonalityTraitsCreateManyAndReturnArgs>(args?: SelectSubset<T, PersonalityTraitsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PersonalityTraits.
+     * @param {PersonalityTraitsDeleteArgs} args - Arguments to delete one PersonalityTraits.
+     * @example
+     * // Delete one PersonalityTraits
+     * const PersonalityTraits = await prisma.personalityTraits.delete({
+     *   where: {
+     *     // ... filter to delete one PersonalityTraits
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PersonalityTraitsDeleteArgs>(args: SelectSubset<T, PersonalityTraitsDeleteArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PersonalityTraits.
+     * @param {PersonalityTraitsUpdateArgs} args - Arguments to update one PersonalityTraits.
+     * @example
+     * // Update one PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PersonalityTraitsUpdateArgs>(args: SelectSubset<T, PersonalityTraitsUpdateArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PersonalityTraits.
+     * @param {PersonalityTraitsDeleteManyArgs} args - Arguments to filter PersonalityTraits to delete.
+     * @example
+     * // Delete a few PersonalityTraits
+     * const { count } = await prisma.personalityTraits.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PersonalityTraitsDeleteManyArgs>(args?: SelectSubset<T, PersonalityTraitsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PersonalityTraits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PersonalityTraitsUpdateManyArgs>(args: SelectSubset<T, PersonalityTraitsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PersonalityTraits and returns the data updated in the database.
+     * @param {PersonalityTraitsUpdateManyAndReturnArgs} args - Arguments to update many PersonalityTraits.
+     * @example
+     * // Update many PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PersonalityTraits and only return the `id`
+     * const personalityTraitsWithIdOnly = await prisma.personalityTraits.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PersonalityTraitsUpdateManyAndReturnArgs>(args: SelectSubset<T, PersonalityTraitsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PersonalityTraits.
+     * @param {PersonalityTraitsUpsertArgs} args - Arguments to update or create a PersonalityTraits.
+     * @example
+     * // Update or create a PersonalityTraits
+     * const personalityTraits = await prisma.personalityTraits.upsert({
+     *   create: {
+     *     // ... data to create a PersonalityTraits
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PersonalityTraits we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PersonalityTraitsUpsertArgs>(args: SelectSubset<T, PersonalityTraitsUpsertArgs<ExtArgs>>): Prisma__PersonalityTraitsClient<$Result.GetResult<Prisma.$PersonalityTraitsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PersonalityTraits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsCountArgs} args - Arguments to filter PersonalityTraits to count.
+     * @example
+     * // Count the number of PersonalityTraits
+     * const count = await prisma.personalityTraits.count({
+     *   where: {
+     *     // ... the filter for the PersonalityTraits we want to count
+     *   }
+     * })
+    **/
+    count<T extends PersonalityTraitsCountArgs>(
+      args?: Subset<T, PersonalityTraitsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PersonalityTraitsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PersonalityTraits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PersonalityTraitsAggregateArgs>(args: Subset<T, PersonalityTraitsAggregateArgs>): Prisma.PrismaPromise<GetPersonalityTraitsAggregateType<T>>
+
+    /**
+     * Group by PersonalityTraits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalityTraitsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PersonalityTraitsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PersonalityTraitsGroupByArgs['orderBy'] }
+        : { orderBy?: PersonalityTraitsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PersonalityTraitsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPersonalityTraitsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PersonalityTraits model
+   */
+  readonly fields: PersonalityTraitsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PersonalityTraits.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PersonalityTraitsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PersonalityTraits model
+   */
+  interface PersonalityTraitsFieldRefs {
+    readonly id: FieldRef<"PersonalityTraits", 'String'>
+    readonly userId: FieldRef<"PersonalityTraits", 'String'>
+    readonly extroversion: FieldRef<"PersonalityTraits", 'Int'>
+    readonly openness: FieldRef<"PersonalityTraits", 'Int'>
+    readonly conscientiousness: FieldRef<"PersonalityTraits", 'Int'>
+    readonly agreeableness: FieldRef<"PersonalityTraits", 'Int'>
+    readonly neuroticism: FieldRef<"PersonalityTraits", 'Int'>
+    readonly createdAt: FieldRef<"PersonalityTraits", 'DateTime'>
+    readonly updatedAt: FieldRef<"PersonalityTraits", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PersonalityTraits findUnique
+   */
+  export type PersonalityTraitsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalityTraits to fetch.
+     */
+    where: PersonalityTraitsWhereUniqueInput
+  }
+
+  /**
+   * PersonalityTraits findUniqueOrThrow
+   */
+  export type PersonalityTraitsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalityTraits to fetch.
+     */
+    where: PersonalityTraitsWhereUniqueInput
+  }
+
+  /**
+   * PersonalityTraits findFirst
+   */
+  export type PersonalityTraitsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalityTraits to fetch.
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalityTraits to fetch.
+     */
+    orderBy?: PersonalityTraitsOrderByWithRelationInput | PersonalityTraitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersonalityTraits.
+     */
+    cursor?: PersonalityTraitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalityTraits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalityTraits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersonalityTraits.
+     */
+    distinct?: PersonalityTraitsScalarFieldEnum | PersonalityTraitsScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalityTraits findFirstOrThrow
+   */
+  export type PersonalityTraitsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalityTraits to fetch.
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalityTraits to fetch.
+     */
+    orderBy?: PersonalityTraitsOrderByWithRelationInput | PersonalityTraitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersonalityTraits.
+     */
+    cursor?: PersonalityTraitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalityTraits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalityTraits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersonalityTraits.
+     */
+    distinct?: PersonalityTraitsScalarFieldEnum | PersonalityTraitsScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalityTraits findMany
+   */
+  export type PersonalityTraitsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalityTraits to fetch.
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalityTraits to fetch.
+     */
+    orderBy?: PersonalityTraitsOrderByWithRelationInput | PersonalityTraitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PersonalityTraits.
+     */
+    cursor?: PersonalityTraitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalityTraits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalityTraits.
+     */
+    skip?: number
+    distinct?: PersonalityTraitsScalarFieldEnum | PersonalityTraitsScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalityTraits create
+   */
+  export type PersonalityTraitsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PersonalityTraits.
+     */
+    data: XOR<PersonalityTraitsCreateInput, PersonalityTraitsUncheckedCreateInput>
+  }
+
+  /**
+   * PersonalityTraits createMany
+   */
+  export type PersonalityTraitsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PersonalityTraits.
+     */
+    data: PersonalityTraitsCreateManyInput | PersonalityTraitsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PersonalityTraits createManyAndReturn
+   */
+  export type PersonalityTraitsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * The data used to create many PersonalityTraits.
+     */
+    data: PersonalityTraitsCreateManyInput | PersonalityTraitsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PersonalityTraits update
+   */
+  export type PersonalityTraitsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PersonalityTraits.
+     */
+    data: XOR<PersonalityTraitsUpdateInput, PersonalityTraitsUncheckedUpdateInput>
+    /**
+     * Choose, which PersonalityTraits to update.
+     */
+    where: PersonalityTraitsWhereUniqueInput
+  }
+
+  /**
+   * PersonalityTraits updateMany
+   */
+  export type PersonalityTraitsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PersonalityTraits.
+     */
+    data: XOR<PersonalityTraitsUpdateManyMutationInput, PersonalityTraitsUncheckedUpdateManyInput>
+    /**
+     * Filter which PersonalityTraits to update
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * Limit how many PersonalityTraits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PersonalityTraits updateManyAndReturn
+   */
+  export type PersonalityTraitsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * The data used to update PersonalityTraits.
+     */
+    data: XOR<PersonalityTraitsUpdateManyMutationInput, PersonalityTraitsUncheckedUpdateManyInput>
+    /**
+     * Filter which PersonalityTraits to update
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * Limit how many PersonalityTraits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PersonalityTraits upsert
+   */
+  export type PersonalityTraitsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PersonalityTraits to update in case it exists.
+     */
+    where: PersonalityTraitsWhereUniqueInput
+    /**
+     * In case the PersonalityTraits found by the `where` argument doesn't exist, create a new PersonalityTraits with this data.
+     */
+    create: XOR<PersonalityTraitsCreateInput, PersonalityTraitsUncheckedCreateInput>
+    /**
+     * In case the PersonalityTraits was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PersonalityTraitsUpdateInput, PersonalityTraitsUncheckedUpdateInput>
+  }
+
+  /**
+   * PersonalityTraits delete
+   */
+  export type PersonalityTraitsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+    /**
+     * Filter which PersonalityTraits to delete.
+     */
+    where: PersonalityTraitsWhereUniqueInput
+  }
+
+  /**
+   * PersonalityTraits deleteMany
+   */
+  export type PersonalityTraitsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersonalityTraits to delete
+     */
+    where?: PersonalityTraitsWhereInput
+    /**
+     * Limit how many PersonalityTraits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PersonalityTraits without action
+   */
+  export type PersonalityTraitsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalityTraits
+     */
+    select?: PersonalityTraitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalityTraits
+     */
+    omit?: PersonalityTraitsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalityTraitsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Like
+   */
+
+  export type AggregateLike = {
+    _count: LikeCountAggregateOutputType | null
+    _min: LikeMinAggregateOutputType | null
+    _max: LikeMaxAggregateOutputType | null
+  }
+
+  export type LikeMinAggregateOutputType = {
+    id: string | null
+    senderId: string | null
+    receiverId: string | null
+    createdAt: Date | null
+  }
+
+  export type LikeMaxAggregateOutputType = {
+    id: string | null
+    senderId: string | null
+    receiverId: string | null
+    createdAt: Date | null
+  }
+
+  export type LikeCountAggregateOutputType = {
+    id: number
+    senderId: number
+    receiverId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LikeMinAggregateInputType = {
+    id?: true
+    senderId?: true
+    receiverId?: true
+    createdAt?: true
+  }
+
+  export type LikeMaxAggregateInputType = {
+    id?: true
+    senderId?: true
+    receiverId?: true
+    createdAt?: true
+  }
+
+  export type LikeCountAggregateInputType = {
+    id?: true
+    senderId?: true
+    receiverId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Like to aggregate.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Likes
+    **/
+    _count?: true | LikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LikeMaxAggregateInputType
+  }
+
+  export type GetLikeAggregateType<T extends LikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLike[P]>
+      : GetScalarType<T[P], AggregateLike[P]>
+  }
+
+
+
+
+  export type LikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LikeWhereInput
+    orderBy?: LikeOrderByWithAggregationInput | LikeOrderByWithAggregationInput[]
+    by: LikeScalarFieldEnum[] | LikeScalarFieldEnum
+    having?: LikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LikeCountAggregateInputType | true
+    _min?: LikeMinAggregateInputType
+    _max?: LikeMaxAggregateInputType
+  }
+
+  export type LikeGroupByOutputType = {
+    id: string
+    senderId: string
+    receiverId: string
+    createdAt: Date
+    _count: LikeCountAggregateOutputType | null
+    _min: LikeMinAggregateOutputType | null
+    _max: LikeMaxAggregateOutputType | null
+  }
+
+  type GetLikeGroupByPayload<T extends LikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LikeGroupByOutputType[P]>
+            : GetScalarType<T[P], LikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    senderId?: boolean
+    receiverId?: boolean
+    createdAt?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["like"]>
+
+  export type LikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    senderId?: boolean
+    receiverId?: boolean
+    createdAt?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["like"]>
+
+  export type LikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    senderId?: boolean
+    receiverId?: boolean
+    createdAt?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["like"]>
+
+  export type LikeSelectScalar = {
+    id?: boolean
+    senderId?: boolean
+    receiverId?: boolean
+    createdAt?: boolean
+  }
+
+  export type LikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "receiverId" | "createdAt", ExtArgs["result"]["like"]>
+  export type LikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Like"
+    objects: {
+      sender: Prisma.$UserPayload<ExtArgs>
+      receiver: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      senderId: string
+      receiverId: string
+      createdAt: Date
+    }, ExtArgs["result"]["like"]>
+    composites: {}
+  }
+
+  type LikeGetPayload<S extends boolean | null | undefined | LikeDefaultArgs> = $Result.GetResult<Prisma.$LikePayload, S>
+
+  type LikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LikeCountAggregateInputType | true
+    }
+
+  export interface LikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Like'], meta: { name: 'Like' } }
+    /**
+     * Find zero or one Like that matches the filter.
+     * @param {LikeFindUniqueArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LikeFindUniqueArgs>(args: SelectSubset<T, LikeFindUniqueArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Like that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LikeFindUniqueOrThrowArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LikeFindUniqueOrThrowArgs>(args: SelectSubset<T, LikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Like that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindFirstArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LikeFindFirstArgs>(args?: SelectSubset<T, LikeFindFirstArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Like that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindFirstOrThrowArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LikeFindFirstOrThrowArgs>(args?: SelectSubset<T, LikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Likes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Likes
+     * const likes = await prisma.like.findMany()
+     * 
+     * // Get first 10 Likes
+     * const likes = await prisma.like.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const likeWithIdOnly = await prisma.like.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LikeFindManyArgs>(args?: SelectSubset<T, LikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Like.
+     * @param {LikeCreateArgs} args - Arguments to create a Like.
+     * @example
+     * // Create one Like
+     * const Like = await prisma.like.create({
+     *   data: {
+     *     // ... data to create a Like
+     *   }
+     * })
+     * 
+     */
+    create<T extends LikeCreateArgs>(args: SelectSubset<T, LikeCreateArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Likes.
+     * @param {LikeCreateManyArgs} args - Arguments to create many Likes.
+     * @example
+     * // Create many Likes
+     * const like = await prisma.like.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LikeCreateManyArgs>(args?: SelectSubset<T, LikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Likes and returns the data saved in the database.
+     * @param {LikeCreateManyAndReturnArgs} args - Arguments to create many Likes.
+     * @example
+     * // Create many Likes
+     * const like = await prisma.like.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Likes and only return the `id`
+     * const likeWithIdOnly = await prisma.like.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LikeCreateManyAndReturnArgs>(args?: SelectSubset<T, LikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Like.
+     * @param {LikeDeleteArgs} args - Arguments to delete one Like.
+     * @example
+     * // Delete one Like
+     * const Like = await prisma.like.delete({
+     *   where: {
+     *     // ... filter to delete one Like
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LikeDeleteArgs>(args: SelectSubset<T, LikeDeleteArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Like.
+     * @param {LikeUpdateArgs} args - Arguments to update one Like.
+     * @example
+     * // Update one Like
+     * const like = await prisma.like.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LikeUpdateArgs>(args: SelectSubset<T, LikeUpdateArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Likes.
+     * @param {LikeDeleteManyArgs} args - Arguments to filter Likes to delete.
+     * @example
+     * // Delete a few Likes
+     * const { count } = await prisma.like.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LikeDeleteManyArgs>(args?: SelectSubset<T, LikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Likes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Likes
+     * const like = await prisma.like.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LikeUpdateManyArgs>(args: SelectSubset<T, LikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Likes and returns the data updated in the database.
+     * @param {LikeUpdateManyAndReturnArgs} args - Arguments to update many Likes.
+     * @example
+     * // Update many Likes
+     * const like = await prisma.like.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Likes and only return the `id`
+     * const likeWithIdOnly = await prisma.like.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LikeUpdateManyAndReturnArgs>(args: SelectSubset<T, LikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Like.
+     * @param {LikeUpsertArgs} args - Arguments to update or create a Like.
+     * @example
+     * // Update or create a Like
+     * const like = await prisma.like.upsert({
+     *   create: {
+     *     // ... data to create a Like
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Like we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LikeUpsertArgs>(args: SelectSubset<T, LikeUpsertArgs<ExtArgs>>): Prisma__LikeClient<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Likes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeCountArgs} args - Arguments to filter Likes to count.
+     * @example
+     * // Count the number of Likes
+     * const count = await prisma.like.count({
+     *   where: {
+     *     // ... the filter for the Likes we want to count
+     *   }
+     * })
+    **/
+    count<T extends LikeCountArgs>(
+      args?: Subset<T, LikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Like.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LikeAggregateArgs>(args: Subset<T, LikeAggregateArgs>): Prisma.PrismaPromise<GetLikeAggregateType<T>>
+
+    /**
+     * Group by Like.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LikeGroupByArgs['orderBy'] }
+        : { orderBy?: LikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Like model
+   */
+  readonly fields: LikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Like.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    receiver<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Like model
+   */
+  interface LikeFieldRefs {
+    readonly id: FieldRef<"Like", 'String'>
+    readonly senderId: FieldRef<"Like", 'String'>
+    readonly receiverId: FieldRef<"Like", 'String'>
+    readonly createdAt: FieldRef<"Like", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Like findUnique
+   */
+  export type LikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+  /**
+   * Like findUniqueOrThrow
+   */
+  export type LikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+  /**
+   * Like findFirst
+   */
+  export type LikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Likes.
+     */
+    distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * Like findFirstOrThrow
+   */
+  export type LikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Likes.
+     */
+    distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * Like findMany
+   */
+  export type LikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter, which Likes to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: LikeOrderByWithRelationInput | LikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * Like create
+   */
+  export type LikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Like.
+     */
+    data: XOR<LikeCreateInput, LikeUncheckedCreateInput>
+  }
+
+  /**
+   * Like createMany
+   */
+  export type LikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Likes.
+     */
+    data: LikeCreateManyInput | LikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Like createManyAndReturn
+   */
+  export type LikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Likes.
+     */
+    data: LikeCreateManyInput | LikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Like update
+   */
+  export type LikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Like.
+     */
+    data: XOR<LikeUpdateInput, LikeUncheckedUpdateInput>
+    /**
+     * Choose, which Like to update.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+  /**
+   * Like updateMany
+   */
+  export type LikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Likes.
+     */
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyInput>
+    /**
+     * Filter which Likes to update
+     */
+    where?: LikeWhereInput
+    /**
+     * Limit how many Likes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Like updateManyAndReturn
+   */
+  export type LikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * The data used to update Likes.
+     */
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyInput>
+    /**
+     * Filter which Likes to update
+     */
+    where?: LikeWhereInput
+    /**
+     * Limit how many Likes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Like upsert
+   */
+  export type LikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Like to update in case it exists.
+     */
+    where: LikeWhereUniqueInput
+    /**
+     * In case the Like found by the `where` argument doesn't exist, create a new Like with this data.
+     */
+    create: XOR<LikeCreateInput, LikeUncheckedCreateInput>
+    /**
+     * In case the Like was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LikeUpdateInput, LikeUncheckedUpdateInput>
+  }
+
+  /**
+   * Like delete
+   */
+  export type LikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+    /**
+     * Filter which Like to delete.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+  /**
+   * Like deleteMany
+   */
+  export type LikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Likes to delete
+     */
+    where?: LikeWhereInput
+    /**
+     * Limit how many Likes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Like without action
+   */
+  export type LikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Like
+     */
+    omit?: LikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Match
+   */
+
+  export type AggregateMatch = {
+    _count: MatchCountAggregateOutputType | null
+    _avg: MatchAvgAggregateOutputType | null
+    _sum: MatchSumAggregateOutputType | null
+    _min: MatchMinAggregateOutputType | null
+    _max: MatchMaxAggregateOutputType | null
+  }
+
+  export type MatchAvgAggregateOutputType = {
+    score: number | null
+  }
+
+  export type MatchSumAggregateOutputType = {
+    score: number | null
+  }
+
+  export type MatchMinAggregateOutputType = {
+    id: string | null
+    user1Id: string | null
+    user2Id: string | null
+    score: number | null
+    createdAt: Date | null
+  }
+
+  export type MatchMaxAggregateOutputType = {
+    id: string | null
+    user1Id: string | null
+    user2Id: string | null
+    score: number | null
+    createdAt: Date | null
+  }
+
+  export type MatchCountAggregateOutputType = {
+    id: number
+    user1Id: number
+    user2Id: number
+    score: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type MatchAvgAggregateInputType = {
+    score?: true
+  }
+
+  export type MatchSumAggregateInputType = {
+    score?: true
+  }
+
+  export type MatchMinAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    score?: true
+    createdAt?: true
+  }
+
+  export type MatchMaxAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    score?: true
+    createdAt?: true
+  }
+
+  export type MatchCountAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    score?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type MatchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Match to aggregate.
+     */
+    where?: MatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Matches to fetch.
+     */
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Matches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Matches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Matches
+    **/
+    _count?: true | MatchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MatchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MatchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MatchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MatchMaxAggregateInputType
+  }
+
+  export type GetMatchAggregateType<T extends MatchAggregateArgs> = {
+        [P in keyof T & keyof AggregateMatch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMatch[P]>
+      : GetScalarType<T[P], AggregateMatch[P]>
+  }
+
+
+
+
+  export type MatchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatchWhereInput
+    orderBy?: MatchOrderByWithAggregationInput | MatchOrderByWithAggregationInput[]
+    by: MatchScalarFieldEnum[] | MatchScalarFieldEnum
+    having?: MatchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MatchCountAggregateInputType | true
+    _avg?: MatchAvgAggregateInputType
+    _sum?: MatchSumAggregateInputType
+    _min?: MatchMinAggregateInputType
+    _max?: MatchMaxAggregateInputType
+  }
+
+  export type MatchGroupByOutputType = {
+    id: string
+    user1Id: string
+    user2Id: string
+    score: number
+    createdAt: Date
+    _count: MatchCountAggregateOutputType | null
+    _avg: MatchAvgAggregateOutputType | null
+    _sum: MatchSumAggregateOutputType | null
+    _min: MatchMinAggregateOutputType | null
+    _max: MatchMaxAggregateOutputType | null
+  }
+
+  type GetMatchGroupByPayload<T extends MatchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MatchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MatchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MatchGroupByOutputType[P]>
+            : GetScalarType<T[P], MatchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    score?: boolean
+    createdAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["match"]>
+
+  export type MatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    score?: boolean
+    createdAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["match"]>
+
+  export type MatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    score?: boolean
+    createdAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["match"]>
+
+  export type MatchSelectScalar = {
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    score?: boolean
+    createdAt?: boolean
+  }
+
+  export type MatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user1Id" | "user2Id" | "score" | "createdAt", ExtArgs["result"]["match"]>
+  export type MatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Match"
+    objects: {
+      user1: Prisma.$UserPayload<ExtArgs>
+      user2: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user1Id: string
+      user2Id: string
+      score: number
+      createdAt: Date
+    }, ExtArgs["result"]["match"]>
+    composites: {}
+  }
+
+  type MatchGetPayload<S extends boolean | null | undefined | MatchDefaultArgs> = $Result.GetResult<Prisma.$MatchPayload, S>
+
+  type MatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MatchCountAggregateInputType | true
+    }
+
+  export interface MatchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Match'], meta: { name: 'Match' } }
+    /**
+     * Find zero or one Match that matches the filter.
+     * @param {MatchFindUniqueArgs} args - Arguments to find a Match
+     * @example
+     * // Get one Match
+     * const match = await prisma.match.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MatchFindUniqueArgs>(args: SelectSubset<T, MatchFindUniqueArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Match that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MatchFindUniqueOrThrowArgs} args - Arguments to find a Match
+     * @example
+     * // Get one Match
+     * const match = await prisma.match.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MatchFindUniqueOrThrowArgs>(args: SelectSubset<T, MatchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Match that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchFindFirstArgs} args - Arguments to find a Match
+     * @example
+     * // Get one Match
+     * const match = await prisma.match.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MatchFindFirstArgs>(args?: SelectSubset<T, MatchFindFirstArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Match that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchFindFirstOrThrowArgs} args - Arguments to find a Match
+     * @example
+     * // Get one Match
+     * const match = await prisma.match.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MatchFindFirstOrThrowArgs>(args?: SelectSubset<T, MatchFindFirstOrThrowArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Matches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Matches
+     * const matches = await prisma.match.findMany()
+     * 
+     * // Get first 10 Matches
+     * const matches = await prisma.match.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const matchWithIdOnly = await prisma.match.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MatchFindManyArgs>(args?: SelectSubset<T, MatchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Match.
+     * @param {MatchCreateArgs} args - Arguments to create a Match.
+     * @example
+     * // Create one Match
+     * const Match = await prisma.match.create({
+     *   data: {
+     *     // ... data to create a Match
+     *   }
+     * })
+     * 
+     */
+    create<T extends MatchCreateArgs>(args: SelectSubset<T, MatchCreateArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Matches.
+     * @param {MatchCreateManyArgs} args - Arguments to create many Matches.
+     * @example
+     * // Create many Matches
+     * const match = await prisma.match.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MatchCreateManyArgs>(args?: SelectSubset<T, MatchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Matches and returns the data saved in the database.
+     * @param {MatchCreateManyAndReturnArgs} args - Arguments to create many Matches.
+     * @example
+     * // Create many Matches
+     * const match = await prisma.match.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Matches and only return the `id`
+     * const matchWithIdOnly = await prisma.match.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MatchCreateManyAndReturnArgs>(args?: SelectSubset<T, MatchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Match.
+     * @param {MatchDeleteArgs} args - Arguments to delete one Match.
+     * @example
+     * // Delete one Match
+     * const Match = await prisma.match.delete({
+     *   where: {
+     *     // ... filter to delete one Match
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MatchDeleteArgs>(args: SelectSubset<T, MatchDeleteArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Match.
+     * @param {MatchUpdateArgs} args - Arguments to update one Match.
+     * @example
+     * // Update one Match
+     * const match = await prisma.match.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MatchUpdateArgs>(args: SelectSubset<T, MatchUpdateArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Matches.
+     * @param {MatchDeleteManyArgs} args - Arguments to filter Matches to delete.
+     * @example
+     * // Delete a few Matches
+     * const { count } = await prisma.match.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MatchDeleteManyArgs>(args?: SelectSubset<T, MatchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Matches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Matches
+     * const match = await prisma.match.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MatchUpdateManyArgs>(args: SelectSubset<T, MatchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Matches and returns the data updated in the database.
+     * @param {MatchUpdateManyAndReturnArgs} args - Arguments to update many Matches.
+     * @example
+     * // Update many Matches
+     * const match = await prisma.match.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Matches and only return the `id`
+     * const matchWithIdOnly = await prisma.match.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MatchUpdateManyAndReturnArgs>(args: SelectSubset<T, MatchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Match.
+     * @param {MatchUpsertArgs} args - Arguments to update or create a Match.
+     * @example
+     * // Update or create a Match
+     * const match = await prisma.match.upsert({
+     *   create: {
+     *     // ... data to create a Match
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Match we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MatchUpsertArgs>(args: SelectSubset<T, MatchUpsertArgs<ExtArgs>>): Prisma__MatchClient<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Matches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchCountArgs} args - Arguments to filter Matches to count.
+     * @example
+     * // Count the number of Matches
+     * const count = await prisma.match.count({
+     *   where: {
+     *     // ... the filter for the Matches we want to count
+     *   }
+     * })
+    **/
+    count<T extends MatchCountArgs>(
+      args?: Subset<T, MatchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MatchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Match.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MatchAggregateArgs>(args: Subset<T, MatchAggregateArgs>): Prisma.PrismaPromise<GetMatchAggregateType<T>>
+
+    /**
+     * Group by Match.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MatchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MatchGroupByArgs['orderBy'] }
+        : { orderBy?: MatchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MatchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMatchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Match model
+   */
+  readonly fields: MatchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Match.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user1<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user2<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Match model
+   */
+  interface MatchFieldRefs {
+    readonly id: FieldRef<"Match", 'String'>
+    readonly user1Id: FieldRef<"Match", 'String'>
+    readonly user2Id: FieldRef<"Match", 'String'>
+    readonly score: FieldRef<"Match", 'Float'>
+    readonly createdAt: FieldRef<"Match", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Match findUnique
+   */
+  export type MatchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter, which Match to fetch.
+     */
+    where: MatchWhereUniqueInput
+  }
+
+  /**
+   * Match findUniqueOrThrow
+   */
+  export type MatchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter, which Match to fetch.
+     */
+    where: MatchWhereUniqueInput
+  }
+
+  /**
+   * Match findFirst
+   */
+  export type MatchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter, which Match to fetch.
+     */
+    where?: MatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Matches to fetch.
+     */
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Matches.
+     */
+    cursor?: MatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Matches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Matches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Matches.
+     */
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
+   * Match findFirstOrThrow
+   */
+  export type MatchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter, which Match to fetch.
+     */
+    where?: MatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Matches to fetch.
+     */
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Matches.
+     */
+    cursor?: MatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Matches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Matches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Matches.
+     */
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
+   * Match findMany
+   */
+  export type MatchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter, which Matches to fetch.
+     */
+    where?: MatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Matches to fetch.
+     */
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Matches.
+     */
+    cursor?: MatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Matches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Matches.
+     */
+    skip?: number
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
+   * Match create
+   */
+  export type MatchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Match.
+     */
+    data: XOR<MatchCreateInput, MatchUncheckedCreateInput>
+  }
+
+  /**
+   * Match createMany
+   */
+  export type MatchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Matches.
+     */
+    data: MatchCreateManyInput | MatchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Match createManyAndReturn
+   */
+  export type MatchCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * The data used to create many Matches.
+     */
+    data: MatchCreateManyInput | MatchCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Match update
+   */
+  export type MatchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Match.
+     */
+    data: XOR<MatchUpdateInput, MatchUncheckedUpdateInput>
+    /**
+     * Choose, which Match to update.
+     */
+    where: MatchWhereUniqueInput
+  }
+
+  /**
+   * Match updateMany
+   */
+  export type MatchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Matches.
+     */
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyInput>
+    /**
+     * Filter which Matches to update
+     */
+    where?: MatchWhereInput
+    /**
+     * Limit how many Matches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Match updateManyAndReturn
+   */
+  export type MatchUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * The data used to update Matches.
+     */
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyInput>
+    /**
+     * Filter which Matches to update
+     */
+    where?: MatchWhereInput
+    /**
+     * Limit how many Matches to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Match upsert
+   */
+  export type MatchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Match to update in case it exists.
+     */
+    where: MatchWhereUniqueInput
+    /**
+     * In case the Match found by the `where` argument doesn't exist, create a new Match with this data.
+     */
+    create: XOR<MatchCreateInput, MatchUncheckedCreateInput>
+    /**
+     * In case the Match was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MatchUpdateInput, MatchUncheckedUpdateInput>
+  }
+
+  /**
+   * Match delete
+   */
+  export type MatchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    /**
+     * Filter which Match to delete.
+     */
+    where: MatchWhereUniqueInput
+  }
+
+  /**
+   * Match deleteMany
+   */
+  export type MatchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Matches to delete
+     */
+    where?: MatchWhereInput
+    /**
+     * Limit how many Matches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Match without action
+   */
+  export type MatchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -7198,6 +12461,11 @@ export namespace Prisma {
     phone: 'phone',
     bio: 'bio',
     googleId: 'googleId',
+    college: 'college',
+    major: 'major',
+    year: 'year',
+    location: 'location',
+    interests: 'interests',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7209,6 +12477,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
+    image: 'image',
     published: 'published',
     authorId: 'authorId',
     createdAt: 'createdAt',
@@ -7264,6 +12533,67 @@ export namespace Prisma {
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+  export const UserPreferencesScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    minAge: 'minAge',
+    maxAge: 'maxAge',
+    preferredGenders: 'preferredGenders',
+    maxDistance: 'maxDistance',
+    collegePreference: 'collegePreference',
+    majorPreference: 'majorPreference',
+    minYear: 'minYear',
+    maxYear: 'maxYear',
+    ageWeight: 'ageWeight',
+    distanceWeight: 'distanceWeight',
+    interestsWeight: 'interestsWeight',
+    collegeWeight: 'collegeWeight',
+    majorWeight: 'majorWeight',
+    yearWeight: 'yearWeight',
+    personalityWeight: 'personalityWeight',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserPreferencesScalarFieldEnum = (typeof UserPreferencesScalarFieldEnum)[keyof typeof UserPreferencesScalarFieldEnum]
+
+
+  export const PersonalityTraitsScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    extroversion: 'extroversion',
+    openness: 'openness',
+    conscientiousness: 'conscientiousness',
+    agreeableness: 'agreeableness',
+    neuroticism: 'neuroticism',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PersonalityTraitsScalarFieldEnum = (typeof PersonalityTraitsScalarFieldEnum)[keyof typeof PersonalityTraitsScalarFieldEnum]
+
+
+  export const LikeScalarFieldEnum: {
+    id: 'id',
+    senderId: 'senderId',
+    receiverId: 'receiverId',
+    createdAt: 'createdAt'
+  };
+
+  export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
+
+
+  export const MatchScalarFieldEnum: {
+    id: 'id',
+    user1Id: 'user1Id',
+    user2Id: 'user2Id',
+    score: 'score',
+    createdAt: 'createdAt'
+  };
+
+  export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -7272,12 +12602,29 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   export const NullsOrder: {
@@ -7318,6 +12665,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -7387,14 +12748,25 @@ export namespace Prisma {
     phone?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     googleId?: StringNullableFilter<"User"> | string | null
+    college?: StringNullableFilter<"User"> | string | null
+    major?: StringNullableFilter<"User"> | string | null
+    year?: IntNullableFilter<"User"> | number | null
+    location?: JsonNullableFilter<"User">
+    interests?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     scoreCard?: XOR<ScoreCardNullableScalarRelationFilter, ScoreCardWhereInput> | null
+    userPreferences?: XOR<UserPreferencesNullableScalarRelationFilter, UserPreferencesWhereInput> | null
+    personalityTraits?: XOR<PersonalityTraitsNullableScalarRelationFilter, PersonalityTraitsWhereInput> | null
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
     conversations1?: ConversationListRelationFilter
     conversations2?: ConversationListRelationFilter
+    sentLikes?: LikeListRelationFilter
+    receivedLikes?: LikeListRelationFilter
+    matches?: MatchListRelationFilter
+    matchedBy?: MatchListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7408,20 +12780,30 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     googleId?: SortOrderInput | SortOrder
+    college?: SortOrderInput | SortOrder
+    major?: SortOrderInput | SortOrder
+    year?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    interests?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     posts?: PostOrderByRelationAggregateInput
     scoreCard?: ScoreCardOrderByWithRelationInput
+    userPreferences?: UserPreferencesOrderByWithRelationInput
+    personalityTraits?: PersonalityTraitsOrderByWithRelationInput
     sentMessages?: MessageOrderByRelationAggregateInput
     receivedMessages?: MessageOrderByRelationAggregateInput
     conversations1?: ConversationOrderByRelationAggregateInput
     conversations2?: ConversationOrderByRelationAggregateInput
+    sentLikes?: LikeOrderByRelationAggregateInput
+    receivedLikes?: LikeOrderByRelationAggregateInput
+    matches?: MatchOrderByRelationAggregateInput
+    matchedBy?: MatchOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    googleId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -7432,15 +12814,27 @@ export namespace Prisma {
     age?: IntNullableFilter<"User"> | number | null
     phone?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
+    college?: StringNullableFilter<"User"> | string | null
+    major?: StringNullableFilter<"User"> | string | null
+    year?: IntNullableFilter<"User"> | number | null
+    location?: JsonNullableFilter<"User">
+    interests?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     scoreCard?: XOR<ScoreCardNullableScalarRelationFilter, ScoreCardWhereInput> | null
+    userPreferences?: XOR<UserPreferencesNullableScalarRelationFilter, UserPreferencesWhereInput> | null
+    personalityTraits?: XOR<PersonalityTraitsNullableScalarRelationFilter, PersonalityTraitsWhereInput> | null
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
     conversations1?: ConversationListRelationFilter
     conversations2?: ConversationListRelationFilter
-  }, "id" | "email" | "googleId">
+    sentLikes?: LikeListRelationFilter
+    receivedLikes?: LikeListRelationFilter
+    matches?: MatchListRelationFilter
+    matchedBy?: MatchListRelationFilter
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7453,6 +12847,11 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     googleId?: SortOrderInput | SortOrder
+    college?: SortOrderInput | SortOrder
+    major?: SortOrderInput | SortOrder
+    year?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    interests?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -7476,6 +12875,11 @@ export namespace Prisma {
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    college?: StringNullableWithAggregatesFilter<"User"> | string | null
+    major?: StringNullableWithAggregatesFilter<"User"> | string | null
+    year?: IntNullableWithAggregatesFilter<"User"> | number | null
+    location?: JsonNullableWithAggregatesFilter<"User">
+    interests?: StringNullableListFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -7487,6 +12891,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
+    image?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -7498,6 +12903,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -7512,6 +12918,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
+    image?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -7523,6 +12930,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -7539,6 +12947,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    image?: StringNullableWithAggregatesFilter<"Post"> | string | null
     published?: BoolWithAggregatesFilter<"Post"> | boolean
     authorId?: StringWithAggregatesFilter<"Post"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
@@ -7790,6 +13199,325 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
   }
 
+  export type UserPreferencesWhereInput = {
+    AND?: UserPreferencesWhereInput | UserPreferencesWhereInput[]
+    OR?: UserPreferencesWhereInput[]
+    NOT?: UserPreferencesWhereInput | UserPreferencesWhereInput[]
+    id?: StringFilter<"UserPreferences"> | string
+    userId?: StringFilter<"UserPreferences"> | string
+    minAge?: IntFilter<"UserPreferences"> | number
+    maxAge?: IntFilter<"UserPreferences"> | number
+    preferredGenders?: StringNullableListFilter<"UserPreferences">
+    maxDistance?: IntFilter<"UserPreferences"> | number
+    collegePreference?: StringFilter<"UserPreferences"> | string
+    majorPreference?: StringFilter<"UserPreferences"> | string
+    minYear?: IntFilter<"UserPreferences"> | number
+    maxYear?: IntFilter<"UserPreferences"> | number
+    ageWeight?: FloatFilter<"UserPreferences"> | number
+    distanceWeight?: FloatFilter<"UserPreferences"> | number
+    interestsWeight?: FloatFilter<"UserPreferences"> | number
+    collegeWeight?: FloatFilter<"UserPreferences"> | number
+    majorWeight?: FloatFilter<"UserPreferences"> | number
+    yearWeight?: FloatFilter<"UserPreferences"> | number
+    personalityWeight?: FloatFilter<"UserPreferences"> | number
+    createdAt?: DateTimeFilter<"UserPreferences"> | Date | string
+    updatedAt?: DateTimeFilter<"UserPreferences"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserPreferencesOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    preferredGenders?: SortOrder
+    maxDistance?: SortOrder
+    collegePreference?: SortOrder
+    majorPreference?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserPreferencesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: UserPreferencesWhereInput | UserPreferencesWhereInput[]
+    OR?: UserPreferencesWhereInput[]
+    NOT?: UserPreferencesWhereInput | UserPreferencesWhereInput[]
+    minAge?: IntFilter<"UserPreferences"> | number
+    maxAge?: IntFilter<"UserPreferences"> | number
+    preferredGenders?: StringNullableListFilter<"UserPreferences">
+    maxDistance?: IntFilter<"UserPreferences"> | number
+    collegePreference?: StringFilter<"UserPreferences"> | string
+    majorPreference?: StringFilter<"UserPreferences"> | string
+    minYear?: IntFilter<"UserPreferences"> | number
+    maxYear?: IntFilter<"UserPreferences"> | number
+    ageWeight?: FloatFilter<"UserPreferences"> | number
+    distanceWeight?: FloatFilter<"UserPreferences"> | number
+    interestsWeight?: FloatFilter<"UserPreferences"> | number
+    collegeWeight?: FloatFilter<"UserPreferences"> | number
+    majorWeight?: FloatFilter<"UserPreferences"> | number
+    yearWeight?: FloatFilter<"UserPreferences"> | number
+    personalityWeight?: FloatFilter<"UserPreferences"> | number
+    createdAt?: DateTimeFilter<"UserPreferences"> | Date | string
+    updatedAt?: DateTimeFilter<"UserPreferences"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type UserPreferencesOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    preferredGenders?: SortOrder
+    maxDistance?: SortOrder
+    collegePreference?: SortOrder
+    majorPreference?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserPreferencesCountOrderByAggregateInput
+    _avg?: UserPreferencesAvgOrderByAggregateInput
+    _max?: UserPreferencesMaxOrderByAggregateInput
+    _min?: UserPreferencesMinOrderByAggregateInput
+    _sum?: UserPreferencesSumOrderByAggregateInput
+  }
+
+  export type UserPreferencesScalarWhereWithAggregatesInput = {
+    AND?: UserPreferencesScalarWhereWithAggregatesInput | UserPreferencesScalarWhereWithAggregatesInput[]
+    OR?: UserPreferencesScalarWhereWithAggregatesInput[]
+    NOT?: UserPreferencesScalarWhereWithAggregatesInput | UserPreferencesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserPreferences"> | string
+    userId?: StringWithAggregatesFilter<"UserPreferences"> | string
+    minAge?: IntWithAggregatesFilter<"UserPreferences"> | number
+    maxAge?: IntWithAggregatesFilter<"UserPreferences"> | number
+    preferredGenders?: StringNullableListFilter<"UserPreferences">
+    maxDistance?: IntWithAggregatesFilter<"UserPreferences"> | number
+    collegePreference?: StringWithAggregatesFilter<"UserPreferences"> | string
+    majorPreference?: StringWithAggregatesFilter<"UserPreferences"> | string
+    minYear?: IntWithAggregatesFilter<"UserPreferences"> | number
+    maxYear?: IntWithAggregatesFilter<"UserPreferences"> | number
+    ageWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    distanceWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    interestsWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    collegeWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    majorWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    yearWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    personalityWeight?: FloatWithAggregatesFilter<"UserPreferences"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
+  }
+
+  export type PersonalityTraitsWhereInput = {
+    AND?: PersonalityTraitsWhereInput | PersonalityTraitsWhereInput[]
+    OR?: PersonalityTraitsWhereInput[]
+    NOT?: PersonalityTraitsWhereInput | PersonalityTraitsWhereInput[]
+    id?: StringFilter<"PersonalityTraits"> | string
+    userId?: StringFilter<"PersonalityTraits"> | string
+    extroversion?: IntFilter<"PersonalityTraits"> | number
+    openness?: IntFilter<"PersonalityTraits"> | number
+    conscientiousness?: IntFilter<"PersonalityTraits"> | number
+    agreeableness?: IntFilter<"PersonalityTraits"> | number
+    neuroticism?: IntFilter<"PersonalityTraits"> | number
+    createdAt?: DateTimeFilter<"PersonalityTraits"> | Date | string
+    updatedAt?: DateTimeFilter<"PersonalityTraits"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PersonalityTraitsOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PersonalityTraitsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: PersonalityTraitsWhereInput | PersonalityTraitsWhereInput[]
+    OR?: PersonalityTraitsWhereInput[]
+    NOT?: PersonalityTraitsWhereInput | PersonalityTraitsWhereInput[]
+    extroversion?: IntFilter<"PersonalityTraits"> | number
+    openness?: IntFilter<"PersonalityTraits"> | number
+    conscientiousness?: IntFilter<"PersonalityTraits"> | number
+    agreeableness?: IntFilter<"PersonalityTraits"> | number
+    neuroticism?: IntFilter<"PersonalityTraits"> | number
+    createdAt?: DateTimeFilter<"PersonalityTraits"> | Date | string
+    updatedAt?: DateTimeFilter<"PersonalityTraits"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type PersonalityTraitsOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PersonalityTraitsCountOrderByAggregateInput
+    _avg?: PersonalityTraitsAvgOrderByAggregateInput
+    _max?: PersonalityTraitsMaxOrderByAggregateInput
+    _min?: PersonalityTraitsMinOrderByAggregateInput
+    _sum?: PersonalityTraitsSumOrderByAggregateInput
+  }
+
+  export type PersonalityTraitsScalarWhereWithAggregatesInput = {
+    AND?: PersonalityTraitsScalarWhereWithAggregatesInput | PersonalityTraitsScalarWhereWithAggregatesInput[]
+    OR?: PersonalityTraitsScalarWhereWithAggregatesInput[]
+    NOT?: PersonalityTraitsScalarWhereWithAggregatesInput | PersonalityTraitsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PersonalityTraits"> | string
+    userId?: StringWithAggregatesFilter<"PersonalityTraits"> | string
+    extroversion?: IntWithAggregatesFilter<"PersonalityTraits"> | number
+    openness?: IntWithAggregatesFilter<"PersonalityTraits"> | number
+    conscientiousness?: IntWithAggregatesFilter<"PersonalityTraits"> | number
+    agreeableness?: IntWithAggregatesFilter<"PersonalityTraits"> | number
+    neuroticism?: IntWithAggregatesFilter<"PersonalityTraits"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"PersonalityTraits"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PersonalityTraits"> | Date | string
+  }
+
+  export type LikeWhereInput = {
+    AND?: LikeWhereInput | LikeWhereInput[]
+    OR?: LikeWhereInput[]
+    NOT?: LikeWhereInput | LikeWhereInput[]
+    id?: StringFilter<"Like"> | string
+    senderId?: StringFilter<"Like"> | string
+    receiverId?: StringFilter<"Like"> | string
+    createdAt?: DateTimeFilter<"Like"> | Date | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type LikeOrderByWithRelationInput = {
+    id?: SortOrder
+    senderId?: SortOrder
+    receiverId?: SortOrder
+    createdAt?: SortOrder
+    sender?: UserOrderByWithRelationInput
+    receiver?: UserOrderByWithRelationInput
+  }
+
+  export type LikeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    senderId_receiverId?: LikeSenderIdReceiverIdCompoundUniqueInput
+    AND?: LikeWhereInput | LikeWhereInput[]
+    OR?: LikeWhereInput[]
+    NOT?: LikeWhereInput | LikeWhereInput[]
+    senderId?: StringFilter<"Like"> | string
+    receiverId?: StringFilter<"Like"> | string
+    createdAt?: DateTimeFilter<"Like"> | Date | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "senderId_receiverId">
+
+  export type LikeOrderByWithAggregationInput = {
+    id?: SortOrder
+    senderId?: SortOrder
+    receiverId?: SortOrder
+    createdAt?: SortOrder
+    _count?: LikeCountOrderByAggregateInput
+    _max?: LikeMaxOrderByAggregateInput
+    _min?: LikeMinOrderByAggregateInput
+  }
+
+  export type LikeScalarWhereWithAggregatesInput = {
+    AND?: LikeScalarWhereWithAggregatesInput | LikeScalarWhereWithAggregatesInput[]
+    OR?: LikeScalarWhereWithAggregatesInput[]
+    NOT?: LikeScalarWhereWithAggregatesInput | LikeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Like"> | string
+    senderId?: StringWithAggregatesFilter<"Like"> | string
+    receiverId?: StringWithAggregatesFilter<"Like"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Like"> | Date | string
+  }
+
+  export type MatchWhereInput = {
+    AND?: MatchWhereInput | MatchWhereInput[]
+    OR?: MatchWhereInput[]
+    NOT?: MatchWhereInput | MatchWhereInput[]
+    id?: StringFilter<"Match"> | string
+    user1Id?: StringFilter<"Match"> | string
+    user2Id?: StringFilter<"Match"> | string
+    score?: FloatFilter<"Match"> | number
+    createdAt?: DateTimeFilter<"Match"> | Date | string
+    user1?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user2?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MatchOrderByWithRelationInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    user1?: UserOrderByWithRelationInput
+    user2?: UserOrderByWithRelationInput
+  }
+
+  export type MatchWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    user1Id_user2Id?: MatchUser1IdUser2IdCompoundUniqueInput
+    AND?: MatchWhereInput | MatchWhereInput[]
+    OR?: MatchWhereInput[]
+    NOT?: MatchWhereInput | MatchWhereInput[]
+    user1Id?: StringFilter<"Match"> | string
+    user2Id?: StringFilter<"Match"> | string
+    score?: FloatFilter<"Match"> | number
+    createdAt?: DateTimeFilter<"Match"> | Date | string
+    user1?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user2?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "user1Id_user2Id">
+
+  export type MatchOrderByWithAggregationInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    _count?: MatchCountOrderByAggregateInput
+    _avg?: MatchAvgOrderByAggregateInput
+    _max?: MatchMaxOrderByAggregateInput
+    _min?: MatchMinOrderByAggregateInput
+    _sum?: MatchSumOrderByAggregateInput
+  }
+
+  export type MatchScalarWhereWithAggregatesInput = {
+    AND?: MatchScalarWhereWithAggregatesInput | MatchScalarWhereWithAggregatesInput[]
+    OR?: MatchScalarWhereWithAggregatesInput[]
+    NOT?: MatchScalarWhereWithAggregatesInput | MatchScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Match"> | string
+    user1Id?: StringWithAggregatesFilter<"Match"> | string
+    user2Id?: StringWithAggregatesFilter<"Match"> | string
+    score?: FloatWithAggregatesFilter<"Match"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Match"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -7801,14 +13529,25 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateInput = {
@@ -7822,14 +13561,25 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserUpdateInput = {
@@ -7843,14 +13593,25 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7864,14 +13625,25 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7885,6 +13657,11 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7900,6 +13677,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7915,6 +13697,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7923,6 +13710,7 @@ export namespace Prisma {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7933,6 +13721,7 @@ export namespace Prisma {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     authorId: string
     createdAt?: Date | string
@@ -7943,6 +13732,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7953,6 +13743,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7963,6 +13754,7 @@ export namespace Prisma {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     authorId: string
     createdAt?: Date | string
@@ -7973,6 +13765,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7982,6 +13775,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8245,6 +14039,343 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserPreferencesCreateInput = {
+    id?: string
+    minAge?: number
+    maxAge?: number
+    preferredGenders?: UserPreferencesCreatepreferredGendersInput | string[]
+    maxDistance?: number
+    collegePreference?: string
+    majorPreference?: string
+    minYear?: number
+    maxYear?: number
+    ageWeight?: number
+    distanceWeight?: number
+    interestsWeight?: number
+    collegeWeight?: number
+    majorWeight?: number
+    yearWeight?: number
+    personalityWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutUserPreferencesInput
+  }
+
+  export type UserPreferencesUncheckedCreateInput = {
+    id?: string
+    userId: string
+    minAge?: number
+    maxAge?: number
+    preferredGenders?: UserPreferencesCreatepreferredGendersInput | string[]
+    maxDistance?: number
+    collegePreference?: string
+    majorPreference?: string
+    minYear?: number
+    maxYear?: number
+    ageWeight?: number
+    distanceWeight?: number
+    interestsWeight?: number
+    collegeWeight?: number
+    majorWeight?: number
+    yearWeight?: number
+    personalityWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPreferencesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserPreferencesNestedInput
+  }
+
+  export type UserPreferencesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPreferencesCreateManyInput = {
+    id?: string
+    userId: string
+    minAge?: number
+    maxAge?: number
+    preferredGenders?: UserPreferencesCreatepreferredGendersInput | string[]
+    maxDistance?: number
+    collegePreference?: string
+    majorPreference?: string
+    minYear?: number
+    maxYear?: number
+    ageWeight?: number
+    distanceWeight?: number
+    interestsWeight?: number
+    collegeWeight?: number
+    majorWeight?: number
+    yearWeight?: number
+    personalityWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPreferencesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPreferencesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalityTraitsCreateInput = {
+    id?: string
+    extroversion?: number
+    openness?: number
+    conscientiousness?: number
+    agreeableness?: number
+    neuroticism?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPersonalityTraitsInput
+  }
+
+  export type PersonalityTraitsUncheckedCreateInput = {
+    id?: string
+    userId: string
+    extroversion?: number
+    openness?: number
+    conscientiousness?: number
+    agreeableness?: number
+    neuroticism?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalityTraitsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPersonalityTraitsNestedInput
+  }
+
+  export type PersonalityTraitsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalityTraitsCreateManyInput = {
+    id?: string
+    userId: string
+    extroversion?: number
+    openness?: number
+    conscientiousness?: number
+    agreeableness?: number
+    neuroticism?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalityTraitsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalityTraitsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    sender: UserCreateNestedOneWithoutSentLikesInput
+    receiver: UserCreateNestedOneWithoutReceivedLikesInput
+  }
+
+  export type LikeUncheckedCreateInput = {
+    id?: string
+    senderId: string
+    receiverId: string
+    createdAt?: Date | string
+  }
+
+  export type LikeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutSentLikesNestedInput
+    receiver?: UserUpdateOneRequiredWithoutReceivedLikesNestedInput
+  }
+
+  export type LikeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    receiverId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeCreateManyInput = {
+    id?: string
+    senderId: string
+    receiverId: string
+    createdAt?: Date | string
+  }
+
+  export type LikeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    receiverId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchCreateInput = {
+    id?: string
+    score: number
+    createdAt?: Date | string
+    user1: UserCreateNestedOneWithoutMatchesInput
+    user2: UserCreateNestedOneWithoutMatchedByInput
+  }
+
+  export type MatchUncheckedCreateInput = {
+    id?: string
+    user1Id: string
+    user2Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type MatchUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user1?: UserUpdateOneRequiredWithoutMatchesNestedInput
+    user2?: UserUpdateOneRequiredWithoutMatchedByNestedInput
+  }
+
+  export type MatchUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchCreateManyInput = {
+    id?: string
+    user1Id: string
+    user2Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type MatchUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -8285,6 +14416,37 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
 
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -8308,6 +14470,16 @@ export namespace Prisma {
     isNot?: ScoreCardWhereInput | null
   }
 
+  export type UserPreferencesNullableScalarRelationFilter = {
+    is?: UserPreferencesWhereInput | null
+    isNot?: UserPreferencesWhereInput | null
+  }
+
+  export type PersonalityTraitsNullableScalarRelationFilter = {
+    is?: PersonalityTraitsWhereInput | null
+    isNot?: PersonalityTraitsWhereInput | null
+  }
+
   export type MessageListRelationFilter = {
     every?: MessageWhereInput
     some?: MessageWhereInput
@@ -8318,6 +14490,18 @@ export namespace Prisma {
     every?: ConversationWhereInput
     some?: ConversationWhereInput
     none?: ConversationWhereInput
+  }
+
+  export type LikeListRelationFilter = {
+    every?: LikeWhereInput
+    some?: LikeWhereInput
+    none?: LikeWhereInput
+  }
+
+  export type MatchListRelationFilter = {
+    every?: MatchWhereInput
+    some?: MatchWhereInput
+    none?: MatchWhereInput
   }
 
   export type SortOrderInput = {
@@ -8337,6 +14521,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type LikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MatchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -8348,12 +14540,18 @@ export namespace Prisma {
     phone?: SortOrder
     bio?: SortOrder
     googleId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrder
+    interests?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     age?: SortOrder
+    year?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -8367,6 +14565,9 @@ export namespace Prisma {
     phone?: SortOrder
     bio?: SortOrder
     googleId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8382,12 +14583,16 @@ export namespace Prisma {
     phone?: SortOrder
     bio?: SortOrder
     googleId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     age?: SortOrder
+    year?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8441,6 +14646,32 @@ export namespace Prisma {
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -8470,6 +14701,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    image?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -8480,6 +14712,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    image?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -8490,6 +14723,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    image?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
@@ -8502,14 +14736,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type ScoreCardCountOrderByAggregateInput = {
@@ -8679,6 +14905,273 @@ export namespace Prisma {
     _max?: NestedEnumMessageTypeFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type UserPreferencesCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    preferredGenders?: SortOrder
+    maxDistance?: SortOrder
+    collegePreference?: SortOrder
+    majorPreference?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserPreferencesAvgOrderByAggregateInput = {
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    maxDistance?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+  }
+
+  export type UserPreferencesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    maxDistance?: SortOrder
+    collegePreference?: SortOrder
+    majorPreference?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserPreferencesMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    maxDistance?: SortOrder
+    collegePreference?: SortOrder
+    majorPreference?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserPreferencesSumOrderByAggregateInput = {
+    minAge?: SortOrder
+    maxAge?: SortOrder
+    maxDistance?: SortOrder
+    minYear?: SortOrder
+    maxYear?: SortOrder
+    ageWeight?: SortOrder
+    distanceWeight?: SortOrder
+    interestsWeight?: SortOrder
+    collegeWeight?: SortOrder
+    majorWeight?: SortOrder
+    yearWeight?: SortOrder
+    personalityWeight?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type PersonalityTraitsCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersonalityTraitsAvgOrderByAggregateInput = {
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+  }
+
+  export type PersonalityTraitsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersonalityTraitsMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersonalityTraitsSumOrderByAggregateInput = {
+    extroversion?: SortOrder
+    openness?: SortOrder
+    conscientiousness?: SortOrder
+    agreeableness?: SortOrder
+    neuroticism?: SortOrder
+  }
+
+  export type LikeSenderIdReceiverIdCompoundUniqueInput = {
+    senderId: string
+    receiverId: string
+  }
+
+  export type LikeCountOrderByAggregateInput = {
+    id?: SortOrder
+    senderId?: SortOrder
+    receiverId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LikeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    senderId?: SortOrder
+    receiverId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LikeMinOrderByAggregateInput = {
+    id?: SortOrder
+    senderId?: SortOrder
+    receiverId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MatchUser1IdUser2IdCompoundUniqueInput = {
+    user1Id: string
+    user2Id: string
+  }
+
+  export type MatchCountOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MatchAvgOrderByAggregateInput = {
+    score?: SortOrder
+  }
+
+  export type MatchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MatchMinOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MatchSumOrderByAggregateInput = {
+    score?: SortOrder
+  }
+
+  export type UserCreateinterestsInput = {
+    set: string[]
+  }
+
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -8690,6 +15183,18 @@ export namespace Prisma {
     create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
     connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
     connect?: ScoreCardWhereUniqueInput
+  }
+
+  export type UserPreferencesCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserPreferencesCreateOrConnectWithoutUserInput
+    connect?: UserPreferencesWhereUniqueInput
+  }
+
+  export type PersonalityTraitsCreateNestedOneWithoutUserInput = {
+    create?: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PersonalityTraitsCreateOrConnectWithoutUserInput
+    connect?: PersonalityTraitsWhereUniqueInput
   }
 
   export type MessageCreateNestedManyWithoutSenderInput = {
@@ -8720,6 +15225,34 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
+  export type LikeCreateNestedManyWithoutSenderInput = {
+    create?: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput> | LikeCreateWithoutSenderInput[] | LikeUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutSenderInput | LikeCreateOrConnectWithoutSenderInput[]
+    createMany?: LikeCreateManySenderInputEnvelope
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+  }
+
+  export type LikeCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput> | LikeCreateWithoutReceiverInput[] | LikeUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutReceiverInput | LikeCreateOrConnectWithoutReceiverInput[]
+    createMany?: LikeCreateManyReceiverInputEnvelope
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+  }
+
+  export type MatchCreateNestedManyWithoutUser1Input = {
+    create?: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input> | MatchCreateWithoutUser1Input[] | MatchUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser1Input | MatchCreateOrConnectWithoutUser1Input[]
+    createMany?: MatchCreateManyUser1InputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
+  export type MatchCreateNestedManyWithoutUser2Input = {
+    create?: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input> | MatchCreateWithoutUser2Input[] | MatchUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser2Input | MatchCreateOrConnectWithoutUser2Input[]
+    createMany?: MatchCreateManyUser2InputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
   export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -8731,6 +15264,18 @@ export namespace Prisma {
     create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
     connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
     connect?: ScoreCardWhereUniqueInput
+  }
+
+  export type UserPreferencesUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserPreferencesCreateOrConnectWithoutUserInput
+    connect?: UserPreferencesWhereUniqueInput
+  }
+
+  export type PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PersonalityTraitsCreateOrConnectWithoutUserInput
+    connect?: PersonalityTraitsWhereUniqueInput
   }
 
   export type MessageUncheckedCreateNestedManyWithoutSenderInput = {
@@ -8761,6 +15306,34 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
+  export type LikeUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput> | LikeCreateWithoutSenderInput[] | LikeUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutSenderInput | LikeCreateOrConnectWithoutSenderInput[]
+    createMany?: LikeCreateManySenderInputEnvelope
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+  }
+
+  export type LikeUncheckedCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput> | LikeCreateWithoutReceiverInput[] | LikeUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutReceiverInput | LikeCreateOrConnectWithoutReceiverInput[]
+    createMany?: LikeCreateManyReceiverInputEnvelope
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+  }
+
+  export type MatchUncheckedCreateNestedManyWithoutUser1Input = {
+    create?: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input> | MatchCreateWithoutUser1Input[] | MatchUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser1Input | MatchCreateOrConnectWithoutUser1Input[]
+    createMany?: MatchCreateManyUser1InputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
+  export type MatchUncheckedCreateNestedManyWithoutUser2Input = {
+    create?: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input> | MatchCreateWithoutUser2Input[] | MatchUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser2Input | MatchCreateOrConnectWithoutUser2Input[]
+    createMany?: MatchCreateManyUser2InputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -8775,6 +15348,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateinterestsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -8803,6 +15381,26 @@ export namespace Prisma {
     delete?: ScoreCardWhereInput | boolean
     connect?: ScoreCardWhereUniqueInput
     update?: XOR<XOR<ScoreCardUpdateToOneWithWhereWithoutUserInput, ScoreCardUpdateWithoutUserInput>, ScoreCardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserPreferencesUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserPreferencesCreateOrConnectWithoutUserInput
+    upsert?: UserPreferencesUpsertWithoutUserInput
+    disconnect?: UserPreferencesWhereInput | boolean
+    delete?: UserPreferencesWhereInput | boolean
+    connect?: UserPreferencesWhereUniqueInput
+    update?: XOR<XOR<UserPreferencesUpdateToOneWithWhereWithoutUserInput, UserPreferencesUpdateWithoutUserInput>, UserPreferencesUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PersonalityTraitsUpdateOneWithoutUserNestedInput = {
+    create?: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PersonalityTraitsCreateOrConnectWithoutUserInput
+    upsert?: PersonalityTraitsUpsertWithoutUserInput
+    disconnect?: PersonalityTraitsWhereInput | boolean
+    delete?: PersonalityTraitsWhereInput | boolean
+    connect?: PersonalityTraitsWhereUniqueInput
+    update?: XOR<XOR<PersonalityTraitsUpdateToOneWithWhereWithoutUserInput, PersonalityTraitsUpdateWithoutUserInput>, PersonalityTraitsUncheckedUpdateWithoutUserInput>
   }
 
   export type MessageUpdateManyWithoutSenderNestedInput = {
@@ -8861,6 +15459,62 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
+  export type LikeUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput> | LikeCreateWithoutSenderInput[] | LikeUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutSenderInput | LikeCreateOrConnectWithoutSenderInput[]
+    upsert?: LikeUpsertWithWhereUniqueWithoutSenderInput | LikeUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: LikeCreateManySenderInputEnvelope
+    set?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    disconnect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    delete?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    update?: LikeUpdateWithWhereUniqueWithoutSenderInput | LikeUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: LikeUpdateManyWithWhereWithoutSenderInput | LikeUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
+  }
+
+  export type LikeUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput> | LikeCreateWithoutReceiverInput[] | LikeUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutReceiverInput | LikeCreateOrConnectWithoutReceiverInput[]
+    upsert?: LikeUpsertWithWhereUniqueWithoutReceiverInput | LikeUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: LikeCreateManyReceiverInputEnvelope
+    set?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    disconnect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    delete?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    update?: LikeUpdateWithWhereUniqueWithoutReceiverInput | LikeUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: LikeUpdateManyWithWhereWithoutReceiverInput | LikeUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
+  }
+
+  export type MatchUpdateManyWithoutUser1NestedInput = {
+    create?: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input> | MatchCreateWithoutUser1Input[] | MatchUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser1Input | MatchCreateOrConnectWithoutUser1Input[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutUser1Input | MatchUpsertWithWhereUniqueWithoutUser1Input[]
+    createMany?: MatchCreateManyUser1InputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutUser1Input | MatchUpdateWithWhereUniqueWithoutUser1Input[]
+    updateMany?: MatchUpdateManyWithWhereWithoutUser1Input | MatchUpdateManyWithWhereWithoutUser1Input[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
+  export type MatchUpdateManyWithoutUser2NestedInput = {
+    create?: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input> | MatchCreateWithoutUser2Input[] | MatchUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser2Input | MatchCreateOrConnectWithoutUser2Input[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutUser2Input | MatchUpsertWithWhereUniqueWithoutUser2Input[]
+    createMany?: MatchCreateManyUser2InputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutUser2Input | MatchUpdateWithWhereUniqueWithoutUser2Input[]
+    updateMany?: MatchUpdateManyWithWhereWithoutUser2Input | MatchUpdateManyWithWhereWithoutUser2Input[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
   export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -8883,6 +15537,26 @@ export namespace Prisma {
     delete?: ScoreCardWhereInput | boolean
     connect?: ScoreCardWhereUniqueInput
     update?: XOR<XOR<ScoreCardUpdateToOneWithWhereWithoutUserInput, ScoreCardUpdateWithoutUserInput>, ScoreCardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserPreferencesUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserPreferencesCreateOrConnectWithoutUserInput
+    upsert?: UserPreferencesUpsertWithoutUserInput
+    disconnect?: UserPreferencesWhereInput | boolean
+    delete?: UserPreferencesWhereInput | boolean
+    connect?: UserPreferencesWhereUniqueInput
+    update?: XOR<XOR<UserPreferencesUpdateToOneWithWhereWithoutUserInput, UserPreferencesUpdateWithoutUserInput>, UserPreferencesUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PersonalityTraitsCreateOrConnectWithoutUserInput
+    upsert?: PersonalityTraitsUpsertWithoutUserInput
+    disconnect?: PersonalityTraitsWhereInput | boolean
+    delete?: PersonalityTraitsWhereInput | boolean
+    connect?: PersonalityTraitsWhereUniqueInput
+    update?: XOR<XOR<PersonalityTraitsUpdateToOneWithWhereWithoutUserInput, PersonalityTraitsUpdateWithoutUserInput>, PersonalityTraitsUncheckedUpdateWithoutUserInput>
   }
 
   export type MessageUncheckedUpdateManyWithoutSenderNestedInput = {
@@ -8939,6 +15613,62 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutUser2Input | ConversationUpdateWithWhereUniqueWithoutUser2Input[]
     updateMany?: ConversationUpdateManyWithWhereWithoutUser2Input | ConversationUpdateManyWithWhereWithoutUser2Input[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type LikeUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput> | LikeCreateWithoutSenderInput[] | LikeUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutSenderInput | LikeCreateOrConnectWithoutSenderInput[]
+    upsert?: LikeUpsertWithWhereUniqueWithoutSenderInput | LikeUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: LikeCreateManySenderInputEnvelope
+    set?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    disconnect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    delete?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    update?: LikeUpdateWithWhereUniqueWithoutSenderInput | LikeUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: LikeUpdateManyWithWhereWithoutSenderInput | LikeUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
+  }
+
+  export type LikeUncheckedUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput> | LikeCreateWithoutReceiverInput[] | LikeUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: LikeCreateOrConnectWithoutReceiverInput | LikeCreateOrConnectWithoutReceiverInput[]
+    upsert?: LikeUpsertWithWhereUniqueWithoutReceiverInput | LikeUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: LikeCreateManyReceiverInputEnvelope
+    set?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    disconnect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    delete?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+    update?: LikeUpdateWithWhereUniqueWithoutReceiverInput | LikeUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: LikeUpdateManyWithWhereWithoutReceiverInput | LikeUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
+  }
+
+  export type MatchUncheckedUpdateManyWithoutUser1NestedInput = {
+    create?: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input> | MatchCreateWithoutUser1Input[] | MatchUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser1Input | MatchCreateOrConnectWithoutUser1Input[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutUser1Input | MatchUpsertWithWhereUniqueWithoutUser1Input[]
+    createMany?: MatchCreateManyUser1InputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutUser1Input | MatchUpdateWithWhereUniqueWithoutUser1Input[]
+    updateMany?: MatchUpdateManyWithWhereWithoutUser1Input | MatchUpdateManyWithWhereWithoutUser1Input[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
+  export type MatchUncheckedUpdateManyWithoutUser2NestedInput = {
+    create?: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input> | MatchCreateWithoutUser2Input[] | MatchUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: MatchCreateOrConnectWithoutUser2Input | MatchCreateOrConnectWithoutUser2Input[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutUser2Input | MatchUpsertWithWhereUniqueWithoutUser2Input[]
+    createMany?: MatchCreateManyUser2InputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutUser2Input | MatchUpdateWithWhereUniqueWithoutUser2Input[]
+    updateMany?: MatchUpdateManyWithWhereWithoutUser2Input | MatchUpdateManyWithWhereWithoutUser2Input[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -9111,6 +15841,115 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedMessagesInput, UserUpdateWithoutReceivedMessagesInput>, UserUncheckedUpdateWithoutReceivedMessagesInput>
   }
 
+  export type UserPreferencesCreatepreferredGendersInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutUserPreferencesInput = {
+    create?: XOR<UserCreateWithoutUserPreferencesInput, UserUncheckedCreateWithoutUserPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserPreferencesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserPreferencesUpdatepreferredGendersInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutUserPreferencesNestedInput = {
+    create?: XOR<UserCreateWithoutUserPreferencesInput, UserUncheckedCreateWithoutUserPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserPreferencesInput
+    upsert?: UserUpsertWithoutUserPreferencesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserPreferencesInput, UserUpdateWithoutUserPreferencesInput>, UserUncheckedUpdateWithoutUserPreferencesInput>
+  }
+
+  export type UserCreateNestedOneWithoutPersonalityTraitsInput = {
+    create?: XOR<UserCreateWithoutPersonalityTraitsInput, UserUncheckedCreateWithoutPersonalityTraitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPersonalityTraitsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPersonalityTraitsNestedInput = {
+    create?: XOR<UserCreateWithoutPersonalityTraitsInput, UserUncheckedCreateWithoutPersonalityTraitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPersonalityTraitsInput
+    upsert?: UserUpsertWithoutPersonalityTraitsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPersonalityTraitsInput, UserUpdateWithoutPersonalityTraitsInput>, UserUncheckedUpdateWithoutPersonalityTraitsInput>
+  }
+
+  export type UserCreateNestedOneWithoutSentLikesInput = {
+    create?: XOR<UserCreateWithoutSentLikesInput, UserUncheckedCreateWithoutSentLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentLikesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReceivedLikesInput = {
+    create?: XOR<UserCreateWithoutReceivedLikesInput, UserUncheckedCreateWithoutReceivedLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedLikesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSentLikesNestedInput = {
+    create?: XOR<UserCreateWithoutSentLikesInput, UserUncheckedCreateWithoutSentLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentLikesInput
+    upsert?: UserUpsertWithoutSentLikesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSentLikesInput, UserUpdateWithoutSentLikesInput>, UserUncheckedUpdateWithoutSentLikesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReceivedLikesNestedInput = {
+    create?: XOR<UserCreateWithoutReceivedLikesInput, UserUncheckedCreateWithoutReceivedLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedLikesInput
+    upsert?: UserUpsertWithoutReceivedLikesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedLikesInput, UserUpdateWithoutReceivedLikesInput>, UserUncheckedUpdateWithoutReceivedLikesInput>
+  }
+
+  export type UserCreateNestedOneWithoutMatchesInput = {
+    create?: XOR<UserCreateWithoutMatchesInput, UserUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMatchesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutMatchedByInput = {
+    create?: XOR<UserCreateWithoutMatchedByInput, UserUncheckedCreateWithoutMatchedByInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMatchedByInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMatchesNestedInput = {
+    create?: XOR<UserCreateWithoutMatchesInput, UserUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMatchesInput
+    upsert?: UserUpsertWithoutMatchesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMatchesInput, UserUpdateWithoutMatchesInput>, UserUncheckedUpdateWithoutMatchesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutMatchedByNestedInput = {
+    create?: XOR<UserCreateWithoutMatchedByInput, UserUncheckedCreateWithoutMatchedByInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMatchedByInput
+    upsert?: UserUpsertWithoutMatchedByInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMatchedByInput, UserUpdateWithoutMatchedByInput>, UserUncheckedUpdateWithoutMatchedByInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9232,6 +16071,29 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -9302,10 +16164,54 @@ export namespace Prisma {
     _max?: NestedEnumMessageTypeFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type PostCreateWithoutAuthorInput = {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9315,6 +16221,7 @@ export namespace Prisma {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9361,6 +16268,80 @@ export namespace Prisma {
   export type ScoreCardCreateOrConnectWithoutUserInput = {
     where: ScoreCardWhereUniqueInput
     create: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserPreferencesCreateWithoutUserInput = {
+    id?: string
+    minAge?: number
+    maxAge?: number
+    preferredGenders?: UserPreferencesCreatepreferredGendersInput | string[]
+    maxDistance?: number
+    collegePreference?: string
+    majorPreference?: string
+    minYear?: number
+    maxYear?: number
+    ageWeight?: number
+    distanceWeight?: number
+    interestsWeight?: number
+    collegeWeight?: number
+    majorWeight?: number
+    yearWeight?: number
+    personalityWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPreferencesUncheckedCreateWithoutUserInput = {
+    id?: string
+    minAge?: number
+    maxAge?: number
+    preferredGenders?: UserPreferencesCreatepreferredGendersInput | string[]
+    maxDistance?: number
+    collegePreference?: string
+    majorPreference?: string
+    minYear?: number
+    maxYear?: number
+    ageWeight?: number
+    distanceWeight?: number
+    interestsWeight?: number
+    collegeWeight?: number
+    majorWeight?: number
+    yearWeight?: number
+    personalityWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPreferencesCreateOrConnectWithoutUserInput = {
+    where: UserPreferencesWhereUniqueInput
+    create: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+  }
+
+  export type PersonalityTraitsCreateWithoutUserInput = {
+    id?: string
+    extroversion?: number
+    openness?: number
+    conscientiousness?: number
+    agreeableness?: number
+    neuroticism?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalityTraitsUncheckedCreateWithoutUserInput = {
+    id?: string
+    extroversion?: number
+    openness?: number
+    conscientiousness?: number
+    agreeableness?: number
+    neuroticism?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalityTraitsCreateOrConnectWithoutUserInput = {
+    where: PersonalityTraitsWhereUniqueInput
+    create: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
   }
 
   export type MessageCreateWithoutSenderInput = {
@@ -9487,6 +16468,98 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LikeCreateWithoutSenderInput = {
+    id?: string
+    createdAt?: Date | string
+    receiver: UserCreateNestedOneWithoutReceivedLikesInput
+  }
+
+  export type LikeUncheckedCreateWithoutSenderInput = {
+    id?: string
+    receiverId: string
+    createdAt?: Date | string
+  }
+
+  export type LikeCreateOrConnectWithoutSenderInput = {
+    where: LikeWhereUniqueInput
+    create: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput>
+  }
+
+  export type LikeCreateManySenderInputEnvelope = {
+    data: LikeCreateManySenderInput | LikeCreateManySenderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LikeCreateWithoutReceiverInput = {
+    id?: string
+    createdAt?: Date | string
+    sender: UserCreateNestedOneWithoutSentLikesInput
+  }
+
+  export type LikeUncheckedCreateWithoutReceiverInput = {
+    id?: string
+    senderId: string
+    createdAt?: Date | string
+  }
+
+  export type LikeCreateOrConnectWithoutReceiverInput = {
+    where: LikeWhereUniqueInput
+    create: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type LikeCreateManyReceiverInputEnvelope = {
+    data: LikeCreateManyReceiverInput | LikeCreateManyReceiverInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MatchCreateWithoutUser1Input = {
+    id?: string
+    score: number
+    createdAt?: Date | string
+    user2: UserCreateNestedOneWithoutMatchedByInput
+  }
+
+  export type MatchUncheckedCreateWithoutUser1Input = {
+    id?: string
+    user2Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type MatchCreateOrConnectWithoutUser1Input = {
+    where: MatchWhereUniqueInput
+    create: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input>
+  }
+
+  export type MatchCreateManyUser1InputEnvelope = {
+    data: MatchCreateManyUser1Input | MatchCreateManyUser1Input[]
+    skipDuplicates?: boolean
+  }
+
+  export type MatchCreateWithoutUser2Input = {
+    id?: string
+    score: number
+    createdAt?: Date | string
+    user1: UserCreateNestedOneWithoutMatchesInput
+  }
+
+  export type MatchUncheckedCreateWithoutUser2Input = {
+    id?: string
+    user1Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type MatchCreateOrConnectWithoutUser2Input = {
+    where: MatchWhereUniqueInput
+    create: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input>
+  }
+
+  export type MatchCreateManyUser2InputEnvelope = {
+    data: MatchCreateManyUser2Input | MatchCreateManyUser2Input[]
+    skipDuplicates?: boolean
+  }
+
   export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
     where: PostWhereUniqueInput
     update: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
@@ -9510,6 +16583,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
+    image?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
@@ -9551,6 +16625,92 @@ export namespace Prisma {
     preferences?: ScoreCardUpdatepreferencesInput | string[]
     personality?: NullableStringFieldUpdateOperationsInput | string | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPreferencesUpsertWithoutUserInput = {
+    update: XOR<UserPreferencesUpdateWithoutUserInput, UserPreferencesUncheckedUpdateWithoutUserInput>
+    create: XOR<UserPreferencesCreateWithoutUserInput, UserPreferencesUncheckedCreateWithoutUserInput>
+    where?: UserPreferencesWhereInput
+  }
+
+  export type UserPreferencesUpdateToOneWithWhereWithoutUserInput = {
+    where?: UserPreferencesWhereInput
+    data: XOR<UserPreferencesUpdateWithoutUserInput, UserPreferencesUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserPreferencesUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPreferencesUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    minAge?: IntFieldUpdateOperationsInput | number
+    maxAge?: IntFieldUpdateOperationsInput | number
+    preferredGenders?: UserPreferencesUpdatepreferredGendersInput | string[]
+    maxDistance?: IntFieldUpdateOperationsInput | number
+    collegePreference?: StringFieldUpdateOperationsInput | string
+    majorPreference?: StringFieldUpdateOperationsInput | string
+    minYear?: IntFieldUpdateOperationsInput | number
+    maxYear?: IntFieldUpdateOperationsInput | number
+    ageWeight?: FloatFieldUpdateOperationsInput | number
+    distanceWeight?: FloatFieldUpdateOperationsInput | number
+    interestsWeight?: FloatFieldUpdateOperationsInput | number
+    collegeWeight?: FloatFieldUpdateOperationsInput | number
+    majorWeight?: FloatFieldUpdateOperationsInput | number
+    yearWeight?: FloatFieldUpdateOperationsInput | number
+    personalityWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalityTraitsUpsertWithoutUserInput = {
+    update: XOR<PersonalityTraitsUpdateWithoutUserInput, PersonalityTraitsUncheckedUpdateWithoutUserInput>
+    create: XOR<PersonalityTraitsCreateWithoutUserInput, PersonalityTraitsUncheckedCreateWithoutUserInput>
+    where?: PersonalityTraitsWhereInput
+  }
+
+  export type PersonalityTraitsUpdateToOneWithWhereWithoutUserInput = {
+    where?: PersonalityTraitsWhereInput
+    data: XOR<PersonalityTraitsUpdateWithoutUserInput, PersonalityTraitsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PersonalityTraitsUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalityTraitsUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    extroversion?: IntFieldUpdateOperationsInput | number
+    openness?: IntFieldUpdateOperationsInput | number
+    conscientiousness?: IntFieldUpdateOperationsInput | number
+    agreeableness?: IntFieldUpdateOperationsInput | number
+    neuroticism?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9647,6 +16807,91 @@ export namespace Prisma {
     data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutUser2Input>
   }
 
+  export type LikeUpsertWithWhereUniqueWithoutSenderInput = {
+    where: LikeWhereUniqueInput
+    update: XOR<LikeUpdateWithoutSenderInput, LikeUncheckedUpdateWithoutSenderInput>
+    create: XOR<LikeCreateWithoutSenderInput, LikeUncheckedCreateWithoutSenderInput>
+  }
+
+  export type LikeUpdateWithWhereUniqueWithoutSenderInput = {
+    where: LikeWhereUniqueInput
+    data: XOR<LikeUpdateWithoutSenderInput, LikeUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type LikeUpdateManyWithWhereWithoutSenderInput = {
+    where: LikeScalarWhereInput
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type LikeScalarWhereInput = {
+    AND?: LikeScalarWhereInput | LikeScalarWhereInput[]
+    OR?: LikeScalarWhereInput[]
+    NOT?: LikeScalarWhereInput | LikeScalarWhereInput[]
+    id?: StringFilter<"Like"> | string
+    senderId?: StringFilter<"Like"> | string
+    receiverId?: StringFilter<"Like"> | string
+    createdAt?: DateTimeFilter<"Like"> | Date | string
+  }
+
+  export type LikeUpsertWithWhereUniqueWithoutReceiverInput = {
+    where: LikeWhereUniqueInput
+    update: XOR<LikeUpdateWithoutReceiverInput, LikeUncheckedUpdateWithoutReceiverInput>
+    create: XOR<LikeCreateWithoutReceiverInput, LikeUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type LikeUpdateWithWhereUniqueWithoutReceiverInput = {
+    where: LikeWhereUniqueInput
+    data: XOR<LikeUpdateWithoutReceiverInput, LikeUncheckedUpdateWithoutReceiverInput>
+  }
+
+  export type LikeUpdateManyWithWhereWithoutReceiverInput = {
+    where: LikeScalarWhereInput
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyWithoutReceiverInput>
+  }
+
+  export type MatchUpsertWithWhereUniqueWithoutUser1Input = {
+    where: MatchWhereUniqueInput
+    update: XOR<MatchUpdateWithoutUser1Input, MatchUncheckedUpdateWithoutUser1Input>
+    create: XOR<MatchCreateWithoutUser1Input, MatchUncheckedCreateWithoutUser1Input>
+  }
+
+  export type MatchUpdateWithWhereUniqueWithoutUser1Input = {
+    where: MatchWhereUniqueInput
+    data: XOR<MatchUpdateWithoutUser1Input, MatchUncheckedUpdateWithoutUser1Input>
+  }
+
+  export type MatchUpdateManyWithWhereWithoutUser1Input = {
+    where: MatchScalarWhereInput
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyWithoutUser1Input>
+  }
+
+  export type MatchScalarWhereInput = {
+    AND?: MatchScalarWhereInput | MatchScalarWhereInput[]
+    OR?: MatchScalarWhereInput[]
+    NOT?: MatchScalarWhereInput | MatchScalarWhereInput[]
+    id?: StringFilter<"Match"> | string
+    user1Id?: StringFilter<"Match"> | string
+    user2Id?: StringFilter<"Match"> | string
+    score?: FloatFilter<"Match"> | number
+    createdAt?: DateTimeFilter<"Match"> | Date | string
+  }
+
+  export type MatchUpsertWithWhereUniqueWithoutUser2Input = {
+    where: MatchWhereUniqueInput
+    update: XOR<MatchUpdateWithoutUser2Input, MatchUncheckedUpdateWithoutUser2Input>
+    create: XOR<MatchCreateWithoutUser2Input, MatchUncheckedCreateWithoutUser2Input>
+  }
+
+  export type MatchUpdateWithWhereUniqueWithoutUser2Input = {
+    where: MatchWhereUniqueInput
+    data: XOR<MatchUpdateWithoutUser2Input, MatchUncheckedUpdateWithoutUser2Input>
+  }
+
+  export type MatchUpdateManyWithWhereWithoutUser2Input = {
+    where: MatchScalarWhereInput
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyWithoutUser2Input>
+  }
+
   export type UserCreateWithoutPostsInput = {
     id?: string
     email: string
@@ -9658,13 +16903,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -9678,13 +16934,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -9714,13 +16981,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -9734,13 +17012,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserCreateWithoutScoreCardInput = {
@@ -9754,13 +17043,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutScoreCardInput = {
@@ -9774,13 +17074,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutScoreCardInput = {
@@ -9810,13 +17121,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutScoreCardInput = {
@@ -9830,13 +17152,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserCreateWithoutConversations1Input = {
@@ -9850,13 +17183,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutConversations1Input = {
@@ -9870,13 +17214,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutConversations1Input = {
@@ -9895,13 +17250,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutConversations2Input = {
@@ -9915,13 +17281,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutConversations2Input = {
@@ -9985,13 +17362,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversations1Input = {
@@ -10005,13 +17393,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUpsertWithoutConversations2Input = {
@@ -10036,13 +17435,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversations2Input = {
@@ -10056,13 +17466,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -10115,13 +17536,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -10135,13 +17567,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -10160,13 +17603,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     conversations1?: ConversationCreateNestedManyWithoutUser1Input
     conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -10180,13 +17634,24 @@ export namespace Prisma {
     phone?: string | null
     bio?: string | null
     googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
     conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -10245,13 +17710,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -10265,13 +17741,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUpsertWithoutReceivedMessagesInput = {
@@ -10296,13 +17783,24 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     conversations1?: ConversationUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -10316,19 +17814,871 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
     conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserCreateWithoutUserPreferencesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutUserPreferencesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutUserPreferencesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserPreferencesInput, UserUncheckedCreateWithoutUserPreferencesInput>
+  }
+
+  export type UserUpsertWithoutUserPreferencesInput = {
+    update: XOR<UserUpdateWithoutUserPreferencesInput, UserUncheckedUpdateWithoutUserPreferencesInput>
+    create: XOR<UserCreateWithoutUserPreferencesInput, UserUncheckedCreateWithoutUserPreferencesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserPreferencesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserPreferencesInput, UserUncheckedUpdateWithoutUserPreferencesInput>
+  }
+
+  export type UserUpdateWithoutUserPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserCreateWithoutPersonalityTraitsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutPersonalityTraitsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutPersonalityTraitsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPersonalityTraitsInput, UserUncheckedCreateWithoutPersonalityTraitsInput>
+  }
+
+  export type UserUpsertWithoutPersonalityTraitsInput = {
+    update: XOR<UserUpdateWithoutPersonalityTraitsInput, UserUncheckedUpdateWithoutPersonalityTraitsInput>
+    create: XOR<UserCreateWithoutPersonalityTraitsInput, UserUncheckedCreateWithoutPersonalityTraitsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPersonalityTraitsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPersonalityTraitsInput, UserUncheckedUpdateWithoutPersonalityTraitsInput>
+  }
+
+  export type UserUpdateWithoutPersonalityTraitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPersonalityTraitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserCreateWithoutSentLikesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutSentLikesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutSentLikesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSentLikesInput, UserUncheckedCreateWithoutSentLikesInput>
+  }
+
+  export type UserCreateWithoutReceivedLikesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutReceivedLikesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutReceivedLikesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReceivedLikesInput, UserUncheckedCreateWithoutReceivedLikesInput>
+  }
+
+  export type UserUpsertWithoutSentLikesInput = {
+    update: XOR<UserUpdateWithoutSentLikesInput, UserUncheckedUpdateWithoutSentLikesInput>
+    create: XOR<UserCreateWithoutSentLikesInput, UserUncheckedCreateWithoutSentLikesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSentLikesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSentLikesInput, UserUncheckedUpdateWithoutSentLikesInput>
+  }
+
+  export type UserUpdateWithoutSentLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSentLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUpsertWithoutReceivedLikesInput = {
+    update: XOR<UserUpdateWithoutReceivedLikesInput, UserUncheckedUpdateWithoutReceivedLikesInput>
+    create: XOR<UserCreateWithoutReceivedLikesInput, UserUncheckedCreateWithoutReceivedLikesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReceivedLikesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReceivedLikesInput, UserUncheckedUpdateWithoutReceivedLikesInput>
+  }
+
+  export type UserUpdateWithoutReceivedLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReceivedLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserCreateWithoutMatchesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matchedBy?: MatchCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutMatchesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matchedBy?: MatchUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutMatchesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMatchesInput, UserUncheckedCreateWithoutMatchesInput>
+  }
+
+  export type UserCreateWithoutMatchedByInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeCreateNestedManyWithoutReceiverInput
+    matches?: MatchCreateNestedManyWithoutUser1Input
+  }
+
+  export type UserUncheckedCreateWithoutMatchedByInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    college?: string | null
+    major?: string | null
+    year?: number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserCreateinterestsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedOneWithoutUserInput
+    personalityTraits?: PersonalityTraitsUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    conversations1?: ConversationUncheckedCreateNestedManyWithoutUser1Input
+    conversations2?: ConversationUncheckedCreateNestedManyWithoutUser2Input
+    sentLikes?: LikeUncheckedCreateNestedManyWithoutSenderInput
+    receivedLikes?: LikeUncheckedCreateNestedManyWithoutReceiverInput
+    matches?: MatchUncheckedCreateNestedManyWithoutUser1Input
+  }
+
+  export type UserCreateOrConnectWithoutMatchedByInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMatchedByInput, UserUncheckedCreateWithoutMatchedByInput>
+  }
+
+  export type UserUpsertWithoutMatchesInput = {
+    update: XOR<UserUpdateWithoutMatchesInput, UserUncheckedUpdateWithoutMatchesInput>
+    create: XOR<UserCreateWithoutMatchesInput, UserUncheckedCreateWithoutMatchesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMatchesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMatchesInput, UserUncheckedUpdateWithoutMatchesInput>
+  }
+
+  export type UserUpdateWithoutMatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matchedBy?: MatchUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matchedBy?: MatchUncheckedUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUpsertWithoutMatchedByInput = {
+    update: XOR<UserUpdateWithoutMatchedByInput, UserUncheckedUpdateWithoutMatchedByInput>
+    create: XOR<UserCreateWithoutMatchedByInput, UserUncheckedCreateWithoutMatchedByInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMatchedByInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMatchedByInput, UserUncheckedUpdateWithoutMatchedByInput>
+  }
+
+  export type UserUpdateWithoutMatchedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUpdateManyWithoutUser1NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMatchedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    college?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: NullableJsonNullValueInput | InputJsonValue
+    interests?: UserUpdateinterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateOneWithoutUserNestedInput
+    personalityTraits?: PersonalityTraitsUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations1?: ConversationUncheckedUpdateManyWithoutUser1NestedInput
+    conversations2?: ConversationUncheckedUpdateManyWithoutUser2NestedInput
+    sentLikes?: LikeUncheckedUpdateManyWithoutSenderNestedInput
+    receivedLikes?: LikeUncheckedUpdateManyWithoutReceiverNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutUser1NestedInput
   }
 
   export type PostCreateManyAuthorInput = {
     id?: string
     title: string
     content?: string | null
+    image?: string | null
     published?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10374,10 +18724,37 @@ export namespace Prisma {
     lastMessageAt?: Date | string | null
   }
 
+  export type LikeCreateManySenderInput = {
+    id?: string
+    receiverId: string
+    createdAt?: Date | string
+  }
+
+  export type LikeCreateManyReceiverInput = {
+    id?: string
+    senderId: string
+    createdAt?: Date | string
+  }
+
+  export type MatchCreateManyUser1Input = {
+    id?: string
+    user2Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type MatchCreateManyUser2Input = {
+    id?: string
+    user1Id: string
+    score: number
+    createdAt?: Date | string
+  }
+
   export type PostUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10387,6 +18764,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10396,6 +18774,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10523,6 +18902,84 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type LikeUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receiver?: UserUpdateOneRequiredWithoutReceivedLikesNestedInput
+  }
+
+  export type LikeUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutSentLikesNestedInput
+  }
+
+  export type LikeUncheckedUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateManyWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUpdateWithoutUser1Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user2?: UserUpdateOneRequiredWithoutMatchedByNestedInput
+  }
+
+  export type MatchUncheckedUpdateWithoutUser1Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUncheckedUpdateManyWithoutUser1Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUpdateWithoutUser2Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user1?: UserUpdateOneRequiredWithoutMatchesNestedInput
+  }
+
+  export type MatchUncheckedUpdateWithoutUser2Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUncheckedUpdateManyWithoutUser2Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateManyConversationInput = {

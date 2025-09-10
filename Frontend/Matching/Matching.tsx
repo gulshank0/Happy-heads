@@ -1,414 +1,208 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Star, MapPin, GraduationCap, Calendar, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Heart, Star, MapPin, GraduationCap, Calendar, User, Eye, EyeOff, ArrowLeft, Settings } from 'lucide-react';
 
 // Types and Interfaces (move these to the top)
 interface UserProfile {
   id: string;
   name: string;
   age: number;
-  gender: 'male' | 'female' | 'other';
+  gender: string;
   college: string;
   major: string;
   year: number;
   bio: string;
-  profilePicture: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  avatar: string;
+  location: { latitude: number; longitude: number } | null;
   interests: string[];
-  preferences: UserPreferences;
-  personality: PersonalityTraits;
-}
-
-interface UserPreferences {
-  ageRange: {
-    min: number;
-    max: number;
-  };
-  preferredGenders: ('male' | 'female' | 'other')[];
-  maxDistance: number; // in kilometers
-  collegePreference: 'same' | 'different' | 'any';
-  majorPreference: 'same' | 'different' | 'any';
-  yearPreference: {
-    min: number;
-    max: number;
-  };
-  importanceWeights: {
-    age: number;
-    distance: number;
-    interests: number;
-    college: number;
-    major: number;
-    year: number;
-    personality: number;
-  };
-}
-
-interface PersonalityTraits {
-  extroversion: number; // 1-10
-  openness: number;     // 1-10
-  conscientiousness: number; // 1-10
-  agreeableness: number;     // 1-10
-  neuroticism: number;       // 1-10
 }
 
 interface MatchResult {
   user: UserProfile;
   score: number;
-  breakdown: ScoreBreakdown;
+  breakdown: {
+    ageCompatibility: number;
+    distanceScore: number;
+    interestSimilarity: number;
+    collegeCompatibility: number;
+    majorCompatibility: number;
+    yearCompatibility: number;
+    personalityCompatibility: number;
+    totalScore: number;
+  };
 }
 
-interface ScoreBreakdown {
-  ageCompatibility: number;
-  distanceScore: number;
-  interestSimilarity: number;
-  collegeCompatibility: number;
-  majorCompatibility: number;
-  yearCompatibility: number;
-  personalityCompatibility: number;
-  totalScore: number;
+interface UserPreferences {
+  minAge: number;
+  maxAge: number;
+  preferredGenders: string[];
+  maxDistance: number;
+  collegePreference: string;
+  majorPreference: string;
+  minYear: number;
+  maxYear: number;
+  ageWeight: number;
+  distanceWeight: number;
+  interestsWeight: number;
+  collegeWeight: number;
+  majorWeight: number;
+  yearWeight: number;
+  personalityWeight: number;
 }
 
-// Matching Algorithm Class (keep this outside the component)
-class MatchingAlgorithm {
-  // Calculate distance between two coordinates using Haversine formula
-  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const R = 6371; // Earth's radius in kilometers
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  }
-
-  // Calculate age compatibility score
-  private calculateAgeCompatibility(userAge: number, candidateAge: number, preferences: UserPreferences): number {
-    if (candidateAge < preferences.ageRange.min || candidateAge > preferences.ageRange.max) {
-      return 0;
-    }
-    
-    const idealAge = (preferences.ageRange.min + preferences.ageRange.max) / 2;
-    const ageDifference = Math.abs(candidateAge - idealAge);
-    const maxDifference = Math.max(
-      Math.abs(preferences.ageRange.min - idealAge),
-      Math.abs(preferences.ageRange.max - idealAge)
-    );
-    
-    return Math.max(0, 100 - (ageDifference / maxDifference) * 100);
-  }
-
-  // Calculate distance compatibility score
-  private calculateDistanceScore(user: UserProfile, candidate: UserProfile): number {
-    const distance = this.calculateDistance(
-      user.location.latitude,
-      user.location.longitude,
-      candidate.location.latitude,
-      candidate.location.longitude
-    );
-
-    if (distance > user.preferences.maxDistance) {
-      return 0;
-    }
-
-    return Math.max(0, 100 - (distance / user.preferences.maxDistance) * 100);
-  }
-
-  // Calculate interest similarity using Jaccard similarity
-  private calculateInterestSimilarity(userInterests: string[], candidateInterests: string[]): number {
-    const userSet = new Set(userInterests.map(interest => interest.toLowerCase()));
-    const candidateSet = new Set(candidateInterests.map(interest => interest.toLowerCase()));
-    
-    const intersection = new Set([...userSet].filter(x => candidateSet.has(x)));
-    const union = new Set([...userSet, ...candidateSet]);
-    
-    if (union.size === 0) return 0;
-    return (intersection.size / union.size) * 100;
-  }
-
-  // Calculate college compatibility
-  private calculateCollegeCompatibility(user: UserProfile, candidate: UserProfile): number {
-    const preference = user.preferences.collegePreference;
-    const sameCollege = user.college === candidate.college;
-
-    switch (preference) {
-      case 'same':
-        return sameCollege ? 100 : 0;
-      case 'different':
-        return sameCollege ? 0 : 100;
-      case 'any':
-        return sameCollege ? 100 : 80; // Slight preference for same college
-      default:
-        return 50;
-    }
-  }
-
-  // Calculate major compatibility
-  private calculateMajorCompatibility(user: UserProfile, candidate: UserProfile): number {
-    const preference = user.preferences.majorPreference;
-    const sameMajor = user.major === candidate.major;
-
-    switch (preference) {
-      case 'same':
-        return sameMajor ? 100 : 0;
-      case 'different':
-        return sameMajor ? 0 : 100;
-      case 'any':
-        return sameMajor ? 100 : 85; // Slight preference for same major
-      default:
-        return 50;
-    }
-  }
-
-  // Calculate year compatibility
-  private calculateYearCompatibility(user: UserProfile, candidate: UserProfile): number {
-    const candidateYear = candidate.year;
-    const preferences = user.preferences.yearPreference;
-
-    if (candidateYear < preferences.min || candidateYear > preferences.max) {
-      return 0;
-    }
-
-    const yearDifference = Math.abs(user.year - candidateYear);
-    return Math.max(0, 100 - (yearDifference * 20)); // 20 points deduction per year difference
-  }
-
-  // Calculate personality compatibility using Euclidean distance
-  private calculatePersonalityCompatibility(userPersonality: PersonalityTraits, candidatePersonality: PersonalityTraits): number {
-    const traits = ['extroversion', 'openness', 'conscientiousness', 'agreeableness', 'neuroticism'] as const;
-    
-    let sumSquaredDifferences = 0;
-    traits.forEach(trait => {
-      const difference = userPersonality[trait] - candidatePersonality[trait];
-      sumSquaredDifferences += difference * difference;
-    });
-
-    const euclideanDistance = Math.sqrt(sumSquaredDifferences);
-    const maxDistance = Math.sqrt(5 * 81); // Maximum possible distance (9^2 * 5 traits)
-    
-    return Math.max(0, 100 - (euclideanDistance / maxDistance) * 100);
-  }
-
-  // Main matching function
-  public findMatches(user: UserProfile, candidates: UserProfile[], limit: number = 10): MatchResult[] {
-    const matches: MatchResult[] = [];
-
-    candidates.forEach(candidate => {
-      // Skip if same user or gender preference doesn't match
-      if (candidate.id === user.id || !user.preferences.preferredGenders.includes(candidate.gender)) {
-        return;
-      }
-
-      // Calculate individual scores
-      const ageCompatibility = this.calculateAgeCompatibility(user.age, candidate.age, user.preferences);
-      const distanceScore = this.calculateDistanceScore(user, candidate);
-      const interestSimilarity = this.calculateInterestSimilarity(user.interests, candidate.interests);
-      const collegeCompatibility = this.calculateCollegeCompatibility(user, candidate);
-      const majorCompatibility = this.calculateMajorCompatibility(user, candidate);
-      const yearCompatibility = this.calculateYearCompatibility(user, candidate);
-      const personalityCompatibility = this.calculatePersonalityCompatibility(user.personality, candidate.personality);
-
-      // Apply weights and calculate total score
-      const weights = user.preferences.importanceWeights;
-      const totalScore = (
-        (ageCompatibility * weights.age) +
-        (distanceScore * weights.distance) +
-        (interestSimilarity * weights.interests) +
-        (collegeCompatibility * weights.college) +
-        (majorCompatibility * weights.major) +
-        (yearCompatibility * weights.year) +
-        (personalityCompatibility * weights.personality)
-      ) / (weights.age + weights.distance + weights.interests + weights.college + weights.major + weights.year + weights.personality);
-
-      const breakdown: ScoreBreakdown = {
-        ageCompatibility,
-        distanceScore,
-        interestSimilarity,
-        collegeCompatibility,
-        majorCompatibility,
-        yearCompatibility,
-        personalityCompatibility,
-        totalScore
-      };
-
-      matches.push({
-        user: candidate,
-        score: totalScore,
-        breakdown
-      });
-    });
-
-    // Sort by score (descending) and return top matches
-    return matches
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit);
-  }
-}
-
-// React Component - Move all hooks inside here
 const Matching: React.FC = () => {
-  // Move all useState hooks inside the component
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
-  const [candidates, setCandidates] = useState<UserProfile[]>([]);
   const [matches, setMatches] = useState<MatchResult[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [showBreakdown, setShowBreakdown] = useState<{ [key: string]: boolean }>({});
+  const [showPreferences, setShowPreferences] = useState<boolean>(false);
+  const [preferences, setPreferences] = useState<UserPreferences>({
+    minAge: 18,
+    maxAge: 35,
+    preferredGenders: ['male', 'female'],
+    maxDistance: 50,
+    collegePreference: 'any',
+    majorPreference: 'any',
+    minYear: 1,
+    maxYear: 4,
+    ageWeight: 0.15,
+    distanceWeight: 0.10,
+    interestsWeight: 0.25,
+    collegeWeight: 0.10,
+    majorWeight: 0.15,
+    yearWeight: 0.10,
+    personalityWeight: 0.15
+  });
 
-  const matchingAlgorithm = new MatchingAlgorithm();
+  // Check authentication and load user data
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
 
-  // Helper functions
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'from-green-400 to-emerald-500';
-    if (score >= 60) return 'from-yellow-400 to-orange-500';
-    if (score >= 40) return 'from-orange-400 to-red-500';
-    return 'from-red-400 to-red-600';
-  };
-
-  const getScoreTextColor = (score: number) => {
-    if (score >= 80) return 'text-green-400';
-    if (score >= 60) return 'text-yellow-400';
-    if (score >= 40) return 'text-orange-400';
-    return 'text-red-400';
-  };
-
-  // Check authentication status
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:8000/auth/me', { // Changed from /auth/me to /auth/status
+      const response = await fetch('http://localhost:8000/auth/me', {
         method: 'GET',
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.authenticated && data.user) {
           setUser(data.user);
-          localStorage.setItem("user", JSON.stringify(data.user));
+          loadUserPreferences();
         } else {
           setUser(null);
-          localStorage.removeItem("user");
         }
       } else {
         setUser(null);
-        localStorage.removeItem("user");
       }
     } catch (error) {
       console.error("Error checking auth status:", error);
       setUser(null);
-      localStorage.removeItem("user");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Mock data for demonstration
-  const mockCurrentUser: UserProfile = {
-    id: "user1",
-    name: "Alice Johnson",
-    age: 20,
-    gender: "female",
-    college: "Stanford University",
-    major: "Computer Science",
-    year: 3,
-    bio: "Love coding and hiking! Looking for someone who shares similar interests and values. Always up for deep conversations and new adventures.",
-    profilePicture: "/images/alice.jpg",
-    location: { latitude: 37.4419, longitude: -122.1430 },
-    interests: ["programming", "hiking", "movies", "coffee", "reading"],
-    preferences: {
-      ageRange: { min: 18, max: 25 },
-      preferredGenders: ["male"],
-      maxDistance: 50,
-      collegePreference: "any",
-      majorPreference: "any",
-      yearPreference: { min: 2, max: 4 },
-      importanceWeights: {
-        age: 0.15,
-        distance: 0.10,
-        interests: 0.25,
-        college: 0.10,
-        major: 0.15,
-        year: 0.10,
-        personality: 0.15
+  const loadUserPreferences = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/matching/preferences', {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.preferences) {
+          setPreferences(data.preferences);
+        }
       }
-    },
-    personality: {
-      extroversion: 7,
-      openness: 8,
-      conscientiousness: 6,
-      agreeableness: 7,
-      neuroticism: 4
+    } catch (error) {
+      console.error('Error loading preferences:', error);
     }
   };
 
-  const mockCandidates: UserProfile[] = [
-    // ... your existing mock candidates data ...
-    {
-      id: "user2",
-      name: "Bob Smith",
-      age: 22,
-      gender: "male",
-      college: "Stanford University",
-      major: "Computer Science",
-      year: 4,
-      bio: "Tech enthusiast and outdoor lover. Always up for new adventures and building cool projects!",
-      profilePicture: "/images/bob.jpg",
-      location: { latitude: 37.4449, longitude: -122.1610 },
-      interests: ["programming", "basketball", "movies", "travel", "gaming"],
-      preferences: {
-        ageRange: { min: 18, max: 24 },
-        preferredGenders: ["female"],
-        maxDistance: 30,
-        collegePreference: "same",
-        majorPreference: "same",
-        yearPreference: { min: 2, max: 4 },
-        importanceWeights: {
-          age: 0.10,
-          distance: 0.15,
-          interests: 0.20,
-          college: 0.15,
-          major: 0.20,
-          year: 0.10,
-          personality: 0.10
-        }
-      },
-      personality: {
-        extroversion: 8,
-        openness: 7,
-        conscientiousness: 7,
-        agreeableness: 8,
-        neuroticism: 3
-      }
-    }
-    // Add other candidates here...
-  ];
-
-  // Effects
-  useEffect(() => {
-    checkAuthStatus();
-    setCurrentUser(mockCurrentUser);
-    setCandidates(mockCandidates);
-  }, []);
-
-  // Event handlers
-  const handleFindMatches = () => {
-    if (!currentUser) return;
+  const handleFindMatches = async () => {
+    if (!user) return;
     
     setLoading(true);
-    setTimeout(() => {
-      const foundMatches = matchingAlgorithm.findMatches(currentUser, candidates, 10);
-      setMatches(foundMatches);
+    setError(null);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/matching/matches?limit=10', {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMatches(data.matches || []);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Failed to find matches');
+      }
+    } catch (error) {
+      console.error('Error finding matches:', error);
+      setError('Network error. Please try again.');
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
+  };
+
+  const handleLikeUser = async (targetUserId: string) => {
+    try {
+      const response = await fetch('http://localhost:8000/api/matching/like', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ targetUserId })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.isMatch) {
+          alert("🎉 It's a Match! You can now start chatting!");
+        } else {
+          alert("Like sent! 💖");
+        }
+        
+        // Remove the liked user from matches
+        setMatches(prev => prev.filter(match => match.user.id !== targetUserId));
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to like user');
+      }
+    } catch (error) {
+      console.error('Error liking user:', error);
+      alert('Network error. Please try again.');
+    }
+  };
+
+  const handleUpdatePreferences = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/matching/preferences', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(preferences)
+      });
+
+      if (response.ok) {
+        alert('Preferences updated successfully!');
+        setShowPreferences(false);
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to update preferences');
+      }
+    } catch (error) {
+      console.error('Error updating preferences:', error);
+      alert('Network error. Please try again.');
+    }
   };
 
   const toggleBreakdown = (userId: string) => {
@@ -418,7 +212,14 @@ const Matching: React.FC = () => {
     }));
   };
 
-  const renderScoreBreakdown = (breakdown: ScoreBreakdown) => (
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return 'from-green-400 to-emerald-500';
+    if (score >= 60) return 'from-yellow-400 to-orange-500';
+    if (score >= 40) return 'from-orange-400 to-red-500';
+    return 'from-red-400 to-pink-500';
+  };
+
+  const renderScoreBreakdown = (breakdown: MatchResult['breakdown']) => (
     <div className="mt-6 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
       <h4 className="font-semibold text-white mb-4 flex items-center">
         <Star className="h-5 w-5 mr-2 text-violet-400" />
@@ -427,63 +228,46 @@ const Matching: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Age</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.ageCompatibility)}`}>
-            {breakdown.ageCompatibility.toFixed(1)}%
-          </div>
+          <div className="text-lg font-bold text-white">{breakdown.ageCompatibility.toFixed(1)}%</div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Distance</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.distanceScore)}`}>
-            {breakdown.distanceScore.toFixed(1)}%
-          </div>
+          <div className="text-lg font-bold text-white">{breakdown.distanceScore.toFixed(1)}%</div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Interests</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.interestSimilarity)}`}>
-            {breakdown.interestSimilarity.toFixed(1)}%
-          </div>
-        </div>
-        <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
-          <div className="text-sm text-white/60 mb-1">College</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.collegeCompatibility)}`}>
-            {breakdown.collegeCompatibility.toFixed(1)}%
-          </div>
-        </div>
-        <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
-          <div className="text-sm text-white/60 mb-1">Major</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.majorCompatibility)}`}>
-            {breakdown.majorCompatibility.toFixed(1)}%
-          </div>
-        </div>
-        <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
-          <div className="text-sm text-white/60 mb-1">Year</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.yearCompatibility)}`}>
-            {breakdown.yearCompatibility.toFixed(1)}%
-          </div>
+          <div className="text-lg font-bold text-white">{breakdown.interestSimilarity.toFixed(1)}%</div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Personality</div>
-          <div className={`font-bold text-lg ${getScoreTextColor(breakdown.personalityCompatibility)}`}>
-            {breakdown.personalityCompatibility.toFixed(1)}%
-          </div>
-        </div>
-        <div className="text-center backdrop-blur-md bg-violet-500/10 border border-violet-500/20 rounded-lg p-3">
-          <div className="text-sm text-violet-300 font-semibold mb-1">Overall</div>
-          <div className={`font-bold text-xl bg-gradient-to-r ${getScoreColor(breakdown.totalScore)} bg-clip-text text-transparent`}>
-            {breakdown.totalScore.toFixed(1)}%
-          </div>
+          <div className="text-lg font-bold text-white">{breakdown.personalityCompatibility.toFixed(1)}%</div>
         </div>
       </div>
     </div>
   );
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-violet-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading...</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-400 mx-auto mb-4"></div>
+          <p className="text-lg">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Please log in to find matches</h2>
+          <button 
+            onClick={() => window.location.href = '/'}
+            className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg"
+          >
+            Go to Login
+          </button>
         </div>
       </div>
     );
@@ -491,19 +275,27 @@ const Matching: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white relative">
-      {/* Decorative Background Elements */}
-      <div className="absolute -left-10 top-20 text-6xl opacity-10 transform rotate-12">💕</div>
-      <div className="absolute -right-10 top-40 text-4xl opacity-10 transform -rotate-12">✨</div>
-      <div className="absolute left-1/4 bottom-20 text-3xl opacity-10 transform rotate-45">💖</div>
-      <div className="absolute right-1/3 bottom-40 text-5xl opacity-10 transform -rotate-45">⭐</div>
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -top-20 -right-20 w-60 h-60 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl animate-pulse delay-2000"></div>
+      </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
+      <div className="relative z-10 p-6 max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="mb-4">
-            <span className="inline-block bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full px-6 py-2 text-sm font-medium text-pink-300 mb-6">
+          <div className="mb-4 flex items-center justify-center gap-4">
+            <span className="inline-block bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full px-6 py-2 text-sm font-medium text-pink-300">
               💕 Smart Matching Algorithm
             </span>
+            <button
+              onClick={() => setShowPreferences(true)}
+              className="inline-flex items-center px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-full text-white hover:bg-white/20 transition-all"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Preferences
+            </button>
           </div>
           
           <h1 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
@@ -525,61 +317,16 @@ const Matching: React.FC = () => {
           </p>
         </div>
 
-        {/* Current User Profile */}
-        {currentUser && (
-          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-8 mb-8 hover:bg-white/10 transition-all duration-300">
-            <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-pink-500/25">
-                <span className="text-3xl text-white font-bold">
-                  {currentUser.name.charAt(0)}
-                </span>
-              </div>
-              <div className="flex-1">
-                <h2 className="text-3xl font-bold text-white mb-2">{currentUser.name}</h2>
-                <div className="flex flex-wrap gap-4 text-white/60 mb-3">
-                  <div className="flex items-center">
-                    <User className="h-4 w-4 mr-1" />
-                    {currentUser.age} years old
-                  </div>
-                  <div className="flex items-center">
-                    <GraduationCap className="h-4 w-4 mr-1" />
-                    {currentUser.college}
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {currentUser.major} • Year {currentUser.year}
-                  </div>
-                </div>
-                <p className="text-white/80 mb-4">{currentUser.bio}</p>
-                <div className="flex flex-wrap gap-2">
-                  {currentUser.interests.map((interest, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 backdrop-blur-md bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm rounded-full"
-                    >
-                      {interest}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Find Matches Button */}
         <div className="text-center mb-12">
           <button
             onClick={handleFindMatches}
             disabled={loading}
-            className={`px-12 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg ${
-              loading
-                ? 'bg-gray-600 cursor-not-allowed'
-                : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transform hover:scale-105 shadow-pink-500/25 hover:shadow-pink-500/40'
-            } text-white`}
+            className="inline-flex items-center px-12 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white font-bold text-lg rounded-xl hover:from-violet-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-lg shadow-violet-500/25"
           >
             {loading ? (
-              <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -588,11 +335,20 @@ const Matching: React.FC = () => {
             ) : (
               <>
                 <Heart className="inline h-5 w-5 mr-2" />
-                Find My Soulmate
+                Find My Matches
               </>
             )}
           </button>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="text-center mb-8">
+            <div className="inline-block bg-red-500/20 border border-red-500/30 rounded-xl px-6 py-4 text-red-200">
+              {error}
+            </div>
+          </div>
+        )}
 
         {/* Matches Results */}
         {matches.length > 0 && (
@@ -614,10 +370,18 @@ const Matching: React.FC = () => {
                     <div className="flex justify-between items-start mb-6">
                       <div className="flex items-center space-x-6">
                         <div className="relative">
-                          <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/25">
-                            <span className="text-3xl text-white font-bold">
-                              {match.user.name.charAt(0)}
-                            </span>
+                          <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/25 overflow-hidden">
+                            {match.user.avatar ? (
+                              <img 
+                                src={match.user.avatar} 
+                                alt={match.user.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-3xl text-white font-bold">
+                                {match.user.name.charAt(0)}
+                              </span>
+                            )}
                           </div>
                           <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                             #{index + 1}
@@ -656,19 +420,14 @@ const Matching: React.FC = () => {
 
                     {/* Interests */}
                     <div className="mb-6">
-                      <span className="text-white/60 font-medium mb-3 block">Shared Interests:</span>
+                      <span className="text-white/60 font-medium mb-3 block">Interests:</span>
                       <div className="flex flex-wrap gap-3">
                         {match.user.interests.map((interest, idx) => (
                           <span
                             key={idx}
-                            className={`px-4 py-2 text-sm rounded-full border transition-all duration-200 ${
-                              currentUser?.interests.includes(interest)
-                                ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/30 text-green-300 shadow-lg shadow-green-500/10'
-                                : 'backdrop-blur-md bg-white/5 border-white/20 text-white/60'
-                            }`}
+                            className="px-4 py-2 text-sm rounded-full border transition-all duration-200 backdrop-blur-md bg-white/5 border-white/20 text-white/60"
                           >
                             {interest}
-                            {currentUser?.interests.includes(interest) && ' ✓'}
                           </span>
                         ))}
                       </div>
@@ -697,7 +456,10 @@ const Matching: React.FC = () => {
                         <button className="px-6 py-3 backdrop-blur-md bg-red-500/20 border border-red-500/30 text-red-300 rounded-lg hover:bg-red-500/30 transition-all duration-200 shadow-lg shadow-red-500/10">
                           ❌ Pass
                         </button>
-                        <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transform hover:scale-105">
+                        <button 
+                          onClick={() => handleLikeUser(match.user.id)}
+                          className="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transform hover:scale-105"
+                        >
                           💕 Like
                         </button>
                       </div>
@@ -712,36 +474,112 @@ const Matching: React.FC = () => {
           </div>
         )}
 
-        {/* Empty State */}
-        {matches.length === 0 && !loading && (
-          <div className="text-center py-20">
-            <div className="text-8xl mb-6 opacity-30">💔</div>
-            <h3 className="text-3xl font-bold text-white mb-4">
-              <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-                No Matches Found
-              </span>
-            </h3>
-            <p className="text-white/60 text-lg mb-8">Try adjusting your preferences or check back later!</p>
-            <button 
-              onClick={() => window.history.back()}
-              className="inline-flex items-center px-6 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-200"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Go Back
-            </button>
+        {/* Preferences Modal */}
+        {showPreferences && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+            <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <h3 className="text-2xl font-bold text-white mb-6">Matching Preferences</h3>
+              
+              {/* Age Range */}
+              <div className="mb-6">
+                <label className="block text-white/80 font-medium mb-2">Age Range</label>
+                <div className="flex gap-4">
+                  <input
+                    type="number"
+                    value={preferences.minAge}
+                    onChange={(e) => setPreferences(prev => ({ ...prev, minAge: parseInt(e.target.value) }))}
+                    className="flex-1 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
+                    min="18"
+                    max="100"
+                  />
+                  <span className="text-white/60 py-2">to</span>
+                  <input
+                    type="number"
+                    value={preferences.maxAge}
+                    onChange={(e) => setPreferences(prev => ({ ...prev, maxAge: parseInt(e.target.value) }))}
+                    className="flex-1 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
+                    min="18"
+                    max="100"
+                  />
+                </div>
+              </div>
+
+              {/* Gender Preferences */}
+              <div className="mb-6">
+                <label className="block text-white/80 font-medium mb-2">Interested in</label>
+                <div className="flex gap-4">
+                  {['male', 'female', 'other'].map(gender => (
+                    <label key={gender} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={preferences.preferredGenders.includes(gender)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setPreferences(prev => ({ 
+                              ...prev, 
+                              preferredGenders: [...prev.preferredGenders, gender] 
+                            }));
+                          } else {
+                            setPreferences(prev => ({ 
+                              ...prev, 
+                              preferredGenders: prev.preferredGenders.filter(g => g !== gender) 
+                            }));
+                          }
+                        }}
+                        className="mr-2"
+                      />
+                      <span className="text-white capitalize">{gender}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Max Distance */}
+              <div className="mb-6">
+                <label className="block text-white/80 font-medium mb-2">
+                  Maximum Distance: {preferences.maxDistance} km
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="200"
+                  value={preferences.maxDistance}
+                  onChange={(e) => setPreferences(prev => ({ ...prev, maxDistance: parseInt(e.target.value) }))}
+                  className="w-full"
+                />
+              </div>
+
+              {/* College Preference */}
+              <div className="mb-6">
+                <label className="block text-white/80 font-medium mb-2">College Preference</label>
+                <select
+                  value={preferences.collegePreference}
+                  onChange={(e) => setPreferences(prev => ({ ...prev, collegePreference: e.target.value }))}
+                  className="w-full px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
+                >
+                  <option value="any" className="bg-gray-800">Any College</option>
+                  <option value="same" className="bg-gray-800">Same College</option>
+                  <option value="different" className="bg-gray-800">Different College</option>
+                </select>
+              </div>
+
+              <div className="flex gap-4 justify-end">
+                <button
+                  onClick={() => setShowPreferences(false)}
+                  className="px-6 py-3 backdrop-blur-md bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpdatePreferences}
+                  className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all"
+                >
+                  Save Preferences
+                </button>
+              </div>
+            </div>
           </div>
         )}
-        
-        {/* Back Button - Fixed at bottom */}
-        <div className="fixed bottom-8 left-8">
-          <button 
-            onClick={() => window.history.back()}
-            className="inline-flex items-center px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-200 shadow-lg"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </button>
-        </div>
       </div>
     </div>
   );

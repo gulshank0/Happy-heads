@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.15.0
- * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+ * Prisma Client JS version: 6.16.0
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.15.0",
-  engine: "85179d7826409ee107a6ba334b5e305ae3fba9fb"
+  client: "6.16.0",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -131,6 +131,11 @@ exports.Prisma.UserScalarFieldEnum = {
   phone: 'phone',
   bio: 'bio',
   googleId: 'googleId',
+  college: 'college',
+  major: 'major',
+  year: 'year',
+  location: 'location',
+  interests: 'interests',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -139,6 +144,7 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  image: 'image',
   published: 'published',
   authorId: 'authorId',
   createdAt: 'createdAt',
@@ -182,14 +188,74 @@ exports.Prisma.MessageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserPreferencesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  minAge: 'minAge',
+  maxAge: 'maxAge',
+  preferredGenders: 'preferredGenders',
+  maxDistance: 'maxDistance',
+  collegePreference: 'collegePreference',
+  majorPreference: 'majorPreference',
+  minYear: 'minYear',
+  maxYear: 'maxYear',
+  ageWeight: 'ageWeight',
+  distanceWeight: 'distanceWeight',
+  interestsWeight: 'interestsWeight',
+  collegeWeight: 'collegeWeight',
+  majorWeight: 'majorWeight',
+  yearWeight: 'yearWeight',
+  personalityWeight: 'personalityWeight',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PersonalityTraitsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  extroversion: 'extroversion',
+  openness: 'openness',
+  conscientiousness: 'conscientiousness',
+  agreeableness: 'agreeableness',
+  neuroticism: 'neuroticism',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MatchScalarFieldEnum = {
+  id: 'id',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
+  score: 'score',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -208,7 +274,11 @@ exports.Prisma.ModelName = {
   Post: 'Post',
   ScoreCard: 'ScoreCard',
   Conversation: 'Conversation',
-  Message: 'Message'
+  Message: 'Message',
+  UserPreferences: 'UserPreferences',
+  PersonalityTraits: 'PersonalityTraits',
+  Like: 'Like',
+  Match: 'Match'
 };
 
 /**

@@ -9,7 +9,7 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Use the imported prisma instance directly
-    let user = await prisma.user.findUnique({
+    let user = await prisma.user.findFirst({
       where: { googleId: profile.id }
     });
 

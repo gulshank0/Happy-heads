@@ -1,5 +1,32 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/database'; // Use the correct import
+
+// Extend Express Request type to include user with id
+declare global {
+  namespace Express {
+    interface User {
+      id: string;
+      [key: string]: any;
+    }
+  }
+}
+
+export const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
+  }
+  
+  return res.status(401).json({ error: 'Not authenticated' });
+};
+
+// Add the missing requireAuth middleware
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
+  }
+  
+  return res.status(401).json({ error: 'Authentication required' });
+};
 
 export class UserController {
   static async createUser(req: Request, res: Response) {

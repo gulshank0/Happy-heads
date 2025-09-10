@@ -5,13 +5,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const {
+  PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
+  PrismaClientRustPanicError,
+  PrismaClientInitializationError,
+  PrismaClientValidationError,
+  getPrismaClient,
+  sqltag,
+  empty,
+  join,
+  raw,
+  skip,
   Decimal,
+  Debug,
   objectEnumValues,
   makeStrictEnum,
+  Extensions,
+  warnOnce,
+  defineDmmfProperty,
   Public,
   getRuntime,
-  skip
-} = require('./runtime/index-browser.js')
+  createParam,
+} = require('./runtime/wasm-engine-edge.js')
 
 
 const Prisma = {}
@@ -20,79 +35,35 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.15.0
- * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+ * Prisma Client JS version: 6.16.0
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.15.0",
-  engine: "85179d7826409ee107a6ba334b5e305ae3fba9fb"
+  client: "6.16.0",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
-Prisma.PrismaClientKnownRequestError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientKnownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)};
-Prisma.PrismaClientUnknownRequestError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientUnknownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientRustPanicError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientRustPanicError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientInitializationError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientInitializationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientValidationError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
+Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError
+Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError
+Prisma.PrismaClientInitializationError = PrismaClientInitializationError
+Prisma.PrismaClientValidationError = PrismaClientValidationError
 Prisma.Decimal = Decimal
 
 /**
  * Re-export of sql-template-tag
  */
-Prisma.sql = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`sqltag is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.empty = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`empty is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.join = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`join is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.raw = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`raw is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.sql = sqltag
+Prisma.empty = empty
+Prisma.join = join
+Prisma.raw = raw
 Prisma.validator = Public.validator
 
 /**
 * Extensions
 */
-Prisma.getExtensionContext = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`Extensions.getExtensionContext is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.defineExtension = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`Extensions.defineExtension is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.getExtensionContext = Extensions.getExtensionContext
+Prisma.defineExtension = Extensions.defineExtension
 
 /**
  * Shorthand utilities for JSON filtering
@@ -109,10 +80,11 @@ Prisma.NullTypes = {
 
 
 
+
+
 /**
  * Enums
  */
-
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
@@ -131,6 +103,11 @@ exports.Prisma.UserScalarFieldEnum = {
   phone: 'phone',
   bio: 'bio',
   googleId: 'googleId',
+  college: 'college',
+  major: 'major',
+  year: 'year',
+  location: 'location',
+  interests: 'interests',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -139,6 +116,7 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  image: 'image',
   published: 'published',
   authorId: 'authorId',
   createdAt: 'createdAt',
@@ -182,14 +160,74 @@ exports.Prisma.MessageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserPreferencesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  minAge: 'minAge',
+  maxAge: 'maxAge',
+  preferredGenders: 'preferredGenders',
+  maxDistance: 'maxDistance',
+  collegePreference: 'collegePreference',
+  majorPreference: 'majorPreference',
+  minYear: 'minYear',
+  maxYear: 'maxYear',
+  ageWeight: 'ageWeight',
+  distanceWeight: 'distanceWeight',
+  interestsWeight: 'interestsWeight',
+  collegeWeight: 'collegeWeight',
+  majorWeight: 'majorWeight',
+  yearWeight: 'yearWeight',
+  personalityWeight: 'personalityWeight',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PersonalityTraitsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  extroversion: 'extroversion',
+  openness: 'openness',
+  conscientiousness: 'conscientiousness',
+  agreeableness: 'agreeableness',
+  neuroticism: 'neuroticism',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MatchScalarFieldEnum = {
+  id: 'id',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
+  score: 'score',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -208,36 +246,89 @@ exports.Prisma.ModelName = {
   Post: 'Post',
   ScoreCard: 'ScoreCard',
   Conversation: 'Conversation',
-  Message: 'Message'
+  Message: 'Message',
+  UserPreferences: 'UserPreferences',
+  PersonalityTraits: 'PersonalityTraits',
+  Like: 'Like',
+  Match: 'Match'
 };
-
 /**
- * This is a stub Prisma Client that will error at runtime if called.
+ * Create the Client
  */
-class PrismaClient {
-  constructor() {
-    return new Proxy(this, {
-      get(target, prop) {
-        let message
-        const runtime = getRuntime()
-        if (runtime.isEdge) {
-          message = `PrismaClient is not configured to run in ${runtime.prettyName}. In order to run Prisma Client on edge runtime, either:
-- Use Prisma Accelerate: https://pris.ly/d/accelerate
-- Use Driver Adapters: https://pris.ly/d/driver-adapters
-`;
-        } else {
-          message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
-        }
-
-        message += `
-If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
-
-        throw new Error(message)
+const config = {
+  "generator": {
+    "name": "client",
+    "provider": {
+      "fromEnvVar": null,
+      "value": "prisma-client-js"
+    },
+    "output": {
+      "value": "/home/gulshan/Full-app/Happy-heads/Backend/generated/client",
+      "fromEnvVar": null
+    },
+    "config": {
+      "engineType": "library"
+    },
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x",
+        "native": true
       }
-    })
+    ],
+    "previewFeatures": [],
+    "sourceFilePath": "/home/gulshan/Full-app/Happy-heads/Backend/prisma/schema.prisma",
+    "isCustomOutput": true
+  },
+  "relativeEnvPaths": {
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
+  },
+  "relativePath": "../../prisma",
+  "clientVersion": "6.16.0",
+  "engineVersion": "1c57fdcd7e44b29b9313256c76699e91c3ac3c43",
+  "datasourceNames": [
+    "db"
+  ],
+  "activeProvider": "postgresql",
+  "postinstall": false,
+  "inlineDatasources": {
+    "db": {
+      "url": {
+        "fromEnvVar": "DATABASE_URL",
+        "value": null
+      }
+    }
+  },
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  email     String   @unique\n  name      String?\n  avatar    String?\n  url       String?\n  gender    String?\n  age       Int?\n  phone     String?\n  bio       String?\n  googleId  String?\n  college   String?\n  major     String?\n  year      Int?\n  location  Json? // {latitude: number, longitude: number}\n  interests String[] // Array of interests\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relations\n  posts             Post[]\n  scoreCard         ScoreCard?\n  userPreferences   UserPreferences?\n  personalityTraits PersonalityTraits?\n  sentMessages      Message[]          @relation(\"SentMessages\")\n  receivedMessages  Message[]          @relation(\"ReceivedMessages\")\n  conversations1    Conversation[]     @relation(\"User1Conversations\")\n  conversations2    Conversation[]     @relation(\"User2Conversations\")\n\n  // Matching relations\n  sentLikes     Like[]  @relation(\"LikeSender\")\n  receivedLikes Like[]  @relation(\"LikeReceiver\")\n  matches       Match[] @relation(\"MatchUser1\")\n  matchedBy     Match[] @relation(\"MatchUser2\")\n\n  @@map(\"users\")\n}\n\nmodel Post {\n  id        String   @id @default(cuid())\n  title     String\n  content   String?\n  image     String? // Add this field for post images\n  published Boolean  @default(false)\n  authorId  String\n  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@map(\"posts\")\n}\n\nmodel ScoreCard {\n  id          String   @id @default(cuid())\n  userId      String   @unique\n  college     String?\n  major       String?\n  year        String?\n  location    String?\n  interests   String[]\n  preferences String[]\n  personality String?\n  score       Int?     @default(0)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@map(\"scorecards\")\n}\n\nmodel Conversation {\n  id            String    @id @default(cuid())\n  user1Id       String\n  user2Id       String\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n  lastMessageAt DateTime?\n\n  user1    User      @relation(\"User1Conversations\", fields: [user1Id], references: [id], onDelete: Cascade)\n  user2    User      @relation(\"User2Conversations\", fields: [user2Id], references: [id], onDelete: Cascade)\n  messages Message[]\n\n  @@unique([user1Id, user2Id])\n  @@map(\"conversations\")\n}\n\nmodel Message {\n  id             String      @id @default(cuid())\n  conversationId String\n  senderId       String\n  receiverId     String\n  content        String\n  messageType    MessageType @default(TEXT)\n  isRead         Boolean     @default(false)\n  isDelivered    Boolean     @default(false)\n  createdAt      DateTime    @default(now())\n  updatedAt      DateTime    @updatedAt\n\n  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  sender       User         @relation(\"SentMessages\", fields: [senderId], references: [id], onDelete: Cascade)\n  receiver     User         @relation(\"ReceivedMessages\", fields: [receiverId], references: [id], onDelete: Cascade)\n\n  @@map(\"messages\")\n}\n\nmodel UserPreferences {\n  id     String @id @default(cuid())\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  minAge            Int      @default(18)\n  maxAge            Int      @default(35)\n  preferredGenders  String[] // [\"male\", \"female\", \"other\"]\n  maxDistance       Int      @default(50) // in kilometers\n  collegePreference String   @default(\"any\") // \"same\", \"different\", \"any\"\n  majorPreference   String   @default(\"any\") // \"same\", \"different\", \"any\"\n  minYear           Int      @default(1)\n  maxYear           Int      @default(4)\n\n  // Importance weights (0-1)\n  ageWeight         Float @default(0.15)\n  distanceWeight    Float @default(0.10)\n  interestsWeight   Float @default(0.25)\n  collegeWeight     Float @default(0.10)\n  majorWeight       Float @default(0.15)\n  yearWeight        Float @default(0.10)\n  personalityWeight Float @default(0.15)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel PersonalityTraits {\n  id     String @id @default(cuid())\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  extroversion      Int @default(5) // 1-10\n  openness          Int @default(5) // 1-10\n  conscientiousness Int @default(5) // 1-10\n  agreeableness     Int @default(5) // 1-10\n  neuroticism       Int @default(5) // 1-10\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Like {\n  id         String   @id @default(cuid())\n  senderId   String\n  receiverId String\n  sender     User     @relation(\"LikeSender\", fields: [senderId], references: [id], onDelete: Cascade)\n  receiver   User     @relation(\"LikeReceiver\", fields: [receiverId], references: [id], onDelete: Cascade)\n  createdAt  DateTime @default(now())\n\n  @@unique([senderId, receiverId])\n}\n\nmodel Match {\n  id        String   @id @default(cuid())\n  user1Id   String\n  user2Id   String\n  user1     User     @relation(\"MatchUser1\", fields: [user1Id], references: [id], onDelete: Cascade)\n  user2     User     @relation(\"MatchUser2\", fields: [user2Id], references: [id], onDelete: Cascade)\n  score     Float // Compatibility score\n  createdAt DateTime @default(now())\n\n  @@unique([user1Id, user2Id])\n}\n\nenum MessageType {\n  TEXT\n  IMAGE\n  FILE\n  EMOJI\n}\n",
+  "inlineSchemaHash": "8a0d05f2843c34375d7bca77a18512ef93f33ebe3c4601bfe9ac402ca7d176bb",
+  "copyEngine": true
+}
+config.dirname = '/'
+
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gender\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"age\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"college\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"major\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"interests\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToUser\"},{\"name\":\"scoreCard\",\"kind\":\"object\",\"type\":\"ScoreCard\",\"relationName\":\"ScoreCardToUser\"},{\"name\":\"userPreferences\",\"kind\":\"object\",\"type\":\"UserPreferences\",\"relationName\":\"UserToUserPreferences\"},{\"name\":\"personalityTraits\",\"kind\":\"object\",\"type\":\"PersonalityTraits\",\"relationName\":\"PersonalityTraitsToUser\"},{\"name\":\"sentMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"SentMessages\"},{\"name\":\"receivedMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ReceivedMessages\"},{\"name\":\"conversations1\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"User1Conversations\"},{\"name\":\"conversations2\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"User2Conversations\"},{\"name\":\"sentLikes\",\"kind\":\"object\",\"type\":\"Like\",\"relationName\":\"LikeSender\"},{\"name\":\"receivedLikes\",\"kind\":\"object\",\"type\":\"Like\",\"relationName\":\"LikeReceiver\"},{\"name\":\"matches\",\"kind\":\"object\",\"type\":\"Match\",\"relationName\":\"MatchUser1\"},{\"name\":\"matchedBy\",\"kind\":\"object\",\"type\":\"Match\",\"relationName\":\"MatchUser2\"}],\"dbName\":\"users\"},\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"published\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PostToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"posts\"},\"ScoreCard\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"college\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"major\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"interests\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"preferences\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"personality\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ScoreCardToUser\"}],\"dbName\":\"scorecards\"},\"Conversation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user1Id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user2Id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastMessageAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user1\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"User1Conversations\"},{\"name\":\"user2\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"User2Conversations\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ConversationToMessage\"}],\"dbName\":\"conversations\"},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conversationId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"receiverId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messageType\",\"kind\":\"enum\",\"type\":\"MessageType\"},{\"name\":\"isRead\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isDelivered\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"conversation\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"ConversationToMessage\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SentMessages\"},{\"name\":\"receiver\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReceivedMessages\"}],\"dbName\":\"messages\"},\"UserPreferences\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserPreferences\"},{\"name\":\"minAge\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"maxAge\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"preferredGenders\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"maxDistance\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"collegePreference\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"majorPreference\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"minYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"maxYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"ageWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"distanceWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"interestsWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"collegeWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"majorWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"yearWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"personalityWeight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"PersonalityTraits\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PersonalityTraitsToUser\"},{\"name\":\"extroversion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"openness\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"conscientiousness\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"agreeableness\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"neuroticism\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Like\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"receiverId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LikeSender\"},{\"name\":\"receiver\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LikeReceiver\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Match\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user1Id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user2Id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user1\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MatchUser1\"},{\"name\":\"user2\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MatchUser2\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
+config.engineWasm = {
+  getRuntime: async () => require('./query_engine_bg.js'),
+  getQueryEngineWasmModule: async () => {
+    const loader = (await import('#wasm-engine-loader')).default
+    const engine = (await loader).default
+    return engine
   }
 }
+config.compilerWasm = undefined
 
+config.injectableEdgeEnv = () => ({
+  parsed: {
+    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+  }
+})
+
+if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {
+  Debug.enable(typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined)
+}
+
+const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
-
 Object.assign(exports, Prisma)
+

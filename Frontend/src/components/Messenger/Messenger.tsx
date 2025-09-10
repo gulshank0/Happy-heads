@@ -40,11 +40,9 @@ export default function Messenger() {
             
             if (response.ok) {
               const data = await response.json();
-              console.log(`✅ Success with ${endpoint}:`, data);
               userData = data.user || data; // Handle different response formats
               break;
             } else {
-              console.log(`❌ ${endpoint} returned ${response.status}`);
             }
           } catch (err) {
             console.log(`❌ ${endpoint} failed:`, err);
@@ -53,13 +51,10 @@ export default function Messenger() {
         
         if (userData) {
           setCurrentUser(userData);
-          console.log('✅ Current user set:', userData);
         } else {
-          console.error('❌ No valid endpoint found for current user');
           setError('Failed to get user information. Please log in again.');
         }
       } catch (error) {
-        console.error('Failed to get current user:', error);
         setError('Failed to get user information');
       }
     };
@@ -114,7 +109,6 @@ export default function Messenger() {
       const data = await messageService.getMessages(conversationId);
       setMessages(data);
     } catch (error) {
-      console.error('Failed to load messages:', error);
       setError('Failed to load messages');
     }
   };
@@ -136,7 +130,6 @@ export default function Messenger() {
   };
 
   const handleSendMessage = async () => {
-    console.log('🚀 handleSendMessage called');
     
     if (!newMessage.trim() || !selectedConversation || !currentUser || sendingMessage) {
       console.log('❌ Send message blocked:', {
@@ -150,14 +143,13 @@ export default function Messenger() {
     
     const currentConversation = conversations.find(conv => conv.id === selectedConversation);
     if (!currentConversation) {
-      console.error('❌ No current conversation found');
       setError('No conversation selected');
       return;
     }
 
     const receiverId = currentConversation.user.id;
     
-    console.log('🔍 Sending message with data:', {
+    console.log('📝 Preparing to send message:', {
       conversationId: selectedConversation,
       receiverId: receiverId,
       senderId: currentUser.id,
@@ -165,12 +157,13 @@ export default function Messenger() {
       currentConversation
     });
 
+    // Store message content before clearing (moved outside try block)
+    const messageToSend = newMessage.trim();
+
     try {
       setSendingMessage(true);
       setError(null);
       
-      // Store message content before clearing
-      const messageToSend = newMessage.trim();
       setNewMessage(""); // Clear input immediately
       
       console.log('📤 Calling messageService.sendMessage...');
@@ -178,7 +171,6 @@ export default function Messenger() {
       // Send message to server (no optimistic update for now to debug)
       const sentMessage = await messageService.sendMessage(receiverId, messageToSend);
       
-      console.log('✅ Message sent successfully:', sentMessage);
       
       // Add the sent message to the UI
       setMessages(prev => [...prev, sentMessage]);
@@ -202,7 +194,6 @@ export default function Messenger() {
       );
       
     } catch (error: any) {
-      console.error('❌ Failed to send message:', error);
       
       // Restore the message in input on error
       setNewMessage(messageToSend);

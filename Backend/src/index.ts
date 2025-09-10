@@ -5,6 +5,8 @@ import passport from "passport";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
 import messageRoutes from "./routes/messages"; // Add this import
+import matchingRoutes from './routes/matchingRoutes';
+import postsRouter from './routes/posts';
 import "./config/passport"; // Import passport configuration
 import cors from "cors";
 import multer from "multer";
@@ -90,6 +92,15 @@ app.use(express.urlencoded({ extended: true }));
 // Static file serving for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Create uploads directory for posts
+const postsUploadsDir = path.join(__dirname, '../uploads/posts');
+if (!fs.existsSync(postsUploadsDir)) {
+  fs.mkdirSync(postsUploadsDir, { recursive: true });
+}
+
+// Serve post images
+app.use('/uploads/posts', express.static(postsUploadsDir));
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret-key',
   resave: false,
@@ -119,6 +130,8 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes); // Add this line
+app.use('/api/matching', matchingRoutes);
+app.use('/posts', postsRouter);
 
 app.get("/users/data", (req, res) => {
   res.json({ message: "User data endpoint" });
