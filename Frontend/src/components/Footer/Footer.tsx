@@ -157,7 +157,7 @@ const Footer: React.FC = () => {
             </p>
           </div>
             <div className="text-white/40 text-sm">
-              © 2024 Cufy. All rights reserved.
+              © 2024 HappyHeads. All rights reserved.
           </div>
           </div>
          

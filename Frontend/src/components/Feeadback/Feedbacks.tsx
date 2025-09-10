@@ -6,21 +6,21 @@ export default function Feedbacks() {
       name: "Priya Sharma",
       college: "Sharda University",
       avatar: "P",
-      feedback: "Yaar cufy mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
+      feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
       gradient: "from-pink-500 to-rose-500"
     },
     {
       name: "Priya Sharma",
       college: "Sharda University",
       avatar: "P",
-      feedback: "Yaar cufy mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
+      feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
       gradient: "from-pink-500 to-rose-500"
     },
     , {
       name: "Priya Sharma",
       college: "Sharda University",
       avatar: "P",
-      feedback: "Yaar cufy mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
+      feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
       gradient: "from-pink-500 to-rose-500"
     },
     {
