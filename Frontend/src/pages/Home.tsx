@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, X, Calendar, MessageCircle, Users, Sparkles, Settings, Home as HomeIcon, User, Menu, LogOut, Bell, Filter } from 'lucide-react';
+import { Heart, X, Calendar, MessageCircle, Users, Sparkle, Settings, Home as HomeIcon, User, Menu, LogOut, Bell, Filter, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Header/Navbar';
+import { size } from 'zod/v4';
+import Feed from '@/components/Feeds/Feed';
+import Notification from '@/components/Notification/Notification';
 
 interface UserProfile {
   id: string;
@@ -38,49 +41,27 @@ const mockProfiles: ProfileCard[] = [
     bio: "Adventure seeker and coffee enthusiast",
     location: "2 miles away"
   },
-  {
-    id: "2",
-    name: "James Rodriguez",
-    age: 29,
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=face",
-    interests: ["Music", "Travel", "Cooking"],
-    bio: "Musician who loves to explore new places",
-    location: "3 miles away"
-  },
-  {
-    id: "3",
-    name: "Sophia Kim",
-    age: 24,
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face",
-    interests: ["Art", "Yoga", "Reading"],
-    bio: "Artist finding beauty in everyday moments",
-    location: "1 mile away"
-  },
-  {
-    id: "4",
-    name: "Michael Torres",
-    age: 31,
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=face",
-    interests: ["Fitness", "Movies", "Dogs"],
-    bio: "Fitness enthusiast and dog lover",
-    location: "4 miles away"
-  }
+  
 ];
 
 const Home: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState('feed'); // Changed from 'dashboard' to 'feed'
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [likedProfiles, setLikedProfiles] = useState<string[]>([]);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [caption, setCaption] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
   const [stats, setStats] = useState({
     matches: 0,
     likes: 0,
     messages: 0,
     profileViews: 0
   });
-  
+
   const navigate = useNavigate();
 
   // Check authentication and load user data
@@ -149,6 +130,34 @@ const Home: React.FC = () => {
     navigate('/profile');
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCaptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCaption(e.target.value);
+  };
+
+  const clearImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+    // Reset the file input
+    const fileInput = document.getElementById('image-upload') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  };
+
+  const handlePreviewToggle = () => {
+    setShowPreview(!showPreview);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -175,63 +184,6 @@ const Home: React.FC = () => {
       <div className='pt-20 bg-black'>
         <Navbar />
       </div>
-      {/* Navigation Bar */}
-      {/* <nav className="backdrop-blur-md bg-white/5 border-b border-white/10 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 rounded-xl text-white/60 hover:bg-white/5 transition-colors"
-              >
-                <Menu size={20} />
-              </button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-violet-400 to-pink-400 rounded-xl flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-white" />
-                </div>
-                <span 
-                  className="text-xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent hover:cursor-pointer" 
-                  onClick={() => setActiveSection('dashboard')}
-                >
-                  Happy Heads
-                </span>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Bell className="w-6 h-6 text-white/60 cursor-pointer hover:text-violet-400 transition-colors" />
-                <span className="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-r from-violet-400 to-pink-400 text-white text-xs rounded-full flex items-center justify-center">
-                  {stats.messages}
-                </span>
-              </div>
-              <div className="relative">
-                <MessageCircle className="w-6 h-6 text-white/60 cursor-pointer hover:text-violet-400 transition-colors" />
-                <span className="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-r from-violet-400 to-pink-400 text-white text-xs rounded-full flex items-center justify-center">
-                  3
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div 
-                  onClick={goToProfile}
-                  className="w-8 h-8 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
-                >
-                  <User className="w-5 h-5 text-white" />
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="p-2 text-white/60 hover:text-red-400 transition-colors"
-                  title="Logout"
-                >
-                  <LogOut size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav> */}
-
       <div className="flex">
         {/* Sidebar */}
         <div className={`fixed lg:static inset-y-0 left-0 z-40 w-64 backdrop-blur-md bg-white/5 border-r border-white/10 transform transition-transform lg:transform-none ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -252,11 +204,12 @@ const Home: React.FC = () => {
 
             <div className="space-y-2">
               {[
-                { id: 'dashboard', label: 'Dashboard', icon: HomeIcon },
-                { id: 'discover', label: 'Discover', icon: Sparkles },
+                { id: 'feed', label: 'Feed', icon: HomeIcon },
+                { id: 'post', label: 'Post', icon: Sparkle },
                 { id: 'matches', label: 'Matches', icon: Users },
+                {id:'notifications', label:'Notifications', icon: Bell},
                 { id: 'messages', label: 'Messages', icon: MessageCircle },
-                { id: 'settings', label: 'Settings', icon: Settings }
+                { id: 'settings', label: 'Settings', icon: Settings },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -288,163 +241,170 @@ const Home: React.FC = () => {
 
         {/* Main Content */}
         <div className="flex-1 p-4 lg:p-8">
-          {/* Dashboard Section */}
-          {activeSection === 'dashboard' && (
-            <div className="space-y-6">
-              <div className="flex items-center space-x-3 mb-8">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-r from-violet-400 to-pink-400 flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold text-white">Welcome back, {firstName}!</h1>
-                  <p className="text-white/60">Ready to find your perfect match today?</p>
-                </div>
-              </div>
-
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                  { label: 'Profile Views', value: stats.profileViews, icon: User, color: 'from-violet-400 to-pink-400' },
-                  { label: 'Likes Received', value: stats.likes, icon: Heart, color: 'from-pink-400 to-red-400' },
-                  { label: 'Matches', value: stats.matches, icon: Users, color: 'from-blue-400 to-violet-400' },
-                  { label: 'Messages', value: stats.messages, icon: MessageCircle, color: 'from-green-400 to-blue-400' }
-                ].map((stat, index) => (
-                  <div key={index} className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all cursor-pointer group">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <stat.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-1">{stat.value}</h3>
-                    <p className="text-white/60 text-sm">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Quick Actions */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
-                  <h2 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <Sparkles className="w-6 h-6 mr-2 text-violet-400" />
-                    Quick Actions
-                  </h2>
-                  <div className="space-y-3">
-                    <button
-                      onClick={() => setActiveSection('discover')}
-                      className="w-full p-4 bg-gradient-to-r from-violet-500 to-pink-500 rounded-xl text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 transition-all"
-                    >
-                      Start Discovering
-                    </button>
-                    <button
-                      onClick={goToProfile}
-                      className="w-full p-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white font-medium hover:bg-white/20 transition-all"
-                    >
-                      Complete Profile
-                    </button>
-                  </div>
-                </div>
-
-                <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
-                  <h2 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <Bell className="w-6 h-6 mr-2 text-pink-400" />
-                    Recent Activity
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-4 p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl">
-                      <div className="w-10 h-10 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center">
-                        <Heart className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-medium text-white">Someone liked your profile</p>
-                        <p className="text-sm text-white/60">2 hours ago</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-4 p-3 bg-pink-500/10 border border-pink-500/20 rounded-xl">
-                      <div className="w-10 h-10 bg-gradient-to-r from-pink-400 to-red-400 rounded-full flex items-center justify-center">
-                        <Users className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-medium text-white">New match available</p>
-                        <p className="text-sm text-white/60">5 hours ago</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Feed Section */}
+          {activeSection === 'feed' && (
+            <Feed/>
+            
+          )}
+{/*Notifications Section*/}
+          {activeSection === 'notifications' && (
+            <Notification/>
           )}
 
-          {/* Discover Section */}
-          {activeSection === 'discover' && (
-            <div className="max-w-md mx-auto">
-              <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold text-white">
-                  <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-                    Discover People
-                  </span>
-                </h1>
-                <button className="p-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-all">
-                  <Filter className="w-5 h-5 text-white/60" />
-                </button>
-              </div>
+
+
+
+
+{/* Post Section */}
+          {activeSection === 'post' && (
+            <div className="space-y-8">
+              <h1 className="text-3xl font-bold text-white mb-8 flex items-center">
+                <Sparkle className="w-8 h-8 mr-3 text-violet-400" />
+                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                  Create a Post
+                </span>
+              </h1>
               
-              <div className="relative">
-                <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 shadow-2xl">
-                  <div className="relative">
-                    <img
-                      src={currentProfile.photo}
-                      alt={currentProfile.name}
-                      className="w-full h-96 object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6">
-                      <div className="flex items-center justify-between mb-2">
-                        <h2 className="text-2xl font-bold text-white">
-                          {currentProfile.name}
-                          {currentProfile.age && <span className="text-white/80">, {currentProfile.age}</span>}
-                        </h2>
-                        {currentProfile.location && (
-                          <span className="text-sm text-white/60 bg-white/20 px-2 py-1 rounded-full">
-                            {currentProfile.location}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-white/90 mb-3">{currentProfile.bio}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {currentProfile.interests.map((interest, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 backdrop-blur-md bg-white/20 border border-white/30 rounded-full text-white text-sm"
-                          >
-                            {interest}
-                          </span>
-                        ))}
+              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6 max-w-lg mx-auto">
+                <h2 className="text-xl font-bold text-white mb-4">Share with the World</h2>
+                
+                {/* Image Upload Section */}
+                <div className="mb-4">
+                  <label className="block text-white/80 text-sm font-medium mb-2">
+                    Add Photo
+                  </label>
+                  
+                  {imagePreview ? (
+                    <div className="relative">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-64 object-cover rounded-xl"
+                      />
+                      <button
+                        onClick={clearImage}
+                        className="absolute top-2 right-2 w-8 h-8 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center transition-all"
+                      >
+                        <X className="w-4 h-4 text-white" />
+                      </button>
+                      <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
+                        <span className="text-white text-xs">{selectedImage?.name}</span>
                       </div>
                     </div>
+                  ) : (
+                    <div className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center hover:border-violet-400 transition-colors">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        id="image-upload"
+                        onChange={handleImageUpload}
+                      />
+                      <label
+                        htmlFor="image-upload"
+                        className="cursor-pointer flex flex-col items-center"
+                      >
+                        <div className="w-12 h-12 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center mb-2">
+                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </div>
+                        <span className="text-white/60 text-sm">Click to upload image</span>
+                        <span className="text-white/40 text-xs mt-1">PNG, JPG up to 10MB</span>
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                {/* Caption Section */}
+                <div className="mb-4">
+                  <label className="block text-white/80 text-sm font-medium mb-2">
+                    Caption
+                  </label>
+                  <textarea
+                    value={caption}
+                    onChange={handleCaptionChange}
+                    className="w-full h-24 p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+                    placeholder="Write a caption for your post..."
+                    maxLength={500}
+                  ></textarea>
+                  <div className="text-right text-white/40 text-xs mt-1">{caption.length}/500</div>
+                </div>
+
+                {/* Privacy & Sharing Options */}
+                <div className="mb-6">
+                  <label className="block text-white/80 text-sm font-medium mb-2">
+                    Who can see this?
+                  </label>
+                  <select className="w-full p-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-violet-400">
+                    <option value="public" className="bg-gray-800"> Anyone can see</option>
+                    <option value="matches" className="bg-gray-800"> Matches only</option>
+                    <option value="friends" className="bg-gray-800"> Friends only</option>
+                  </select>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex space-x-3">
+                  
+                  <button 
+                    onClick={handlePreviewToggle}
+                    className={`flex-1 py-3 border border-white/20 text-white rounded-xl hover:bg-white/20 transition-all font-medium ${
+                      showPreview ? 'bg-violet-500/20 border-violet-400' : 'bg-white/10'
+                    }`}
+                  >
+                    {showPreview ? 'Hide Preview' : 'Preview'}
+                  </button>
+                  <button className="flex-1 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all font-medium">
+                    Post
+                  </button>
+                </div>
+
+                {/* Post Preview - Only shows when Preview button is clicked */}
+                {showPreview && (imagePreview || caption) && (
+                  <div className="mt-6">
+                    <h3 className="text-white/80 text-sm font-medium mb-2">Preview</h3>
+                    <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center">
+                          <User className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="text-white font-medium">{user?.name || 'Your Name'}</span>
+                      </div>
+                      
+                      {imagePreview && (
+                        <div className="bg-white/5 rounded-xl p-2 mb-2">
+                          <img
+                            src={imagePreview}
+                            alt="Post preview"
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        </div>
+                      )}
+                      
+                      {caption && (
+                        <p className="text-white/80 text-sm">{caption}</p>
+                      )}
+                      
+                      {!caption && !imagePreview && (
+                        <p className="text-white/60 text-sm italic">Add an image or caption to see preview...</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
 
-                <div className="flex justify-center space-x-6 mt-8">
-                  <button
-                    onClick={handlePass}
-                    className="w-16 h-16 backdrop-blur-md bg-white/10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110 active:scale-95 group"
-                  >
-                    <X className="w-8 h-8 text-white/70 group-hover:text-red-400 transition-colors" />
-                  </button>
-                  <button
-                    onClick={handleLike}
-                    className="w-16 h-16 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center hover:shadow-lg hover:shadow-violet-500/25 transition-all hover:scale-110 active:scale-95"
-                  >
-                    <Heart className="w-8 h-8 text-white" />
-                  </button>
-                </div>
-
-                <div className="text-center mt-6">
-                  <p className="text-white/60 text-sm">
-                    {mockProfiles.length - currentProfileIndex - 1} more profiles to discover
-                  </p>
-                </div>
+                {/* Show message when preview is toggled but no content */}
+                {showPreview && !imagePreview && !caption && (
+                  <div className="mt-6">
+                    <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6 text-center">
+                      <p className="text-white/60 text-sm">Add an image or caption to see your post preview</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
+         
           {/* Matches Section */}
           {activeSection === 'matches' && (
             <div className="space-y-8">
@@ -463,7 +423,7 @@ const Home: React.FC = () => {
                   <h2 className="text-2xl font-bold text-white mb-4">No matches yet</h2>
                   <p className="text-white/60 mb-8">Start discovering people to find your perfect match!</p>
                   <button
-                    onClick={() => setActiveSection('discover')}
+                    onClick={() => setActiveSection('feed')}
                     className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all font-medium"
                   >
                     Start Discovering
