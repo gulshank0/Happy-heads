@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
+/**
+ * Model ScoreCard
+ * 
+ */
+export type ScoreCard = $Result.DefaultSelection<Prisma.$ScoreCardPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -161,6 +166,16 @@ export class PrismaClient<
     * ```
     */
   get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scoreCard`: Exposes CRUD operations for the **ScoreCard** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScoreCards
+    * const scoreCards = await prisma.scoreCard.findMany()
+    * ```
+    */
+  get scoreCard(): Prisma.ScoreCardDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -602,7 +617,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Post: 'Post'
+    Post: 'Post',
+    ScoreCard: 'ScoreCard'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -621,7 +637,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post"
+      modelProps: "user" | "post" | "scoreCard"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -773,6 +789,80 @@ export namespace Prisma {
           }
         }
       }
+      ScoreCard: {
+        payload: Prisma.$ScoreCardPayload<ExtArgs>
+        fields: Prisma.ScoreCardFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScoreCardFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScoreCardFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          findFirst: {
+            args: Prisma.ScoreCardFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScoreCardFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          findMany: {
+            args: Prisma.ScoreCardFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>[]
+          }
+          create: {
+            args: Prisma.ScoreCardCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          createMany: {
+            args: Prisma.ScoreCardCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScoreCardCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>[]
+          }
+          delete: {
+            args: Prisma.ScoreCardDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          update: {
+            args: Prisma.ScoreCardUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScoreCardDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScoreCardUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScoreCardUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScoreCardUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreCardPayload>
+          }
+          aggregate: {
+            args: Prisma.ScoreCardAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScoreCard>
+          }
+          groupBy: {
+            args: Prisma.ScoreCardGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScoreCardGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScoreCardCountArgs<ExtArgs>
+            result: $Utils.Optional<ScoreCardCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -867,6 +957,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     post?: PostOmit
+    scoreCard?: ScoreCardOmit
   }
 
   /* Types for Logging */
@@ -1232,6 +1323,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
+    scoreCard?: boolean | User$scoreCardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1283,6 +1375,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "url" | "gender" | "age" | "phone" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
+    scoreCard?: boolean | User$scoreCardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1292,6 +1385,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[]
+      scoreCard: Prisma.$ScoreCardPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1701,6 +1795,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    scoreCard<T extends User$scoreCardArgs<ExtArgs> = {}>(args?: Subset<T, User$scoreCardArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2151,6 +2246,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * User.scoreCard
+   */
+  export type User$scoreCardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    where?: ScoreCardWhereInput
   }
 
   /**
@@ -3257,6 +3371,1189 @@ export namespace Prisma {
 
 
   /**
+   * Model ScoreCard
+   */
+
+  export type AggregateScoreCard = {
+    _count: ScoreCardCountAggregateOutputType | null
+    _avg: ScoreCardAvgAggregateOutputType | null
+    _sum: ScoreCardSumAggregateOutputType | null
+    _min: ScoreCardMinAggregateOutputType | null
+    _max: ScoreCardMaxAggregateOutputType | null
+  }
+
+  export type ScoreCardAvgAggregateOutputType = {
+    year: number | null
+    score: number | null
+  }
+
+  export type ScoreCardSumAggregateOutputType = {
+    year: number | null
+    score: number | null
+  }
+
+  export type ScoreCardMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    college: string | null
+    major: string | null
+    year: number | null
+    location: string | null
+    preferences: string | null
+    personality: string | null
+    score: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoreCardMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    college: string | null
+    major: string | null
+    year: number | null
+    location: string | null
+    preferences: string | null
+    personality: string | null
+    score: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoreCardCountAggregateOutputType = {
+    id: number
+    userId: number
+    college: number
+    major: number
+    year: number
+    location: number
+    interests: number
+    preferences: number
+    personality: number
+    score: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScoreCardAvgAggregateInputType = {
+    year?: true
+    score?: true
+  }
+
+  export type ScoreCardSumAggregateInputType = {
+    year?: true
+    score?: true
+  }
+
+  export type ScoreCardMinAggregateInputType = {
+    id?: true
+    userId?: true
+    college?: true
+    major?: true
+    year?: true
+    location?: true
+    preferences?: true
+    personality?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoreCardMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    college?: true
+    major?: true
+    year?: true
+    location?: true
+    preferences?: true
+    personality?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoreCardCountAggregateInputType = {
+    id?: true
+    userId?: true
+    college?: true
+    major?: true
+    year?: true
+    location?: true
+    interests?: true
+    preferences?: true
+    personality?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScoreCardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoreCard to aggregate.
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreCards to fetch.
+     */
+    orderBy?: ScoreCardOrderByWithRelationInput | ScoreCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScoreCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScoreCards
+    **/
+    _count?: true | ScoreCardCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScoreCardAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScoreCardSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScoreCardMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScoreCardMaxAggregateInputType
+  }
+
+  export type GetScoreCardAggregateType<T extends ScoreCardAggregateArgs> = {
+        [P in keyof T & keyof AggregateScoreCard]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScoreCard[P]>
+      : GetScalarType<T[P], AggregateScoreCard[P]>
+  }
+
+
+
+
+  export type ScoreCardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScoreCardWhereInput
+    orderBy?: ScoreCardOrderByWithAggregationInput | ScoreCardOrderByWithAggregationInput[]
+    by: ScoreCardScalarFieldEnum[] | ScoreCardScalarFieldEnum
+    having?: ScoreCardScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScoreCardCountAggregateInputType | true
+    _avg?: ScoreCardAvgAggregateInputType
+    _sum?: ScoreCardSumAggregateInputType
+    _min?: ScoreCardMinAggregateInputType
+    _max?: ScoreCardMaxAggregateInputType
+  }
+
+  export type ScoreCardGroupByOutputType = {
+    id: string
+    userId: string
+    college: string
+    major: string
+    year: number
+    location: string | null
+    interests: string[]
+    preferences: string | null
+    personality: string | null
+    score: number
+    createdAt: Date
+    updatedAt: Date
+    _count: ScoreCardCountAggregateOutputType | null
+    _avg: ScoreCardAvgAggregateOutputType | null
+    _sum: ScoreCardSumAggregateOutputType | null
+    _min: ScoreCardMinAggregateOutputType | null
+    _max: ScoreCardMaxAggregateOutputType | null
+  }
+
+  type GetScoreCardGroupByPayload<T extends ScoreCardGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScoreCardGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScoreCardGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScoreCardGroupByOutputType[P]>
+            : GetScalarType<T[P], ScoreCardGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScoreCardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
+    preferences?: boolean
+    personality?: boolean
+    score?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreCard"]>
+
+  export type ScoreCardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
+    preferences?: boolean
+    personality?: boolean
+    score?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreCard"]>
+
+  export type ScoreCardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
+    preferences?: boolean
+    personality?: boolean
+    score?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreCard"]>
+
+  export type ScoreCardSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    college?: boolean
+    major?: boolean
+    year?: boolean
+    location?: boolean
+    interests?: boolean
+    preferences?: boolean
+    personality?: boolean
+    score?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ScoreCardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "college" | "major" | "year" | "location" | "interests" | "preferences" | "personality" | "score" | "createdAt" | "updatedAt", ExtArgs["result"]["scoreCard"]>
+  export type ScoreCardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ScoreCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ScoreCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ScoreCardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScoreCard"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      college: string
+      major: string
+      year: number
+      location: string | null
+      interests: string[]
+      preferences: string | null
+      personality: string | null
+      score: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scoreCard"]>
+    composites: {}
+  }
+
+  type ScoreCardGetPayload<S extends boolean | null | undefined | ScoreCardDefaultArgs> = $Result.GetResult<Prisma.$ScoreCardPayload, S>
+
+  type ScoreCardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScoreCardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScoreCardCountAggregateInputType | true
+    }
+
+  export interface ScoreCardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScoreCard'], meta: { name: 'ScoreCard' } }
+    /**
+     * Find zero or one ScoreCard that matches the filter.
+     * @param {ScoreCardFindUniqueArgs} args - Arguments to find a ScoreCard
+     * @example
+     * // Get one ScoreCard
+     * const scoreCard = await prisma.scoreCard.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScoreCardFindUniqueArgs>(args: SelectSubset<T, ScoreCardFindUniqueArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScoreCard that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScoreCardFindUniqueOrThrowArgs} args - Arguments to find a ScoreCard
+     * @example
+     * // Get one ScoreCard
+     * const scoreCard = await prisma.scoreCard.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScoreCardFindUniqueOrThrowArgs>(args: SelectSubset<T, ScoreCardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScoreCard that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardFindFirstArgs} args - Arguments to find a ScoreCard
+     * @example
+     * // Get one ScoreCard
+     * const scoreCard = await prisma.scoreCard.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScoreCardFindFirstArgs>(args?: SelectSubset<T, ScoreCardFindFirstArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScoreCard that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardFindFirstOrThrowArgs} args - Arguments to find a ScoreCard
+     * @example
+     * // Get one ScoreCard
+     * const scoreCard = await prisma.scoreCard.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScoreCardFindFirstOrThrowArgs>(args?: SelectSubset<T, ScoreCardFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScoreCards that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScoreCards
+     * const scoreCards = await prisma.scoreCard.findMany()
+     * 
+     * // Get first 10 ScoreCards
+     * const scoreCards = await prisma.scoreCard.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scoreCardWithIdOnly = await prisma.scoreCard.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScoreCardFindManyArgs>(args?: SelectSubset<T, ScoreCardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScoreCard.
+     * @param {ScoreCardCreateArgs} args - Arguments to create a ScoreCard.
+     * @example
+     * // Create one ScoreCard
+     * const ScoreCard = await prisma.scoreCard.create({
+     *   data: {
+     *     // ... data to create a ScoreCard
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScoreCardCreateArgs>(args: SelectSubset<T, ScoreCardCreateArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScoreCards.
+     * @param {ScoreCardCreateManyArgs} args - Arguments to create many ScoreCards.
+     * @example
+     * // Create many ScoreCards
+     * const scoreCard = await prisma.scoreCard.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScoreCardCreateManyArgs>(args?: SelectSubset<T, ScoreCardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScoreCards and returns the data saved in the database.
+     * @param {ScoreCardCreateManyAndReturnArgs} args - Arguments to create many ScoreCards.
+     * @example
+     * // Create many ScoreCards
+     * const scoreCard = await prisma.scoreCard.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScoreCards and only return the `id`
+     * const scoreCardWithIdOnly = await prisma.scoreCard.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScoreCardCreateManyAndReturnArgs>(args?: SelectSubset<T, ScoreCardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScoreCard.
+     * @param {ScoreCardDeleteArgs} args - Arguments to delete one ScoreCard.
+     * @example
+     * // Delete one ScoreCard
+     * const ScoreCard = await prisma.scoreCard.delete({
+     *   where: {
+     *     // ... filter to delete one ScoreCard
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScoreCardDeleteArgs>(args: SelectSubset<T, ScoreCardDeleteArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScoreCard.
+     * @param {ScoreCardUpdateArgs} args - Arguments to update one ScoreCard.
+     * @example
+     * // Update one ScoreCard
+     * const scoreCard = await prisma.scoreCard.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScoreCardUpdateArgs>(args: SelectSubset<T, ScoreCardUpdateArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScoreCards.
+     * @param {ScoreCardDeleteManyArgs} args - Arguments to filter ScoreCards to delete.
+     * @example
+     * // Delete a few ScoreCards
+     * const { count } = await prisma.scoreCard.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScoreCardDeleteManyArgs>(args?: SelectSubset<T, ScoreCardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScoreCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScoreCards
+     * const scoreCard = await prisma.scoreCard.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScoreCardUpdateManyArgs>(args: SelectSubset<T, ScoreCardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScoreCards and returns the data updated in the database.
+     * @param {ScoreCardUpdateManyAndReturnArgs} args - Arguments to update many ScoreCards.
+     * @example
+     * // Update many ScoreCards
+     * const scoreCard = await prisma.scoreCard.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScoreCards and only return the `id`
+     * const scoreCardWithIdOnly = await prisma.scoreCard.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScoreCardUpdateManyAndReturnArgs>(args: SelectSubset<T, ScoreCardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScoreCard.
+     * @param {ScoreCardUpsertArgs} args - Arguments to update or create a ScoreCard.
+     * @example
+     * // Update or create a ScoreCard
+     * const scoreCard = await prisma.scoreCard.upsert({
+     *   create: {
+     *     // ... data to create a ScoreCard
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScoreCard we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScoreCardUpsertArgs>(args: SelectSubset<T, ScoreCardUpsertArgs<ExtArgs>>): Prisma__ScoreCardClient<$Result.GetResult<Prisma.$ScoreCardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScoreCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardCountArgs} args - Arguments to filter ScoreCards to count.
+     * @example
+     * // Count the number of ScoreCards
+     * const count = await prisma.scoreCard.count({
+     *   where: {
+     *     // ... the filter for the ScoreCards we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScoreCardCountArgs>(
+      args?: Subset<T, ScoreCardCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScoreCardCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScoreCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScoreCardAggregateArgs>(args: Subset<T, ScoreCardAggregateArgs>): Prisma.PrismaPromise<GetScoreCardAggregateType<T>>
+
+    /**
+     * Group by ScoreCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreCardGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScoreCardGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScoreCardGroupByArgs['orderBy'] }
+        : { orderBy?: ScoreCardGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScoreCardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScoreCardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScoreCard model
+   */
+  readonly fields: ScoreCardFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScoreCard.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScoreCardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScoreCard model
+   */
+  interface ScoreCardFieldRefs {
+    readonly id: FieldRef<"ScoreCard", 'String'>
+    readonly userId: FieldRef<"ScoreCard", 'String'>
+    readonly college: FieldRef<"ScoreCard", 'String'>
+    readonly major: FieldRef<"ScoreCard", 'String'>
+    readonly year: FieldRef<"ScoreCard", 'Int'>
+    readonly location: FieldRef<"ScoreCard", 'String'>
+    readonly interests: FieldRef<"ScoreCard", 'String[]'>
+    readonly preferences: FieldRef<"ScoreCard", 'String'>
+    readonly personality: FieldRef<"ScoreCard", 'String'>
+    readonly score: FieldRef<"ScoreCard", 'Int'>
+    readonly createdAt: FieldRef<"ScoreCard", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScoreCard", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScoreCard findUnique
+   */
+  export type ScoreCardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreCard to fetch.
+     */
+    where: ScoreCardWhereUniqueInput
+  }
+
+  /**
+   * ScoreCard findUniqueOrThrow
+   */
+  export type ScoreCardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreCard to fetch.
+     */
+    where: ScoreCardWhereUniqueInput
+  }
+
+  /**
+   * ScoreCard findFirst
+   */
+  export type ScoreCardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreCard to fetch.
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreCards to fetch.
+     */
+    orderBy?: ScoreCardOrderByWithRelationInput | ScoreCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoreCards.
+     */
+    cursor?: ScoreCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoreCards.
+     */
+    distinct?: ScoreCardScalarFieldEnum | ScoreCardScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreCard findFirstOrThrow
+   */
+  export type ScoreCardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreCard to fetch.
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreCards to fetch.
+     */
+    orderBy?: ScoreCardOrderByWithRelationInput | ScoreCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoreCards.
+     */
+    cursor?: ScoreCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoreCards.
+     */
+    distinct?: ScoreCardScalarFieldEnum | ScoreCardScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreCard findMany
+   */
+  export type ScoreCardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreCards to fetch.
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreCards to fetch.
+     */
+    orderBy?: ScoreCardOrderByWithRelationInput | ScoreCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScoreCards.
+     */
+    cursor?: ScoreCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreCards.
+     */
+    skip?: number
+    distinct?: ScoreCardScalarFieldEnum | ScoreCardScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreCard create
+   */
+  export type ScoreCardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ScoreCard.
+     */
+    data: XOR<ScoreCardCreateInput, ScoreCardUncheckedCreateInput>
+  }
+
+  /**
+   * ScoreCard createMany
+   */
+  export type ScoreCardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScoreCards.
+     */
+    data: ScoreCardCreateManyInput | ScoreCardCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScoreCard createManyAndReturn
+   */
+  export type ScoreCardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScoreCards.
+     */
+    data: ScoreCardCreateManyInput | ScoreCardCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScoreCard update
+   */
+  export type ScoreCardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ScoreCard.
+     */
+    data: XOR<ScoreCardUpdateInput, ScoreCardUncheckedUpdateInput>
+    /**
+     * Choose, which ScoreCard to update.
+     */
+    where: ScoreCardWhereUniqueInput
+  }
+
+  /**
+   * ScoreCard updateMany
+   */
+  export type ScoreCardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScoreCards.
+     */
+    data: XOR<ScoreCardUpdateManyMutationInput, ScoreCardUncheckedUpdateManyInput>
+    /**
+     * Filter which ScoreCards to update
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * Limit how many ScoreCards to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScoreCard updateManyAndReturn
+   */
+  export type ScoreCardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * The data used to update ScoreCards.
+     */
+    data: XOR<ScoreCardUpdateManyMutationInput, ScoreCardUncheckedUpdateManyInput>
+    /**
+     * Filter which ScoreCards to update
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * Limit how many ScoreCards to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScoreCard upsert
+   */
+  export type ScoreCardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ScoreCard to update in case it exists.
+     */
+    where: ScoreCardWhereUniqueInput
+    /**
+     * In case the ScoreCard found by the `where` argument doesn't exist, create a new ScoreCard with this data.
+     */
+    create: XOR<ScoreCardCreateInput, ScoreCardUncheckedCreateInput>
+    /**
+     * In case the ScoreCard was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScoreCardUpdateInput, ScoreCardUncheckedUpdateInput>
+  }
+
+  /**
+   * ScoreCard delete
+   */
+  export type ScoreCardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+    /**
+     * Filter which ScoreCard to delete.
+     */
+    where: ScoreCardWhereUniqueInput
+  }
+
+  /**
+   * ScoreCard deleteMany
+   */
+  export type ScoreCardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoreCards to delete
+     */
+    where?: ScoreCardWhereInput
+    /**
+     * Limit how many ScoreCards to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScoreCard without action
+   */
+  export type ScoreCardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreCard
+     */
+    select?: ScoreCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreCard
+     */
+    omit?: ScoreCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreCardInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3299,6 +4596,24 @@ export namespace Prisma {
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+  export const ScoreCardScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    college: 'college',
+    major: 'major',
+    year: 'year',
+    location: 'location',
+    interests: 'interests',
+    preferences: 'preferences',
+    personality: 'personality',
+    score: 'score',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScoreCardScalarFieldEnum = (typeof ScoreCardScalarFieldEnum)[keyof typeof ScoreCardScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3413,6 +4728,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
+    scoreCard?: XOR<ScoreCardNullableScalarRelationFilter, ScoreCardWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3429,6 +4745,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     posts?: PostOrderByRelationAggregateInput
+    scoreCard?: ScoreCardOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3448,6 +4765,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
+    scoreCard?: XOR<ScoreCardNullableScalarRelationFilter, ScoreCardWhereInput> | null
   }, "id" | "email" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -3553,6 +4871,98 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
+  export type ScoreCardWhereInput = {
+    AND?: ScoreCardWhereInput | ScoreCardWhereInput[]
+    OR?: ScoreCardWhereInput[]
+    NOT?: ScoreCardWhereInput | ScoreCardWhereInput[]
+    id?: StringFilter<"ScoreCard"> | string
+    userId?: StringFilter<"ScoreCard"> | string
+    college?: StringFilter<"ScoreCard"> | string
+    major?: StringFilter<"ScoreCard"> | string
+    year?: IntFilter<"ScoreCard"> | number
+    location?: StringNullableFilter<"ScoreCard"> | string | null
+    interests?: StringNullableListFilter<"ScoreCard">
+    preferences?: StringNullableFilter<"ScoreCard"> | string | null
+    personality?: StringNullableFilter<"ScoreCard"> | string | null
+    score?: IntFilter<"ScoreCard"> | number
+    createdAt?: DateTimeFilter<"ScoreCard"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoreCard"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ScoreCardOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrderInput | SortOrder
+    interests?: SortOrder
+    preferences?: SortOrderInput | SortOrder
+    personality?: SortOrderInput | SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ScoreCardWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: ScoreCardWhereInput | ScoreCardWhereInput[]
+    OR?: ScoreCardWhereInput[]
+    NOT?: ScoreCardWhereInput | ScoreCardWhereInput[]
+    college?: StringFilter<"ScoreCard"> | string
+    major?: StringFilter<"ScoreCard"> | string
+    year?: IntFilter<"ScoreCard"> | number
+    location?: StringNullableFilter<"ScoreCard"> | string | null
+    interests?: StringNullableListFilter<"ScoreCard">
+    preferences?: StringNullableFilter<"ScoreCard"> | string | null
+    personality?: StringNullableFilter<"ScoreCard"> | string | null
+    score?: IntFilter<"ScoreCard"> | number
+    createdAt?: DateTimeFilter<"ScoreCard"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoreCard"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type ScoreCardOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrderInput | SortOrder
+    interests?: SortOrder
+    preferences?: SortOrderInput | SortOrder
+    personality?: SortOrderInput | SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScoreCardCountOrderByAggregateInput
+    _avg?: ScoreCardAvgOrderByAggregateInput
+    _max?: ScoreCardMaxOrderByAggregateInput
+    _min?: ScoreCardMinOrderByAggregateInput
+    _sum?: ScoreCardSumOrderByAggregateInput
+  }
+
+  export type ScoreCardScalarWhereWithAggregatesInput = {
+    AND?: ScoreCardScalarWhereWithAggregatesInput | ScoreCardScalarWhereWithAggregatesInput[]
+    OR?: ScoreCardScalarWhereWithAggregatesInput[]
+    NOT?: ScoreCardScalarWhereWithAggregatesInput | ScoreCardScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScoreCard"> | string
+    userId?: StringWithAggregatesFilter<"ScoreCard"> | string
+    college?: StringWithAggregatesFilter<"ScoreCard"> | string
+    major?: StringWithAggregatesFilter<"ScoreCard"> | string
+    year?: IntWithAggregatesFilter<"ScoreCard"> | number
+    location?: StringNullableWithAggregatesFilter<"ScoreCard"> | string | null
+    interests?: StringNullableListFilter<"ScoreCard">
+    preferences?: StringNullableWithAggregatesFilter<"ScoreCard"> | string | null
+    personality?: StringNullableWithAggregatesFilter<"ScoreCard"> | string | null
+    score?: IntWithAggregatesFilter<"ScoreCard"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ScoreCard"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScoreCard"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -3567,6 +4977,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3583,6 +4994,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3599,6 +5011,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3615,6 +5028,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3731,6 +5145,110 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ScoreCardCreateInput = {
+    id?: string
+    college: string
+    major: string
+    year: number
+    location?: string | null
+    interests?: ScoreCardCreateinterestsInput | string[]
+    preferences?: string | null
+    personality?: string | null
+    score?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutScoreCardInput
+  }
+
+  export type ScoreCardUncheckedCreateInput = {
+    id?: string
+    userId: string
+    college: string
+    major: string
+    year: number
+    location?: string | null
+    interests?: ScoreCardCreateinterestsInput | string[]
+    preferences?: string | null
+    personality?: string | null
+    score?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreCardUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutScoreCardNestedInput
+  }
+
+  export type ScoreCardUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreCardCreateManyInput = {
+    id?: string
+    userId: string
+    college: string
+    major: string
+    year: number
+    location?: string | null
+    interests?: ScoreCardCreateinterestsInput | string[]
+    preferences?: string | null
+    personality?: string | null
+    score?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreCardUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreCardUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -3787,6 +5305,11 @@ export namespace Prisma {
     every?: PostWhereInput
     some?: PostWhereInput
     none?: PostWhereInput
+  }
+
+  export type ScoreCardNullableScalarRelationFilter = {
+    is?: ScoreCardWhereInput | null
+    isNot?: ScoreCardWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -3965,6 +5488,94 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type ScoreCardCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrder
+    interests?: SortOrder
+    preferences?: SortOrder
+    personality?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreCardAvgOrderByAggregateInput = {
+    year?: SortOrder
+    score?: SortOrder
+  }
+
+  export type ScoreCardMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrder
+    preferences?: SortOrder
+    personality?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreCardMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    college?: SortOrder
+    major?: SortOrder
+    year?: SortOrder
+    location?: SortOrder
+    preferences?: SortOrder
+    personality?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreCardSumOrderByAggregateInput = {
+    year?: SortOrder
+    score?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -3972,11 +5583,23 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
+  export type ScoreCardCreateNestedOneWithoutUserInput = {
+    create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
+    connect?: ScoreCardWhereUniqueInput
+  }
+
   export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
     createMany?: PostCreateManyAuthorInputEnvelope
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type ScoreCardUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
+    connect?: ScoreCardWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4013,6 +5636,16 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
+  export type ScoreCardUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
+    upsert?: ScoreCardUpsertWithoutUserInput
+    disconnect?: ScoreCardWhereInput | boolean
+    delete?: ScoreCardWhereInput | boolean
+    connect?: ScoreCardWhereUniqueInput
+    update?: XOR<XOR<ScoreCardUpdateToOneWithWhereWithoutUserInput, ScoreCardUpdateWithoutUserInput>, ScoreCardUncheckedUpdateWithoutUserInput>
+  }
+
   export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -4025,6 +5658,16 @@ export namespace Prisma {
     update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
     updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type ScoreCardUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ScoreCardCreateOrConnectWithoutUserInput
+    upsert?: ScoreCardUpsertWithoutUserInput
+    disconnect?: ScoreCardWhereInput | boolean
+    delete?: ScoreCardWhereInput | boolean
+    connect?: ScoreCardWhereUniqueInput
+    update?: XOR<XOR<ScoreCardUpdateToOneWithWhereWithoutUserInput, ScoreCardUpdateWithoutUserInput>, ScoreCardUncheckedUpdateWithoutUserInput>
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -4043,6 +5686,37 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPostsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type ScoreCardCreateinterestsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutScoreCardInput = {
+    create?: XOR<UserCreateWithoutScoreCardInput, UserUncheckedCreateWithoutScoreCardInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScoreCardInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ScoreCardUpdateinterestsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutScoreCardNestedInput = {
+    create?: XOR<UserCreateWithoutScoreCardInput, UserUncheckedCreateWithoutScoreCardInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScoreCardInput
+    upsert?: UserUpsertWithoutScoreCardInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutScoreCardInput, UserUpdateWithoutScoreCardInput>, UserUncheckedUpdateWithoutScoreCardInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4194,6 +5868,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type PostCreateWithoutAuthorInput = {
     id?: string
     title: string
@@ -4220,6 +5921,39 @@ export namespace Prisma {
   export type PostCreateManyAuthorInputEnvelope = {
     data: PostCreateManyAuthorInput | PostCreateManyAuthorInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ScoreCardCreateWithoutUserInput = {
+    id?: string
+    college: string
+    major: string
+    year: number
+    location?: string | null
+    interests?: ScoreCardCreateinterestsInput | string[]
+    preferences?: string | null
+    personality?: string | null
+    score?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreCardUncheckedCreateWithoutUserInput = {
+    id?: string
+    college: string
+    major: string
+    year: number
+    location?: string | null
+    interests?: ScoreCardCreateinterestsInput | string[]
+    preferences?: string | null
+    personality?: string | null
+    score?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreCardCreateOrConnectWithoutUserInput = {
+    where: ScoreCardWhereUniqueInput
+    create: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
   }
 
   export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -4251,6 +5985,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Post"> | Date | string
   }
 
+  export type ScoreCardUpsertWithoutUserInput = {
+    update: XOR<ScoreCardUpdateWithoutUserInput, ScoreCardUncheckedUpdateWithoutUserInput>
+    create: XOR<ScoreCardCreateWithoutUserInput, ScoreCardUncheckedCreateWithoutUserInput>
+    where?: ScoreCardWhereInput
+  }
+
+  export type ScoreCardUpdateToOneWithWhereWithoutUserInput = {
+    where?: ScoreCardWhereInput
+    data: XOR<ScoreCardUpdateWithoutUserInput, ScoreCardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ScoreCardUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreCardUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    college?: StringFieldUpdateOperationsInput | string
+    major?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ScoreCardUpdateinterestsInput | string[]
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    personality?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutPostsInput = {
     id?: string
     email: string
@@ -4264,6 +6037,7 @@ export namespace Prisma {
     googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    scoreCard?: ScoreCardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -4279,6 +6053,7 @@ export namespace Prisma {
     googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    scoreCard?: ScoreCardUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -4310,6 +6085,7 @@ export namespace Prisma {
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scoreCard?: ScoreCardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -4325,6 +6101,87 @@ export namespace Prisma {
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scoreCard?: ScoreCardUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutScoreCardInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutScoreCardInput = {
+    id?: string
+    email: string
+    name?: string | null
+    avatar?: string | null
+    url?: string | null
+    gender?: string | null
+    age?: number | null
+    phone?: string | null
+    bio?: string | null
+    googleId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutScoreCardInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutScoreCardInput, UserUncheckedCreateWithoutScoreCardInput>
+  }
+
+  export type UserUpsertWithoutScoreCardInput = {
+    update: XOR<UserUpdateWithoutScoreCardInput, UserUncheckedUpdateWithoutScoreCardInput>
+    create: XOR<UserCreateWithoutScoreCardInput, UserUncheckedCreateWithoutScoreCardInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutScoreCardInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutScoreCardInput, UserUncheckedUpdateWithoutScoreCardInput>
+  }
+
+  export type UserUpdateWithoutScoreCardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutScoreCardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    age?: NullableIntFieldUpdateOperationsInput | number | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type PostCreateManyAuthorInput = {

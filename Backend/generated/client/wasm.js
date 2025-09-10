@@ -145,6 +145,21 @@ exports.Prisma.PostScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ScoreCardScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  college: 'college',
+  major: 'major',
+  year: 'year',
+  location: 'location',
+  interests: 'interests',
+  preferences: 'preferences',
+  personality: 'personality',
+  score: 'score',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -163,7 +178,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Post: 'Post'
+  Post: 'Post',
+  ScoreCard: 'ScoreCard'
 };
 
 /**

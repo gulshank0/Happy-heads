@@ -5,6 +5,8 @@ import Navbar from '@/components/Header/Navbar';
 import { size } from 'zod/v4';
 import Feed from '@/components/Feeds/Feed';
 import Notification from '@/components/Notification/Notification';
+import Matching from '../../Matching/Matching';
+import Messenger from '@/components/Messenger/Messenger';
 
 interface UserProfile {
   id: string;
@@ -407,82 +409,24 @@ const Home: React.FC = () => {
          
           {/* Matches Section */}
           {activeSection === 'matches' && (
-            <div className="space-y-8">
+           <Matching/>
+          )}
+
+          {/* Match Profile Section */}
+          {activeSection === 'matchProfile' && currentProfile && (
+            <div className="space-y-8 max-w-md mx-auto">
               <h1 className="text-3xl font-bold text-white mb-8 flex items-center">
                 <Users className="w-8 h-8 mr-3 text-violet-400" />
                 <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-                  Your Matches
+                  Discover Profiles
                 </span>
               </h1>
-              
-              {likedProfiles.length === 0 ? (
-                <div className="text-center py-16">
-                  <div className="w-24 h-24 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Heart className="w-12 h-12 text-white" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-4">No matches yet</h2>
-                  <p className="text-white/60 mb-8">Start discovering people to find your perfect match!</p>
-                  <button
-                    onClick={() => setActiveSection('feed')}
-                    className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all font-medium"
-                  >
-                    Start Discovering
-                  </button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {likedProfiles.map((profileId) => {
-                    const profile = mockProfiles.find(p => p.id === profileId);
-                    if (!profile) return null;
-                    
-                    return (
-                      <div key={profile.id} className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all group">
-                        <div className="relative">
-                          <img
-                            src={profile.photo}
-                            alt={profile.name}
-                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
-                          />
-                          <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-                            New Match!
-                          </div>
-                        </div>
-                        <div className="p-4">
-                          <h3 className="text-lg font-bold text-white mb-1">
-                            {profile.name}
-                            {profile.age && <span className="text-white/80">, {profile.age}</span>}
-                          </h3>
-                          <p className="text-white/60 text-sm mb-3">{profile.bio}</p>
-                          <button className="w-full py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all font-medium">
-                            Send Message
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
             </div>
           )}
 
           {/* Messages Section */}
           {activeSection === 'messages' && (
-            <div className="space-y-8">
-              <h1 className="text-3xl font-bold text-white mb-8 flex items-center">
-                <MessageCircle className="w-8 h-8 mr-3 text-pink-400" />
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-                  Messages
-                </span>
-              </h1>
-              
-              <div className="text-center py-16">
-                <div className="w-24 h-24 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-12 h-12 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-4">No messages yet</h2>
-                <p className="text-white/60 mb-8">Start matching with people to begin conversations!</p>
-              </div>
-            </div>
+          <Messenger/>
           )}
 
           {/* Settings Section */}
