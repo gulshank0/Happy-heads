@@ -10,7 +10,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
   const [content, setContent] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [privacy, setPrivacy] = useState<'public' | 'matches' | 'friends'>('public');
+  const [privacy, setPrivacy] = useState<'profile'>('profile');
   const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState('');
   const [isPosting, setIsPosting] = useState(false);
@@ -94,7 +94,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
       setImagePreviews([]);
       setTags([]);
       setLocation('');
-      setPrivacy('public');
+      setPrivacy('profile');
 
     } catch (error) {
       console.error('Failed to create post:', error);
@@ -224,17 +224,6 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
             <span className="text-sm">Tag</span>
           </button>
         </div>
-
-        {/* Privacy Selector */}
-        <select
-          value={privacy}
-          onChange={(e) => setPrivacy(e.target.value as 'public' | 'matches' | 'friends')}
-          className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
-        >
-          <option value="public" className="bg-gray-800">🌍 Public</option>
-          <option value="matches" className="bg-gray-800">💕 Matches Only</option>
-          <option value="friends" className="bg-gray-800">👥 Friends Only</option>
-        </select>
       </div>
 
       {/* Post Button */}

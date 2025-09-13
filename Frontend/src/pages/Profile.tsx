@@ -718,7 +718,7 @@ const Profile: React.FC = () => {
                   <input
                     type="text"
                     name="interests"
-                    value={profile.interests?.join(', ') || ''}
+                    value={profile.interests?.join(',') || ''}
                     onChange={(e) => setProfile(prev => ({
                       ...prev,
                       interests: e.target.value.split(',').map(interest => interest.trim()).filter(interest => interest)

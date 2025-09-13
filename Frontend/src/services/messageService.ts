@@ -412,7 +412,7 @@ class MessageService {
       console.log('🔍 Searching users:', query);
       
       // Use the correct endpoint URL
-      let url = `${API_BASE_URL}/api/users/search-messaging`;
+      let url = `${API_BASE_URL}/users`;
       
       // Build query parameters
       const params = new URLSearchParams();
