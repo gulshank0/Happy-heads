@@ -501,7 +501,22 @@ export default function Feed() {
                           <span className="text-sm">{post.comments}</span>
                         </button>
 
-                        <button className="text-white/60 hover:text-green-400 transition-colors">
+                        <button
+                          className="text-white/60 hover:text-green-400 transition-colors"
+                          onClick={() => {
+                          if (navigator.share) {
+                            navigator.share({
+                            title: post.userName + "'s post",
+                            text: post.content,
+                            url: window.location.origin + `/posts/${post.id}`,
+                            }).catch(() => {});
+                          } else {
+                            // fallback: copy link to clipboard
+                            navigator.clipboard.writeText(window.location.origin + `/posts/${post.id}`);
+                            alert('Post link copied to clipboard!');
+                          }
+                          }}
+                        >
                           <Share2 className="w-5 h-5" />
                         </button>
                       </div>
