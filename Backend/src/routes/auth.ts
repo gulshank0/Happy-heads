@@ -12,10 +12,10 @@ router.get('/google',
 
 // Google OAuth callback
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:8080/?success=false' }),
+  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/?success=false` }),
   (req, res) => {
     // Successful authentication, redirect to frontend with success flag
-    res.redirect('http://localhost:8080/?success=true');
+    res.redirect(`${process.env.FRONTEND_URL}/?success=true`);
   }
 );
 

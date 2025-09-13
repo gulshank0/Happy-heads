@@ -22,7 +22,7 @@ model User {
   college   String?
   major     String?
   year      Int?
-  location  Json?    // {latitude: number, longitude: number}
+  location  String?    // {latitude: number, longitude: number}
   interests String[] // Array of interests
   
   createdAt DateTime @default(now())
@@ -39,26 +39,50 @@ model User {
   conversations2     Conversation[] @relation("User2Conversations")
   
   // Matching relations
-  sentLikes      Like[] @relation("LikeSender")
-  receivedLikes  Like[] @relation("LikeReceiver")
+  likes              Like[] // Added for Like relation
   matches        Match[] @relation("MatchUser1")
   matchedBy      Match[] @relation("MatchUser2")
+  comments       Comment[]
+  sentLikes      UserLike[] @relation("SentLikes")
+  receivedLikes  UserLike[] @relation("ReceivedLikes")
 
   @@map("users")
 }
 
 model Post {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   title     String
   content   String?
-  image     String?  // Add this field for post images
-  published Boolean  @default(false)
+  published Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id])
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  image     String?
+  comments  Comment[]
+  likes     Like[]    // Added to complete relation with Like
 
   @@map("posts")
+}
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+}
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  @@map("comments")
 }
 
 model ScoreCard {
@@ -153,19 +177,9 @@ model PersonalityTraits {
   neuroticism      Int    @default(5) // 1-10
   
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 
-model Like {
-  id         String   @id @default(cuid())
-  senderId   String
-  receiverId String
-  sender     User     @relation("LikeSender", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver   User     @relation("LikeReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
-  
-  @@unique([senderId, receiverId])
-}
 
 model Match {
   id         String   @id @default(cuid())
@@ -177,6 +191,15 @@ model Match {
   createdAt  DateTime @default(now())
   
   @@unique([user1Id, user2Id])
+}
+
+model UserLike {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+  sender     User     @relation("SentLikes", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedLikes", fields: [receiverId], references: [id])
 }
 
 enum MessageType {

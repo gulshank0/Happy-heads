@@ -1,3 +1,5 @@
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X, User, LogIn, LogOut } from "lucide-react";
@@ -23,7 +25,7 @@ const Navbar = () => {
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:8000/auth/me', {
+      const response = await fetch(`${BACKEND_URL}/auth/me`, {
         method: 'GET',
         credentials: 'include', // Important: include cookies
         headers: {
@@ -69,7 +71,7 @@ const Navbar = () => {
       }, 500);
       
       // Navigate to profile
-      navigate("/profile");
+      navigate("/home");
     } else {
       // Check auth status on component mount
       checkAuthStatus();
@@ -81,13 +83,14 @@ const Navbar = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8000/auth/google";
+    console.log('Backend URL:', BACKEND_URL); // Add this line for debugging
+    window.location.href = `${BACKEND_URL}/auth/google`;
   };
   
   const handleLogout = async () => {
     try {
       // Call logout endpoint to clear server-side session
-      const response = await fetch('http://localhost:8000/auth/logout', {
+      const response = await fetch(`${BACKEND_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {

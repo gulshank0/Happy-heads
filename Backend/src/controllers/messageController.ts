@@ -1,7 +1,14 @@
 import { Request, Response } from 'express';
-import prisma from '../config/database';
+import { PrismaClient } from '../../generated/client';
+
+const prisma = new PrismaClient();
 
 export class MessageController {
+  // Helper method to format timestamp
+  private formatTimestamp(date: Date): string {
+    return date.toISOString();
+  }
+
   // Get all conversations for a user
   async getConversations(req: Request, res: Response) {
     try {
@@ -10,6 +17,8 @@ export class MessageController {
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
       }
+
+      console.log('🔍 Getting conversations for user:', userId);
 
       const conversations = await prisma.conversation.findMany({
         where: {
@@ -89,9 +98,10 @@ export class MessageController {
         };
       });
 
+      console.log('✅ Found conversations:', formattedConversations.length);
       res.json(formattedConversations);
     } catch (error) {
-      console.error('Get conversations error:', error);
+      console.error('❌ Get conversations error:', error);
       res.status(500).json({ error: 'Failed to get conversations' });
     }
   }
@@ -107,6 +117,8 @@ export class MessageController {
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
       }
+
+      console.log('🔍 Getting messages for conversation:', conversationId);
 
       // Verify user is part of this conversation
       const conversation = await prisma.conversation.findFirst({
@@ -156,10 +168,12 @@ export class MessageController {
       const formattedMessages = messages.reverse().map(message => ({
         id: message.id,
         senderId: message.senderId,
+        receiverId: message.receiverId,
         content: message.content,
         messageType: message.messageType,
         timestamp: this.formatTimestamp(message.createdAt),
         isRead: message.isRead,
+        conversationId: message.conversationId,
         sender: {
           id: message.sender.id,
           name: message.sender.name,
@@ -167,26 +181,27 @@ export class MessageController {
         }
       }));
 
+      console.log('✅ Found messages:', formattedMessages.length);
       res.json(formattedMessages);
     } catch (error) {
-      console.error('Get messages error:', error);
+      console.error('❌ Get messages error:', error);
       res.status(500).json({ error: 'Failed to get messages' });
     }
   }
 
-  // Send a new message
+  // Send message (HTTP endpoint)
   async sendMessage(req: Request, res: Response) {
     try {
       const userId = (req.user as any)?.id;
       const { receiverId, content, messageType = 'TEXT' } = req.body;
+      const { conversationId } = req.params;
 
-      console.log('🔍 Send Message Debug:', {
+      console.log('🔍 HTTP Send Message Request:', {
         userId,
         receiverId,
-        content,
+        content: content?.substring(0, 50) + '...',
         messageType,
-        user: req.user,
-        session: (req.session as any)?.passport?.user
+        conversationId
       });
 
       if (!userId) {
@@ -194,8 +209,8 @@ export class MessageController {
         return res.status(401).json({ error: 'Not authenticated' });
       }
 
-      if (!receiverId || !content) {
-        console.log('❌ Missing receiverId or content:', { receiverId, content });
+      if (!receiverId || !content?.trim()) {
+        console.log('❌ Missing receiverId or content');
         return res.status(400).json({ error: 'Receiver ID and content are required' });
       }
 
@@ -217,37 +232,53 @@ export class MessageController {
       console.log('✅ Receiver found:', receiver.name);
 
       // Find or create conversation
-      let conversation = await prisma.conversation.findFirst({
-        where: {
-          OR: [
-            { user1Id: userId, user2Id: receiverId },
-            { user1Id: receiverId, user2Id: userId }
-          ]
-        }
-      });
-
-      if (!conversation) {
-        console.log('📝 Creating new conversation');
-        conversation = await prisma.conversation.create({
-          data: {
-            user1Id: userId,
-            user2Id: receiverId,
-            lastMessageAt: new Date()
+      let conversation;
+      
+      if (conversationId) {
+        conversation = await prisma.conversation.findFirst({
+          where: {
+            id: conversationId,
+            OR: [
+              { user1Id: userId, user2Id: receiverId },
+              { user1Id: receiverId, user2Id: userId }
+            ]
           }
         });
-        console.log('✅ Conversation created:', conversation.id);
+        
+        if (!conversation) {
+          return res.status(404).json({ error: 'Conversation not found' });
+        }
       } else {
-        console.log('✅ Existing conversation found:', conversation.id);
+        conversation = await prisma.conversation.findFirst({
+          where: {
+            OR: [
+              { user1Id: userId, user2Id: receiverId },
+              { user1Id: receiverId, user2Id: userId }
+            ]
+          }
+        });
+
+        if (!conversation) {
+          console.log('📝 Creating new conversation');
+          conversation = await prisma.conversation.create({
+            data: {
+              user1Id: userId,
+              user2Id: receiverId,
+              lastMessageAt: new Date()
+            }
+          });
+          console.log('✅ Conversation created:', conversation.id);
+        }
       }
 
-      // Create the message
+      // Create message in database
       console.log('📨 Creating message...');
       const message = await prisma.message.create({
         data: {
           conversationId: conversation.id,
           senderId: userId,
           receiverId: receiverId,
-          content: content,
+          content: content.trim(),
           messageType: messageType,
           isDelivered: true
         },
@@ -270,8 +301,6 @@ export class MessageController {
         data: { lastMessageAt: new Date() }
       });
 
-      console.log('✅ Conversation updated');
-
       const formattedMessage = {
         id: message.id,
         senderId: message.senderId,
@@ -280,6 +309,7 @@ export class MessageController {
         messageType: message.messageType,
         timestamp: this.formatTimestamp(message.createdAt),
         isRead: message.isRead,
+        conversationId: message.conversationId,
         sender: {
           id: message.sender.id,
           name: message.sender.name,
@@ -287,10 +317,10 @@ export class MessageController {
         }
       };
 
-      console.log('✅ Message sent successfully:', formattedMessage);
+      console.log('✅ HTTP message sent successfully');
       res.status(201).json(formattedMessage);
     } catch (error) {
-      console.error('❌ Send message error:', error);
+      console.error('❌ HTTP send message error:', error);
       res.status(500).json({ error: 'Failed to send message' });
     }
   }
@@ -312,6 +342,8 @@ export class MessageController {
       if (userId === otherUserId) {
         return res.status(400).json({ error: 'Cannot create conversation with yourself' });
       }
+
+      console.log('🔍 Creating conversation between:', userId, 'and', otherUserId);
 
       // Check if other user exists
       const otherUser = await prisma.user.findUnique({
@@ -352,7 +384,8 @@ export class MessageController {
         conversation = await prisma.conversation.create({
           data: {
             user1Id: userId,
-            user2Id: otherUserId
+            user2Id: otherUserId,
+            lastMessageAt: new Date()
           },
           include: {
             user1: {
@@ -389,9 +422,10 @@ export class MessageController {
         messages: []
       };
 
+      console.log('✅ Conversation created/found:', conversation.id);
       res.status(201).json(formattedConversation);
     } catch (error) {
-      console.error('Create conversation error:', error);
+      console.error('❌ Create conversation error:', error);
       res.status(500).json({ error: 'Failed to create conversation' });
     }
   }
@@ -421,7 +455,7 @@ export class MessageController {
         return res.status(404).json({ error: 'Conversation not found' });
       }
 
-      await prisma.message.updateMany({
+      const result = await prisma.message.updateMany({
         where: {
           conversationId: conversationId,
           receiverId: userId,
@@ -431,10 +465,10 @@ export class MessageController {
           isRead: true
         }
       });
-
-      res.json({ message: 'Messages marked as read' });
+      console.log(`✅ Marked ${result.count} messages as read`);
+      res.json({ count: result.count });
     } catch (error) {
-      console.error('Mark as read error:', error);
+      console.error('❌ Mark as read error:', error);
       res.status(500).json({ error: 'Failed to mark messages as read' });
     }
   }
@@ -473,56 +507,11 @@ export class MessageController {
         where: { id: conversationId }
       });
 
+      console.log('✅ Conversation deleted:', conversationId);
       res.json({ message: 'Conversation deleted successfully' });
     } catch (error) {
-      console.error('Delete conversation error:', error);
+      console.error('❌ Delete conversation error:', error);
       res.status(500).json({ error: 'Failed to delete conversation' });
-    }
-  }
-
-  // Add this method to debug authentication
-  async debugAuth(req: Request, res: Response) {
-    try {
-      const userId = (req.user as any)?.id;
-      const sessionUser = (req.session as any)?.passport?.user;
-      
-      console.log('🔍 Debug Auth Info:', {
-        userId,
-        sessionUser,
-        reqUser: req.user,
-        session: req.session,
-        sessionID: req.sessionID,
-        isAuthenticated: req.isAuthenticated?.(),
-      });
-
-      res.json({
-        userId,
-        sessionUser,
-        authenticated: !!userId,
-        sessionID: req.sessionID
-      });
-    } catch (error) {
-      console.error('Auth debug error:', error);
-      res.status(500).json({ error: 'Auth debug failed' });
-    }
-  }
-
-  private formatTimestamp(date: Date): string {
-    const now = new Date();
-    const messageDate = new Date(date);
-    const diffInMinutes = Math.floor((now.getTime() - messageDate.getTime()) / (1000 * 60));
-
-    if (diffInMinutes < 1) {
-      return 'Just now';
-    } else if (diffInMinutes < 60) {
-      return `${diffInMinutes}m ago`;
-    } else if (diffInMinutes < 1440) {
-      const hours = Math.floor(diffInMinutes / 60);
-      return `${hours}h ago`;
-    } else if (diffInMinutes < 2880) {
-      return 'Yesterday';
-    } else {
-      return messageDate.toLocaleDateString();
     }
   }
 }

@@ -9,7 +9,7 @@ import { Shield, Heart, Star, TriangleAlert, Users, Sparkles } from "lucide-reac
 
 export default function Index() {
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = `${process.env.BACKEND_URI}/auth/google`;
   };
   return (
     <>

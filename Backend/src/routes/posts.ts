@@ -52,7 +52,7 @@ router.post('/create', requireAuth, uploadPostImage.single('image'), async (req,
 
     let imageUrl = null;
     if (req.file) {
-      imageUrl = `http://localhost:${process.env.PORT || 8000}/uploads/posts/${req.file.filename}`;
+      imageUrl = `http://localhost:8000/uploads/posts/${req.file.filename}`;
     }
 
     const post = await prisma.post.create({
@@ -61,7 +61,7 @@ router.post('/create', requireAuth, uploadPostImage.single('image'), async (req,
         content: content || '',
         authorId: userId,
         published: true,
-        image: imageUrl
+        image: imageUrl ? imageUrl : null
       },
       include: {
         author: {
@@ -86,49 +86,70 @@ router.post('/create', requireAuth, uploadPostImage.single('image'), async (req,
 
 // Get all posts for feed
 router.get('/feed', requireAuth, async (req, res) => {
+  const userId = req.user?.id;
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    include: {
+      author: { select: { id: true, name: true, avatar: true, age: true, college: true, location: true } },
+      likes: { select: { userId: true } },
+      _count: { select: { comments: true, likes: true } }
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 50
+  });
+
+  const formattedPosts = posts.map(post => ({
+    ...post,
+    comments: post._count.comments,
+    likes: post._count.likes,
+    isLiked: post.likes.some(like => like.userId === userId),
+  }));
+
+  res.json(formattedPosts);
+});
+
+// Get comments for a post
+router.get('/:postId/comments', requireAuth, async (req, res) => {
   try {
-    const posts = await prisma.post.findMany({
-      where: { published: true },
+    const { postId } = req.params;
+    const comments = await prisma.comment.findMany({
+      where: { postId },
       include: {
         author: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true,
-            age: true,
-            college: true,
-            location: true
-          }
-        }
+          select: { id: true, name: true, avatar: true },
+        },
       },
-      orderBy: { createdAt: 'desc' },
-      take: 50 // Limit to 50 most recent posts
+      orderBy: { createdAt: 'asc' },
+    });
+    res.json({ success: true, comments });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch comments' });
+  }
+});
+
+// Create a comment on a post
+router.post('/:postId/comments', requireAuth, async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { content } = req.body;
+    const userId = req.user?.id;
+
+    if (!userId || !content?.trim()) {
+      return res.status(400).json({ error: 'Invalid request' });
+    }
+
+    const newComment = await prisma.comment.create({
+      data: { content, authorId: userId, postId },
+      include: {
+        author: {
+          select: { id: true, name: true, avatar: true, college: true, major: true, year: true },
+        },
+      },
     });
 
-    const formattedPosts = posts.map(post => ({
-      id: post.id,
-      userId: post.author.id,
-      userName: post.author.name || 'Anonymous',
-      userAvatar: post.author.avatar || '/default-avatar.png',
-      userAge: post.author.age || 20,
-      userCollege: post.author.college || 'Unknown College',
-      userLocation: post.author.location ? JSON.parse(post.author.location as string).city || 'Unknown' : 'Unknown',
-      content: post.content || '',
-      image: post.image,
-      title: post.title,
-      timestamp: formatTimestamp(post.createdAt),
-      likes: 0, // You can implement likes system later
-      comments: 0, // You can implement comments system later
-      isLiked: false,
-      isBookmarked: false,
-      tags: [], // You can add tags field to Post model if needed
-      privacy: 'public' as const
-    }));
-
-    res.json(formattedPosts);
+    res.status(201).json({ success: true, comment: newComment });
   } catch (error) {
-    console.error('Feed fetch error:', error);
-    res.status(500).json({ error: 'Failed to fetch posts' });
+    res.status(500).json({ error: 'Failed to create comment' });
   }
 });
 
@@ -154,8 +175,8 @@ router.get('/profiles', requireAuth, async (req, res) => {
         college: true,
         major: true,
         year: true,
-        interests: true,
-        location: true
+        location: true,
+        interests: true
       },
       take: 20
     });
@@ -164,7 +185,7 @@ router.get('/profiles', requireAuth, async (req, res) => {
       id: profile.id,
       name: profile.name || 'Anonymous',
       age: profile.age || 20,
-      location: profile.location ? JSON.parse(profile.location as string).city || 'Unknown' : 'Unknown',
+      location: profile.location || 'Unknown',
       college: profile.college || 'Unknown College',
       major: profile.major || 'Unknown Major',
       year: profile.year || 1,
@@ -185,6 +206,46 @@ router.get('/profiles', requireAuth, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch profiles' });
   }
 });
+
+router.post('/:postId/like', requireAuth, async (req, res) => {
+  const userId = req.user?.id;
+  const { postId } = req.params;
+  if (!userId) return res.status(401).json({ error: 'Authentication required' });
+
+  const existing = await prisma.like.findFirst({ where: { userId, postId } });
+  if (existing) return res.status(400).json({ error: 'Already liked' });
+
+  await prisma.like.create({ data: { userId, postId } });
+  res.json({ success: true });
+});
+
+router.post('/:postId/unlike', requireAuth, async (req, res) => {
+  const userId = req.user?.id;
+  const { postId } = req.params;
+  if (!userId) return res.status(401).json({ error: 'Authentication required' });
+
+  await prisma.like.deleteMany({ where: { userId, postId } });
+  res.json({ success: true });
+});
+
+async function recordLike(userId: string, postId: string): Promise<boolean> {
+  // Check if like already exists
+  const existingLike = await prisma.like.findFirst({
+    where: {
+      userId,
+      postId
+    }
+  });
+
+  if (existingLike) return false;
+
+  // Create the like
+  await prisma.like.create({
+    data: { userId, postId }
+  });
+
+  return true;
+}
 
 function formatTimestamp(date: Date): string {
   const now = new Date();

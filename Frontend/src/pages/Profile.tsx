@@ -1,3 +1,10 @@
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+interface ApiError {
+  error: string;
+  message?: string;
+}
+
 import React, { useState, useEffect, useRef } from 'react';
 import { User, Mail, Phone, Calendar, FileText, Edit3, Check, X, Camera, Upload } from 'lucide-react';
 import Navbar from '@/components/Header/Navbar';
@@ -11,12 +18,33 @@ interface ProfileData {
   age: string;
   bio: string;
   gender: string;
+  college?: string;
+  major?: string;
+  interests?: string[];
+  url?: string;
+  location?: string;
+  year?: string;
   googleId?: string;
 }
 
 const Profile: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [originalProfile, setOriginalProfile] = useState<ProfileData>({ 
+    name: "", 
+    email: "", 
+    phone: "", 
+    age: "", 
+    bio: "", 
+    avatar: "",
+    gender: "male",
+    url: "",
+    location: "",
+    year: "",
+    college: "",
+    major: "",
+    interests: []
+  });
   const [profile, setProfile] = useState<ProfileData>({ 
     name: "", 
     email: "", 
@@ -24,36 +52,56 @@ const Profile: React.FC = () => {
     age: "", 
     bio: "", 
     avatar: "",
-    gender: "male"
+    gender: "male",
+    url: "",
+    location: "",
+    year: "",
+    college: "",
+    major: "",
+    interests: []
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string>("");
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [imageLoadError, setImageLoadError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await fetch('http://localhost:8000/auth/me', {
+        const response = await fetch(`${BACKEND_URL}/auth/me`, {
           method: 'GET',
           credentials: 'include'
         });
 
+        console.log('Auth response status:', response.status);
+
         if (response.ok) {
           const data = await response.json();
+          console.log('Auth response data:', data);
+          
           if (data.authenticated && data.user) {
             setIsAuthenticated(true);
-            setProfile({
+            const profileData = {
               name: data.user.name || '',
               email: data.user.email || '',
               phone: data.user.phone || '',
               age: data.user.age?.toString() || '',
               bio: data.user.bio || '',
               gender: data.user.gender || 'male',
-              avatar: data.user.avatar || ''
-            });
+              avatar: data.user.avatar || '',
+              url: data.user.url || '',
+              location: data.user.location || '',
+              year: data.user.year?.toString() || '',
+              college: data.user.college || '',
+              major: data.user.major || '',
+              interests: data.user.interests || [],
+            };
+            
+            setProfile(profileData);
+            setOriginalProfile(profileData); // Store original data for cancel functionality
           } else {
             setIsAuthenticated(false);
             window.location.href = '/';
@@ -85,6 +133,7 @@ const Profile: React.FC = () => {
         return;
       }
 
+      setImageLoadError(false);
       setAvatarFile(file);
       
       const reader = new FileReader();
@@ -95,12 +144,19 @@ const Profile: React.FC = () => {
       setError("");
     }
   };
+  const handleInterestsChange = (newInterests: string[]) => {
+    const filteredInterests = newInterests.map(item => typeof item === 'string' ? item.trim() : '');
+    setProfile(prev => ({
+      ...prev,
+      interests: filteredInterests
+    }));
+  };
 
   const uploadAvatar = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append('avatar', file);
 
-    const response = await fetch('http://localhost:8000/users/upload-avatar', {
+    const response = await fetch(`${BACKEND_URL}/users/upload-avatar`, {
       method: 'POST',
       credentials: 'include',
       body: formData,
@@ -117,6 +173,7 @@ const Profile: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    console.log(`Input changed - ${name}:`, value);
     setProfile(prev => ({
       ...prev,
       [name]: value
@@ -125,16 +182,20 @@ const Profile: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log('=== SAVE FUNCTION STARTED ===');
     setLoading(true);
     setError("");
 
     try {
       let avatarUrl = profile.avatar;
 
+      // Handle avatar upload first if there's a new file
       if (avatarFile) {
+        console.log('Uploading new avatar...');
         setUploadingAvatar(true);
         try {
           avatarUrl = await uploadAvatar(avatarFile);
+          console.log('Avatar uploaded successfully:', avatarUrl);
         } catch (uploadError) {
           console.error('Avatar upload error:', uploadError);
           setError(uploadError instanceof Error ? uploadError.message : 'Avatar upload failed');
@@ -145,17 +206,28 @@ const Profile: React.FC = () => {
         setUploadingAvatar(false);
       }
 
+      // Prepare update data with proper type conversion
       const updateData = {
-        name: profile.name,
-        email: profile.email,
-        phone: profile.phone,
-        age: profile.age ? parseInt(profile.age) : null,
+        name: profile.name.trim(),
+        email: profile.email.trim(),
+        phone: profile.phone.trim(),
+        age: profile.age && profile.age.trim() ? parseInt(profile.age.trim()) : null,
         gender: profile.gender,
-        bio: profile.bio,
-        avatar: avatarUrl
+        bio: profile.bio.trim(),
+        avatar: avatarUrl,
+        url: profile.url?.trim() || '',
+        location: profile.location?.trim() || '',
+        year: profile.year && profile.year.trim() ? parseInt(profile.year.trim()) : null,
+        college: profile.college?.trim() || '',
+        major: profile.major?.trim() || '',
+        interests: profile.interests || [],
+        googleId: profile.googleId || '',
       };
 
-      const response = await fetch('http://localhost:8000/users/profile', {
+      console.log('=== SENDING UPDATE DATA ===');
+      console.log(JSON.stringify(updateData, null, 2));
+
+      const response = await fetch(`${BACKEND_URL}/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -164,28 +236,66 @@ const Profile: React.FC = () => {
         body: JSON.stringify(updateData),
       });
 
+      console.log('=== API RESPONSE ===');
+      console.log('Status:', response.status);
+      console.log('Status Text:', response.statusText);
+
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+
       if (!response.ok) {
         if (response.status === 401) {
+          console.log('Unauthorized - redirecting to login');
           setIsAuthenticated(false);
           window.location.href = '/';
           return;
         }
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Profile update failed");
+        
+        let errorMessage = "Profile update failed";
+        try {
+          const errorData = JSON.parse(responseText);
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch (parseError) {
+          console.error('Failed to parse error response:', parseError);
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        
+        throw new Error(errorMessage);
       }
 
-      const updatedUser = await response.json();
+      // Parse successful response
+      let updatedUser;
+      try {
+        updatedUser = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse success response:', parseError);
+        throw new Error('Invalid response from server');
+      }
+
+      console.log('=== RECEIVED UPDATED USER ===');
+      console.log(JSON.stringify(updatedUser, null, 2));
       
-      setProfile({
+      // Update the profile state with the response from the server
+      const newProfileData = {
         name: updatedUser.name || '',
         email: updatedUser.email || '',
         phone: updatedUser.phone || '',
         age: updatedUser.age?.toString() || '',
         bio: updatedUser.bio || '',
         avatar: updatedUser.avatar || '',
-        gender: updatedUser.gender || 'male'
-      });
+        gender: updatedUser.gender || 'male',
+        url: updatedUser.url || '',
+        location: updatedUser.location || '',
+        year: updatedUser.year?.toString() || '',
+        college: updatedUser.college || '',
+        major: updatedUser.major || '',
+        interests: updatedUser.interests || []
+      };
 
+      setProfile(newProfileData);
+      setOriginalProfile(newProfileData); // Update original data too
+
+      // Clear temporary states
       setAvatarFile(null);
       setAvatarPreview("");
       if (fileInputRef.current) {
@@ -193,10 +303,10 @@ const Profile: React.FC = () => {
       }
 
       setIsEditing(false);
-      console.log("Profile update successful");
+      console.log("=== PROFILE UPDATE SUCCESSFUL ===");
       
     } catch (error: unknown) {
-      console.error("Profile update error:", error);
+      console.error("=== PROFILE UPDATE ERROR ===", error);
       setError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -205,6 +315,8 @@ const Profile: React.FC = () => {
   };
 
   const handleCancel = () => {
+    console.log('Canceling edit - resetting to original profile');
+    setProfile({ ...originalProfile }); // Reset to original values
     setIsEditing(false);
     setError("");
     setAvatarFile(null);
@@ -215,6 +327,7 @@ const Profile: React.FC = () => {
   };
 
   const handleEdit = () => {
+    console.log('Starting edit mode');
     setIsEditing(true);
     setError("");
   };
@@ -245,15 +358,25 @@ const Profile: React.FC = () => {
     profile.age,
     profile.avatar,
     profile.gender,
-    profile.bio
+    profile.bio,
+    profile.college,
+    profile.major,
+    profile.interests?.length ? 'filled' : '',
+    profile.url,
+    profile.location,
+    profile.year
   ].filter(value => value && value.trim() !== '').length;
 
-  const completionPercentage = Math.round((completedFields / 7) * 100);
+  const completionPercentage = Math.round((completedFields / 12) * 100);
   const handleNext = () => {
     window.location.href = '/home';
   }
 
   console.log('Profile avatar:', profile.avatar);
+
+  const handleImageError = () => {
+    setImageLoadError(true);
+  };
 
   return (
     <div>
@@ -279,21 +402,12 @@ const Profile: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-6">
                   <div className="relative w-20 h-20 rounded-full overflow-hidden shadow-lg group">
-                    {avatarPreview || profile.avatar ? (
+                    {(avatarPreview || profile.avatar) && !imageLoadError ? (
                       <img 
                         src={avatarPreview || profile.avatar} 
                         alt="Profile" 
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentElement!.innerHTML = `
-                            <div class="w-full h-full bg-gradient-to-r from-violet-400 to-pink-400 flex items-center justify-center">
-                              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                              </svg>
-                            </div>
-                          `;
-                        }}
+                        onError={handleImageError}
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-r from-violet-400 to-pink-400 flex items-center justify-center">
@@ -466,7 +580,7 @@ const Profile: React.FC = () => {
                   )}
                 </div>
               </div>
-
+<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
                   <User className="w-4 h-4 mr-2 text-violet-400" />
@@ -488,6 +602,138 @@ const Profile: React.FC = () => {
                   </div>
                 )}
               </div>
+<div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  Year
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="year"
+                    value={profile.year}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="Enter your year (e.g., Freshman, Sophomore)"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white min-h-[48px] flex items-center">
+                    {profile.year || <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+              
+
+
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  Location
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="location"
+                    value={profile.location}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="Enter your location"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white min-h-[48px] flex items-center">
+                    {profile.location || <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  Personal URL
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="url"
+                    value={profile.url}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="Enter your personal URL"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white min-h-[48px] flex items-center">
+                    {profile.url || <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  College
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="college"
+                    value={profile.college}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="Enter your college"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white min-h-[48px] flex items-center">
+                    {profile.college || <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  Major
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="major"
+                    value={profile.major}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="Enter your major"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white min-h-[48px] flex items-center">
+                    {profile.major || <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center text-sm font-semibold text-white/80">
+                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  Interests (comma separated)
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="interests"
+                    value={profile.interests?.join(', ') || ''}
+                    onChange={(e) => setProfile(prev => ({
+                      ...prev,
+                      interests: e.target.value.split(',').map(interest => interest.trim()).filter(interest => interest)
+                    }))}
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    placeholder="e.g., Music, Sports, Art"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none min-h-[48px] flex items-center" >
+                    {profile.interests && profile.interests.length > 0 ? profile.interests.join(', ') : <span className="text-white/50">Not specified</span>}
+                  </div>
+                )}
+              </div>
+
+
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
@@ -509,7 +755,7 @@ const Profile: React.FC = () => {
                   </div>
                 )}
               </div>
-
+</div>
               {isEditing && (
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-end">
                   <button
@@ -526,6 +772,7 @@ const Profile: React.FC = () => {
                   >
                     <Check className="w-4 h-4 mr-2 inline" />
                     {uploadingAvatar ? "Uploading..." : loading ? "Saving..." : "Save Changes"}
+                    {}
                   </button>
                 </div>
               )}
@@ -536,7 +783,7 @@ const Profile: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-white">Profile Completion</h3>
               <span className="text-sm font-medium text-white/60">
-                {completedFields}/7 completed
+                {completedFields}/12 completed
               </span>
             </div>
             <div className="flex items-center space-x-3">

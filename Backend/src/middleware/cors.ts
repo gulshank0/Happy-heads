@@ -6,10 +6,9 @@ const corsOptions = {
     if (!origin) return callback(null, true);
     
     const allowedOrigins = [
-      'http://localhost:3000',
+      process.env.FRONTEND_URL,
       'http://localhost:8080',
       'http://localhost:5173', // Vite default
-      process.env.FRONTEND_URL
     ].filter(Boolean);
 
     if (allowedOrigins.indexOf(origin) !== -1) {

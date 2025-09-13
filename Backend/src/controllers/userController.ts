@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-import prisma from '../config/database';
+import { PrismaClient } from '../../generated/client';
+
+const prisma = new PrismaClient();
 
 export class UserController {
   async createUser(req: Request, res: Response) {
     try {
-      const { name, email, age, bio, phone, avatar, gender, googleId } = req.body;
+      const { name, email, age, bio, phone, avatar, gender, googleId,url,location,year,major,interests } = req.body;
       
       if (!name || !email) {
         return res.status(400).json({ error: 'Name and email are required' });
@@ -20,7 +22,7 @@ export class UserController {
       }
 
       const user = await prisma.user.create({
-        data: { name, email, avatar, age: Number(age), bio, phone, gender, googleId, createdAt: new Date(), updatedAt: new Date() }
+        data: { name, email, avatar, age: Number(age), bio, phone, gender, googleId, url, location, year, major, interests, createdAt: new Date(), updatedAt: new Date() }
       });
 
       res.status(201).json(user);
@@ -52,7 +54,7 @@ export class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const userId = (req.user as any)?.id;
-      const { name, email, avatar, age, phone, bio, gender } = req.body;
+      const { name, email, avatar, age, phone, bio, gender, url, location, year, major, interests } = req.body;
 
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
@@ -70,6 +72,12 @@ export class UserController {
       if (phone !== undefined) updateData.phone = phone;
       if (bio !== undefined) updateData.bio = bio;
       if (gender !== undefined) updateData.gender = gender;
+      
+      if (url !== undefined) updateData.url = url;
+      if (location !== undefined) updateData.location = location;
+      if (year !== undefined) updateData.year = year;
+      if (major !== undefined) updateData.major = major;
+      if (interests !== undefined) updateData.interests = interests;
 
       const updatedUser = await prisma.user.update({
         where: { id: userId },
@@ -118,40 +126,138 @@ export class UserController {
     }
   }
 
-  // Get all users (for search/messaging)
+  // Get all users (for initial load)
   async getAllUsers(req: Request, res: Response) {
     try {
       const currentUserId = (req.user as any)?.id;
-      const search = req.query.search as string;
-      const limit = parseInt(req.query.limit as string) || 20;
+      
+      if (!currentUserId) {
+        return res.status(401).json({ error: 'Not authenticated' });
+      }
+
+      const users = await prisma.user.findMany({
+        where: {
+          id: { not: currentUserId }
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          avatar: true,
+          bio: true,
+          age: true,
+          year: true,
+          major: true,
+          interests: true,
+          createdAt: true,
+          location: true,
+          url: true
+        },
+        take: 20,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      res.json(users);
+    } catch (error) {
+      console.error('❌ Get all users error:', error);
+      res.status(500).json({ error: 'Failed to get users' });
+    }
+  }
+
+  // Search users for messaging
+  async searchUsersForMessaging(req: Request, res: Response) {
+    try {
+      const currentUserId = (req.user as any)?.id;
+      const { q: query, limit = '10' } = req.query;
+
+      console.log('🔍 Search users request:', {
+        currentUserId,
+        query,
+        limit,
+        user: req.user
+      });
 
       if (!currentUserId) {
         return res.status(401).json({ error: 'Not authenticated' });
       }
 
-      const whereClause: any = {
-        id: {
-          not: currentUserId // Exclude current user
-        }
-      };
+      const searchLimit = Math.min(parseInt(limit as string) || 10, 50);
 
-      // Add search filter if provided
-      if (search && search.trim()) {
+      let whereClause: any = {
+        id: { not: currentUserId } // Exclude current user
+      };
+      // Add search filters if query provided
+      interface SearchUserQuery {
+        q?: string;
+        limit?: string;
+      }
+
+      interface UserSearchWhereClause {
+        id: { not: string };
+        OR?: Array<{
+          name?: {
+            contains: string;
+            mode: 'insensitive';
+          };
+          email?: {
+            contains: string;
+            mode: 'insensitive';
+          };
+        }>;
+      }
+
+      interface UserSelectFields {
+        id: true;
+        name: true;
+        email: true;
+        avatar: true;
+        bio: true;
+        age: true;
+        createdAt: true;
+        year?: true;
+        major?: true;
+        interests?: true;
+        location?: true;
+        url?: true;
+      }
+
+      interface UserWithConversationInfo {
+        id: string;
+        name: string;
+        email: string;
+        avatar: string | null;
+        bio: string | null;
+        age: number | null;
+        createdAt: Date;
+        year?: string | null;
+        major?: string | null;
+        interests?: string | null;
+        location?: string | null;
+        url?: string | null;
+        hasExistingConversation: boolean;
+      }
+
+            if (query && typeof query === 'string' && query.trim()) {
+        const searchTerm = query.trim();
         whereClause.OR = [
           {
             name: {
-              contains: search.trim(),
+              contains: searchTerm,
               mode: 'insensitive'
             }
           },
           {
             email: {
-              contains: search.trim(),
+              contains: searchTerm,
               mode: 'insensitive'
             }
           }
         ];
       }
+
+      console.log('🔍 Search query:', whereClause);
 
       const users = await prisma.user.findMany({
         where: whereClause,
@@ -162,119 +268,45 @@ export class UserController {
           avatar: true,
           bio: true,
           age: true,
-          createdAt: true
+          year: true,
+          major: true,
+          interests: true,
+          location: true,
+          url: true,
+          createdAt: true,
+          updatedAt: true
         },
-        take: limit,
+        take: searchLimit,
         orderBy: {
           name: 'asc'
         }
       });
 
-      res.json({
-        success: true,
-        users: users,
-        count: users.length
-      });
-    } catch (error) {
-      console.error('Get all users error:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Failed to fetch users' 
-      });
-    }
-  }
+      console.log('✅ Found users:', users.length);
 
-  // Search users specifically for messaging
-  async searchUsersForMessaging(req: Request, res: Response) {
-    try {
-      const currentUserId = (req.user as any)?.id;
-      const { q: searchQuery } = req.query;
-
-      if (!currentUserId) {
-        return res.status(401).json({ error: 'Not authenticated' });
-      }
-
-      if (!searchQuery || typeof searchQuery !== 'string') {
-        return res.status(400).json({ error: 'Search query is required' });
-      }
-
-      // Get existing conversation partners to show them differently
-      const existingConversations = await prisma.conversation.findMany({
-        where: {
-          OR: [
-            { user1Id: currentUserId },
-            { user2Id: currentUserId }
-          ]
-        },
-        select: {
-          user1Id: true,
-          user2Id: true
-        }
-      });
-
-      const existingPartnerIds = existingConversations.map(conv => 
-        conv.user1Id === currentUserId ? conv.user2Id : conv.user1Id
-      );
-
-      const users = await prisma.user.findMany({
-        where: {
-          AND: [
-            {
-              id: {
-                not: currentUserId // Exclude current user
-              }
-            },
-            {
+      // Check for existing conversations
+      const usersWithConversationInfo = await Promise.all(
+        users.map(async (user) => {
+          const existingConversation = await prisma.conversation.findFirst({
+            where: {
               OR: [
-                {
-                  name: {
-                    contains: searchQuery,
-                    mode: 'insensitive'
-                  }
-                },
-                {
-                  email: {
-                    contains: searchQuery,
-                    mode: 'insensitive'
-                  }
-                }
+                { user1Id: currentUserId, user2Id: user.id },
+                { user1Id: user.id, user2Id: currentUserId }
               ]
             }
-          ]
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          avatar: true,
-          bio: true,
-          age: true
-        },
-        take: 10,
-        orderBy: [
-          {
-            name: 'asc'
-          }
-        ]
-      });
+          });
 
-      // Add hasExistingConversation flag
-      const usersWithConversationFlag = users.map(user => ({
-        ...user,
-        hasExistingConversation: existingPartnerIds.includes(user.id)
-      }));
+          return {
+            ...user,
+            hasExistingConversation: !!existingConversation
+          };
+        })
+      );
 
-      res.json({
-        success: true,
-        users: usersWithConversationFlag,
-        query: searchQuery
-      });
+      res.json(usersWithConversationInfo);
     } catch (error) {
-      console.error('Search users for messaging error:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Failed to search users' 
-      });
+      console.error('❌ Search users error:', error);
+      res.status(500).json({ error: 'Failed to search users' });
     }
   }
 
@@ -285,6 +317,17 @@ export class UserController {
 
       if (!userId) {
         return res.status(401).json({ error: 'Not authenticated' });
+      }
+
+      // Verify current user exists in database
+      const currentUser = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, name: true, email: true }
+      });
+
+      if (!currentUser) {
+        console.log('❌ Current user not found in database:', userId);
+        return res.status(404).json({ error: 'Current user not found' });
       }
 
       const user = await prisma.user.findUnique({
@@ -298,6 +341,12 @@ export class UserController {
           age: true,
           phone: true,
           gender: true,
+          year: true,
+          major: true,
+          interests: true,
+          location: true,
+          url: true,
+          googleId: true,
           createdAt: true,
           updatedAt: true
         }
@@ -316,6 +365,61 @@ export class UserController {
       res.status(500).json({ 
         success: false,
         error: 'Failed to get user profile' 
+      });
+    }
+  }
+
+  // Test database connection for debugging
+  async testDatabaseConnection(req: Request, res: Response) {
+    try {
+      const currentUserId = (req.user as any)?.id;
+      
+      if (!currentUserId) {
+        return res.status(401).json({ error: 'Not authenticated' });
+      }
+
+      // Test basic user count
+      const userCount = await prisma.user.count();
+      
+      // Test current user exists
+      const currentUser = await prisma.user.findUnique({
+        where: { id: currentUserId },
+        select: { id: true, name: true, email: true }
+      });
+
+      if (!currentUser) {
+        console.log('❌ Current user not found in database:', currentUserId);
+        return res.status(404).json({ error: 'Current user not found' });
+      }
+
+      // Test sample users query
+      const sampleUsers = await prisma.user.findMany({
+        where: {
+          id: { not: currentUserId }
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true
+        },
+        take: 5
+      });
+
+      res.json({
+        success: true,
+        debug: {
+          totalUsers: userCount,
+          currentUser: currentUser,
+          sampleUsers: sampleUsers,
+          timestamp: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      console.error('Database test error:', error);
+      res.status(500).json({ 
+        success: false,
+        error: 'Database connection failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
       });
     }
   }

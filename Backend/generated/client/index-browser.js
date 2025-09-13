@@ -20,11 +20,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.0
+ * Prisma Client JS version: 6.16.1
  * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.16.0",
+  client: "6.16.1",
   engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
@@ -144,11 +144,27 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
-  image: 'image',
   published: 'published',
   authorId: 'authorId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  image: 'image'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  authorId: 'authorId',
+  postId: 'postId'
 };
 
 exports.Prisma.ScoreCardScalarFieldEnum = {
@@ -222,13 +238,6 @@ exports.Prisma.PersonalityTraitsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.LikeScalarFieldEnum = {
-  id: 'id',
-  senderId: 'senderId',
-  receiverId: 'receiverId',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.MatchScalarFieldEnum = {
   id: 'id',
   user1Id: 'user1Id',
@@ -237,25 +246,21 @@ exports.Prisma.MatchScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserLikeScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -272,13 +277,15 @@ exports.MessageType = exports.$Enums.MessageType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
+  Like: 'Like',
+  Comment: 'Comment',
   ScoreCard: 'ScoreCard',
   Conversation: 'Conversation',
   Message: 'Message',
   UserPreferences: 'UserPreferences',
   PersonalityTraits: 'PersonalityTraits',
-  Like: 'Like',
-  Match: 'Match'
+  Match: 'Match',
+  UserLike: 'UserLike'
 };
 
 /**

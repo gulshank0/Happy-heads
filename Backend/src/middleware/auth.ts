@@ -19,13 +19,27 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
   return res.status(401).json({ error: 'Not authenticated' });
 };
 
-// Add the missing requireAuth middleware
 export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return next();
-  }
+  const userId = (req.user as any)?.id;
+  const sessionUserId = (req.session as any)?.passport?.user?.id;
   
-  return res.status(401).json({ error: 'Authentication required' });
+  console.log('🔍 Auth middleware check:', {
+    hasUser: !!req.user,
+    userId,
+    sessionUserId,
+    isAuthenticated: req.isAuthenticated?.()
+  });
+
+  if (userId || sessionUserId) {
+    // Ensure req.user has the correct structure
+    if (!req.user && sessionUserId) {
+      req.user = { id: sessionUserId };
+    }
+    next();
+  } else {
+    console.log('❌ Authentication required');
+    res.status(401).json({ error: 'Authentication required' });
+  }
 };
 
 export class UserController {

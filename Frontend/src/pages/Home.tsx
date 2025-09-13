@@ -1,3 +1,5 @@
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 import React, { useState, useEffect } from 'react';
 import { Heart, X, Calendar, MessageCircle, Users, Sparkle, Settings, Home as HomeIcon, User, Menu, LogOut, Bell, Filter, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -19,8 +21,15 @@ interface UserProfile {
   gender?: string;
   googleId?: string;
   avatar?: string;
+  college?: string;
+  location?: string;
+  interests?: string[];
+  isVerified?: boolean;
+  isPremium?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  // Add other fields as necessary
+  posts?: any[];
 }
 
 interface ProfileCard {
@@ -68,7 +77,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:8000/auth/me', {
+        const response = await fetch(`${BACKEND_URL}/auth/me`, {
           method: 'GET',
           credentials: 'include'
         });
@@ -103,7 +112,7 @@ const Home: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:8000/auth/logout', {
+      await fetch(`${BACKEND_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -127,7 +136,7 @@ const Home: React.FC = () => {
   };
 
   const goToProfile = () => {
-    navigate('/profile');
+    navigate('/home');
   };
 
   const handlePostCreated = (newPost: any) => {

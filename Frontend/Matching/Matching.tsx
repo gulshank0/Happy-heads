@@ -1,5 +1,9 @@
+const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8000';
+
+
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, MapPin, GraduationCap, Calendar, User, Eye, EyeOff, ArrowLeft, Settings } from 'lucide-react';
+import dotenv from 'dotenv';
 
 // Types and Interfaces (move these to the top)
 interface UserProfile {
@@ -83,7 +87,7 @@ const Matching: React.FC = () => {
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:8000/auth/me', {
+      const response = await fetch(`${BACKEND_URL}/auth/me`, {
         method: 'GET',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' }
@@ -110,7 +114,7 @@ const Matching: React.FC = () => {
 
   const loadUserPreferences = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/matching/preferences', {
+      const response = await fetch(`${BACKEND_URL}/api/matching/preferences`, {
         method: 'GET',
         credentials: 'include'
       });
@@ -133,7 +137,7 @@ const Matching: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/api/matching/matches?limit=10', {
+      const response = await fetch(`${BACKEND_URL}/api/matching/matches?limit=10`, {
         method: 'GET',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' }
@@ -156,7 +160,7 @@ const Matching: React.FC = () => {
 
   const handleLikeUser = async (targetUserId: string) => {
     try {
-      const response = await fetch('http://localhost:8000/api/matching/like', {
+      const response = await fetch(`${BACKEND_URL}/api/matching/like`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -185,7 +189,7 @@ const Matching: React.FC = () => {
 
   const handleUpdatePreferences = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/matching/preferences', {
+      const response = await fetch(`${BACKEND_URL}/api/matching/preferences`, {
         method: 'PUT',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

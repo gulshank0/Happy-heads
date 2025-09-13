@@ -1,6 +1,17 @@
+interface ImportMetaEnv {
+  readonly BACKEND_URL: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8000';
+
 import React, { useState, useEffect } from 'react';
-import { Heart, X, Filter, MapPin, GraduationCap, Calendar, MessageCircle, Star, Bookmark, Share2, MoreVertical, Zap, Eye, Users, Clock, Plus } from 'lucide-react';
+import { Heart, X, Filter, MapPin, GraduationCap, Calendar, MessageCircle, Star, Bookmark, Share2, MoreVertical, Zap, Users, Clock, Plus } from 'lucide-react';
 import PostCreation from '../PostCreation/PostCreation';
+import CommentSection from '../Comments/CommentSection';
 
 interface Post {
   id: string;
@@ -54,13 +65,16 @@ export default function Feed() {
     online: false
   });
   const [showFilters, setShowFilters] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [activeCommentSection, setActiveCommentSection] = useState<string | null>(null);
+  const [visibleComments, setVisibleComments] = useState<string | null>(null);
 
   // Fetch real posts from API
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/posts/feed', {
+      const response = await fetch(`${BACKEND_URL}/posts/feed`, {
         credentials: 'include'
       });
 
@@ -80,7 +94,7 @@ export default function Feed() {
   // Fetch real profiles from API
   const fetchProfiles = async () => {
     try {
-      const response = await fetch('http://localhost:8000/posts/profiles', {
+      const response = await fetch(`${BACKEND_URL}/posts/profiles`, {
         credentials: 'include'
       });
 
@@ -127,12 +141,36 @@ export default function Feed() {
     }
   };
 
-  const handlePostLike = (postId: string) => {
-    setPosts(posts.map(post => 
-      post.id === postId 
-        ? { ...post, isLiked: !post.isLiked, likes: post.isLiked ? post.likes - 1 : post.likes + 1 }
-        : post
+  const handlePostLike = async (postId: string) => {
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+  
+    // Optimistic UI update
+    setPosts(posts.map(p =>
+      p.id === postId
+        ? {
+            ...p,
+            isLiked: !p.isLiked,
+            likes: !isNaN(Number(p.likes))
+              ? (p.isLiked ? p.likes - 1 : p.likes + 1)
+              : 0
+          }
+        : p
     ));
+  
+    try {
+      const endpoint = post.isLiked ? 'unlike' : 'like';
+      await fetch(`${BACKEND_URL}/posts/${postId}/${endpoint}`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      // Optionally, re-fetch posts for consistency
+      // fetchPosts();
+    } catch (error) {
+      // Rollback UI if needed
+      setPosts(posts);
+      alert('Failed to update like. Please try again.');
+    }
   };
 
   const handlePostBookmark = (postId: string) => {
@@ -141,6 +179,10 @@ export default function Feed() {
         ? { ...post, isBookmarked: !post.isBookmarked }
         : post
     ));
+  };
+
+  const toggleComments = (postId: string) => {
+    setVisibleComments(prev => (prev === postId ? null : postId));
   };
 
   const currentProfile = profiles[currentProfileIndex];
@@ -448,10 +490,13 @@ export default function Feed() {
                           }`}
                         >
                           <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-                          <span className="text-sm">{post.likes}</span>
+                          <span className="text-sm">{!isNaN(Number(post.likes)) ? post.likes : 0}</span>
                         </button>
 
-                        <button className="flex items-center space-x-2 text-white/60 hover:text-blue-400 transition-colors">
+                        <button
+                          onClick={() => toggleComments(post.id)}
+                          className="flex items-center space-x-2 text-white/60 hover:text-blue-400 transition-colors"
+                        >
                           <MessageCircle className="w-5 h-5" />
                           <span className="text-sm">{post.comments}</span>
                         </button>
@@ -471,6 +516,9 @@ export default function Feed() {
                       </button>
                     </div>
                   </div>
+
+                  {/* Comment Section */}
+                  {visibleComments === post.id && <CommentSection postId={post.id} />}
                 </div>
               ))}
 

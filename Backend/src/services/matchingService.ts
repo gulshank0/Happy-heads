@@ -12,7 +12,7 @@ interface UserForMatching {
   year: number;
   bio: string;
   avatar: string;
-  location: { latitude: number; longitude: number } | null;
+  location: { latitude: number; longitude: number }| null;
   interests: string[];
   userPreferences: {
     minAge: number;
@@ -58,9 +58,11 @@ interface MatchResult {
 export class MatchingService {
   // Get users for matching (excluding current user and already liked/matched users)
   async getUsersForMatching(currentUserId: string): Promise<UserForMatching[]> {
-    const likedUserIds = await prisma.like.findMany({
+    const likedUserIds = await prisma.userLike.findMany({
       where: { senderId: currentUserId },
-      select: { receiverId: true }
+      select: {
+        receiverId: true
+      }
     });
 
     const matchedUserIds = await prisma.match.findMany({
@@ -257,6 +259,57 @@ export class MatchingService {
     return Math.max(0, (1 - euclideanDistance / maxDistance) * 100);
   }
 
+  // Calculate the compatibility score between two users
+  private calculateCompatibility(currentUser: UserForMatching, candidate: UserForMatching): MatchResult | null {
+    if (!currentUser.userPreferences) return null;
+
+    const ageCompatibility = this.calculateAgeCompatibility(
+      currentUser.age, candidate.age, currentUser.userPreferences
+    );
+    const distanceScore = this.calculateDistanceScore(currentUser, candidate);
+    const interestSimilarity = this.calculateInterestSimilarity(
+      currentUser.interests, candidate.interests
+    );
+    const collegeCompatibility = this.calculateCollegeCompatibility(currentUser, candidate);
+    const majorCompatibility = this.calculateMajorCompatibility(currentUser, candidate);
+    const yearCompatibility = this.calculateYearCompatibility(currentUser, candidate);
+    const personalityCompatibility = this.calculatePersonalityCompatibility(
+      currentUser.personalityTraits, candidate.personalityTraits
+    );
+
+    const weights = currentUser.userPreferences;
+    const totalWeight = weights.ageWeight + weights.distanceWeight + weights.interestsWeight +
+                       weights.collegeWeight + weights.majorWeight + weights.yearWeight +
+                       weights.personalityWeight;
+
+    if (totalWeight === 0) return null; // Avoid division by zero
+
+    const totalScore = (
+      (ageCompatibility * weights.ageWeight) +
+      (distanceScore * weights.distanceWeight) +
+      (interestSimilarity * weights.interestsWeight) +
+      (collegeCompatibility * weights.collegeWeight) +
+      (majorCompatibility * weights.majorWeight) +
+      (yearCompatibility * weights.yearWeight) +
+      (personalityCompatibility * weights.personalityWeight)
+    ) / totalWeight;
+
+    return {
+      user: candidate,
+      score: totalScore,
+      breakdown: {
+        ageCompatibility,
+        distanceScore,
+        interestSimilarity,
+        collegeCompatibility,
+        majorCompatibility,
+        yearCompatibility,
+        personalityCompatibility,
+        totalScore
+      }
+    };
+  }
+
   // Main matching algorithm
   async findMatches(userId: string, limit: number = 10): Promise<MatchResult[]> {
     const currentUser = await this.getCurrentUser(userId);
@@ -268,57 +321,26 @@ export class MatchingService {
     const matches: MatchResult[] = [];
 
     for (const candidate of candidates) {
-      // Check gender preference
-      if (!currentUser.userPreferences.preferredGenders.includes(candidate.gender)) {
+      // Check for mutual gender preference
+      const currentUserGender = currentUser.gender;
+      const candidateGender = candidate.gender;
+
+      const currentUserLikesCandidateGender = currentUser.userPreferences.preferredGenders.includes(candidateGender);
+      
+      // Ensure candidate has preferences set to check reciprocation
+      const candidateLikesCurrentUserGender = candidate.userPreferences ? 
+        candidate.userPreferences.preferredGenders.includes(currentUserGender) : 
+        true; // Default to true if candidate has no preference set
+
+      if (!currentUserLikesCandidateGender || !candidateLikesCurrentUserGender) {
         continue;
       }
 
-      // Calculate compatibility scores
-      const ageCompatibility = this.calculateAgeCompatibility(
-        currentUser.age, candidate.age, currentUser.userPreferences
-      );
-      const distanceScore = this.calculateDistanceScore(currentUser, candidate);
-      const interestSimilarity = this.calculateInterestSimilarity(
-        currentUser.interests, candidate.interests
-      );
-      const collegeCompatibility = this.calculateCollegeCompatibility(currentUser, candidate);
-      const majorCompatibility = this.calculateMajorCompatibility(currentUser, candidate);
-      const yearCompatibility = this.calculateYearCompatibility(currentUser, candidate);
-      const personalityCompatibility = this.calculatePersonalityCompatibility(
-        currentUser.personalityTraits, candidate.personalityTraits
-      );
+      // Calculate compatibility scores using the new method
+      const matchResult = this.calculateCompatibility(currentUser, candidate);
 
-      // Calculate weighted total score
-      const weights = currentUser.userPreferences;
-      const totalWeight = weights.ageWeight + weights.distanceWeight + weights.interestsWeight + 
-                         weights.collegeWeight + weights.majorWeight + weights.yearWeight + 
-                         weights.personalityWeight;
-
-      const totalScore = (
-        (ageCompatibility * weights.ageWeight) +
-        (distanceScore * weights.distanceWeight) +
-        (interestSimilarity * weights.interestsWeight) +
-        (collegeCompatibility * weights.collegeWeight) +
-        (majorCompatibility * weights.majorWeight) +
-        (yearCompatibility * weights.yearWeight) +
-        (personalityCompatibility * weights.personalityWeight)
-      ) / totalWeight;
-
-      if (totalScore > 30) { // Only include matches above 30% compatibility
-        matches.push({
-          user: candidate,
-          score: totalScore,
-          breakdown: {
-            ageCompatibility,
-            distanceScore,
-            interestSimilarity,
-            collegeCompatibility,
-            majorCompatibility,
-            yearCompatibility,
-            personalityCompatibility,
-            totalScore
-          }
-        });
+      if (matchResult && matchResult.score > 30) { // Only include matches above 30% compatibility
+        matches.push(matchResult);
       }
     }
 
@@ -342,37 +364,38 @@ export class MatchingService {
   // Record a like
   async recordLike(senderId: string, receiverId: string): Promise<boolean> {
     // Check if like already exists
-    const existingLike = await prisma.like.findUnique({
+    const existingLike = await prisma.userLike.findFirst({
       where: {
-        senderId_receiverId: {
-          senderId,
-          receiverId
-        }
+        senderId,
+        receiverId
       }
     });
 
     if (existingLike) return false;
 
     // Create the like
-    await prisma.like.create({
+    await prisma.userLike.create({
       data: { senderId, receiverId }
     });
 
     // Check if it's a mutual like (match)
-    const reciprocalLike = await prisma.like.findUnique({
+    const reciprocalLike = await prisma.userLike.findFirst({
       where: {
-        senderId_receiverId: {
-          senderId: receiverId,
-          receiverId: senderId
-        }
+        senderId: receiverId,
+        receiverId: senderId
       }
     });
 
     if (reciprocalLike) {
-      // Calculate compatibility score for the match
-      const matches = await this.findMatches(senderId, 1);
-      const match = matches.find(m => m.user.id === receiverId);
-      const score = match?.score || 50;
+      // Calculate compatibility score for the match more efficiently
+      const sender = await this.getCurrentUser(senderId);
+      const receiver = await this.getCurrentUser(receiverId);
+      
+      let score = 50; // Default score
+      if (sender && receiver) {
+        const matchResult = this.calculateCompatibility(sender, receiver);
+        score = matchResult?.score || 50;
+      }
 
       await this.createMatch(senderId, receiverId, score);
       return true; // It's a match!

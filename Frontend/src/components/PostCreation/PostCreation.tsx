@@ -56,7 +56,7 @@ export default function PostCreation({ isOpen, onClose, onPostCreated }: PostCre
         formData.append('image', imageFile);
       }
 
-      const response = await fetch('http://localhost:8000/posts/create', {
+      const response = await fetch(`${process.env.BACKEND_URI}/posts/create`, {
         method: 'POST',
         credentials: 'include',
         body: formData
