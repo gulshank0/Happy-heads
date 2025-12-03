@@ -1,0 +1,238 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  url       String?
+  gender    String?
+  age       Int?
+  phone     String?
+  bio       String?
+  googleId  String?
+  college   String?
+  major     String?
+  year      Int?
+  location  String?    // {latitude: number, longitude: number}
+  interests String[] // Array of interests
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts              Post[]
+  userPosts          UserPost[]
+  scoreCard          ScoreCard?
+  userPreferences    UserPreferences?
+  personalityTraits  PersonalityTraits?
+  sentMessages       Message[] @relation("SentMessages")
+  receivedMessages   Message[] @relation("ReceivedMessages")
+  conversations1     Conversation[] @relation("User1Conversations")
+  conversations2     Conversation[] @relation("User2Conversations")
+  
+  // Matching relations
+  likes              Like[] // Added for Like relation
+  matches        Match[] @relation("MatchUser1")
+  matchedBy      Match[] @relation("MatchUser2")
+  comments       Comment[]
+  sentLikes      UserLike[] @relation("SentLikes")
+  receivedLikes  UserLike[] @relation("ReceivedLikes")
+  notificationReads NotificationRead[] @relation("NotificationReads")
+
+  @@map("users")
+}
+
+model UserPost{
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  image     String?  // URL or path to the image
+  postType  String?  // Type of the post (e.g., article, image, video)
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_posts")
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  title     String
+  content   String?
+  image     String?   // URL or path to the image
+  published Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comments  Comment[]
+  likes     Like[]
+
+  @@map("posts")
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+}
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  @@map("comments")
+}
+
+model ScoreCard {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  college     String?
+  major       String?
+  year        String?
+  location    String?
+  interests   String[]
+  preferences String[]
+  personality String?
+  score       Int?     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("scorecards")
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  user1Id      String
+  user2Id      String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+  lastMessageAt DateTime?
+  
+  user1        User      @relation("User1Conversations", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2        User      @relation("User2Conversations", fields: [user2Id], references: [id], onDelete: Cascade)
+  messages     Message[]
+
+  @@unique([user1Id, user2Id])
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  receiverId     String
+  content        String
+  messageType    MessageType  @default(TEXT)
+  isRead         Boolean      @default(false)
+  isDelivered    Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender         User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver       User         @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model UserPreferences {
+  id                 String @id @default(cuid())
+  userId             String @unique
+  user               User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  minAge             Int    @default(18)
+  maxAge             Int    @default(35)
+  preferredGenders   String[] // ["male", "female", "other"]
+  maxDistance        Int    @default(50) // in kilometers
+  collegePreference  String @default("any") // "same", "different", "any"
+  majorPreference    String @default("any") // "same", "different", "any"
+  minYear            Int    @default(1)
+  maxYear            Int    @default(4)
+  
+  // Importance weights (0-1)
+  ageWeight          Float  @default(0.15)
+  distanceWeight     Float  @default(0.10)
+  interestsWeight    Float  @default(0.25)
+  collegeWeight      Float  @default(0.10)
+  majorWeight        Float  @default(0.15)
+  yearWeight         Float  @default(0.10)
+  personalityWeight  Float  @default(0.15)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PersonalityTraits {
+  id               String @id @default(cuid())
+  userId           String @unique
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  extroversion     Int    @default(5) // 1-10
+  openness         Int    @default(5) // 1-10
+  conscientiousness Int   @default(5) // 1-10
+  agreeableness    Int    @default(5) // 1-10
+  neuroticism      Int    @default(5) // 1-10
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+
+model Match {
+  id         String   @id @default(cuid())
+  user1Id    String
+  user2Id    String
+  user1      User     @relation("MatchUser1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2      User     @relation("MatchUser2", fields: [user2Id], references: [id], onDelete: Cascade)
+  score      Float    // Compatibility score
+  createdAt  DateTime @default(now())
+  
+  @@unique([user1Id, user2Id])
+}
+
+model UserLike {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+  sender     User     @relation("SentLikes", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedLikes", fields: [receiverId], references: [id])
+}
+
+model NotificationRead {
+  id               String   @id @default(cuid())
+  userId           String
+  notificationId   String
+  notificationType String   // 'like', 'match', 'message'
+  readAt           DateTime @default(now())
+  user             User     @relation("NotificationReads", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, notificationId, notificationType])
+  @@map("notification_reads")
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  EMOJI
+}

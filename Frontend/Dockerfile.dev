@@ -1,0 +1,41 @@
+# =============================================================================
+# Frontend Development Dockerfile
+# =============================================================================
+# Optimized for development with Vite's hot module replacement (HMR)
+# =============================================================================
+
+FROM node:20-alpine
+
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Install dependencies
+RUN pnpm install
+
+# Copy configuration files
+COPY index.html ./
+COPY vite.config.ts ./
+COPY tsconfig.json ./
+COPY tailwind.config.ts ./
+COPY postcss.config.js ./
+COPY components.json ./
+
+# Copy source (will be overridden by volume mount)
+COPY src ./src
+COPY public ./public
+COPY shared ./shared
+COPY Matching ./Matching
+
+# Expose Vite dev server port
+EXPOSE 5173
+
+# Development environment
+ENV NODE_ENV=development
+
+# Start Vite dev server with HMR
+CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]

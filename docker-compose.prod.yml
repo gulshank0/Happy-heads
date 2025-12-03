@@ -1,0 +1,152 @@
+# =============================================================================
+# Docker Compose Production Overrides
+# =============================================================================
+# Production-specific configuration that overrides docker-compose.yml
+# 
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# 
+# This file:
+# - Removes exposed ports for internal services (postgres, redis)
+# - Adds production-grade logging
+# - Configures resource limits
+# - Adds SSL/TLS support via reverse proxy
+# - Enables production optimizations
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # PostgreSQL - Production Configuration
+  # ===========================================================================
+  postgres:
+    # Override: Remove port exposure in production
+    ports: []
+    
+    # Production environment
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Production logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  # ===========================================================================
+  # Redis - Production Configuration
+  # ===========================================================================
+  redis:
+    # Override: Remove port exposure in production
+    ports: []
+    
+    # Stronger Redis configuration for production
+    command: >
+      redis-server 
+      --appendonly yes 
+      --maxmemory 512mb 
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --timeout 0
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 768M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    
+    # Production logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  # ===========================================================================
+  # Backend - Production Configuration
+  # ===========================================================================
+  backend:
+    # Environment overrides
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      SESSION_SECRET: ${SESSION_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      FRONTEND_URL: ${FRONTEND_URL}
+      BACKEND_URL: ${BACKEND_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL}
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      # Enable replicas for scaling
+      replicas: 1
+    
+    # Production logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+    
+    # Override: Don't expose backend port directly (nginx proxies)
+    ports: []
+
+  # ===========================================================================
+  # Frontend - Production Configuration
+  # ===========================================================================
+  frontend:
+    build:
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+        VITE_WS_URL: ${VITE_WS_URL}
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+    
+    # Production logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    
+    # Expose on port 8080 (and 443 for HTTPS if configured)
+    ports:
+      - "8080:8080"
+      - "443:443"

@@ -1,0 +1,48 @@
+# =============================================================================
+# Backend Development Dockerfile
+# =============================================================================
+# Optimized for development with hot-reload support
+# Uses ts-node for direct TypeScript execution
+# =============================================================================
+
+FROM node:20-alpine
+
+# Install dependencies for native modules
+RUN apk add --no-cache \
+    g++ \
+    make \
+    openssl \
+    openssl-dev \
+    python3
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including devDependencies)
+RUN npm ci --legacy-peer-deps
+
+# Copy Prisma schema and generate client
+COPY prisma ./prisma/
+RUN npx prisma generate
+
+# Copy TypeScript config
+COPY tsconfig.json ./
+
+# Copy source code (will be overridden by volume mount)
+COPY src ./src
+
+# Expose ports
+EXPOSE 8000
+EXPOSE 9229
+
+# Development environment
+ENV NODE_ENV=development
+
+# Use ts-node-dev for hot-reload in development
+# Install globally for development
+RUN npm install -g ts-node-dev
+
+# Start with hot-reload and debug support
+CMD ["ts-node-dev", "--respawn", "--transpile-only", "--inspect=0.0.0.0:9229", "src/index.ts"]

@@ -1,0 +1,226 @@
+# =============================================================================
+# Docker Compose Configuration for Happy-Heads Application
+# =============================================================================
+# Complete orchestration for development and production environments
+# 
+# Services:
+# - postgres:  PostgreSQL database for persistent data storage
+# - redis:     Redis cache for sessions and real-time features (optional)
+# - backend:   Node.js/Express API server with WebSocket support
+# - frontend:  React SPA served via Nginx with API proxy
+#
+# Usage:
+#   Development:  docker compose up -d
+#   Production:   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#   View logs:    docker compose logs -f [service_name]
+#   Stop:         docker compose down
+#   Full reset:   docker compose down -v (removes volumes!)
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # PostgreSQL Database
+  # ===========================================================================
+  # Primary data store for users, posts, messages, matches, etc.
+  # Data persists in named volume 'postgres_data'
+  postgres:
+    image: postgres:16-alpine
+    container_name: happy-heads-postgres
+    
+    # Restart policy: always restart unless explicitly stopped
+    restart: unless-stopped
+    
+    # Environment configuration
+    environment:
+      # Database credentials - CHANGE THESE IN PRODUCTION!
+      POSTGRES_USER: ${POSTGRES_USER:-happyheads}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-happyheads_secret_password}
+      POSTGRES_DB: ${POSTGRES_DB:-happyheads_db}
+      
+      # Performance tuning
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8"
+    
+    # Persistent storage for database files
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Optional: Mount init scripts for schema setup
+      # - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    
+    # Expose port for external tools (DBeaver, pgAdmin, etc.)
+    # Remove in production or use different host port
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    
+    # Health check to ensure database is ready
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-happyheads} -d ${POSTGRES_DB:-happyheads_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    
+    # Network configuration
+    networks:
+      - happy-heads-network
+
+  # ===========================================================================
+  # Redis Cache (Optional but Recommended)
+  # ===========================================================================
+  # Used for session storage, caching, and pub/sub for WebSocket scaling
+  redis:
+    image: redis:7-alpine
+    container_name: happy-heads-redis
+    restart: unless-stopped
+    
+    # Redis configuration
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    
+    # Persistent storage for Redis data
+    volumes:
+      - redis_data:/data
+    
+    # Expose port for external access (development only)
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    networks:
+      - happy-heads-network
+
+  # ===========================================================================
+  # Backend API Server
+  # ===========================================================================
+  # Node.js/Express server with Prisma ORM and WebSocket support
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: happy-heads-backend
+    restart: unless-stopped
+    
+    # Wait for database and redis to be healthy before starting
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    
+    # Environment variables
+    environment:
+      # Node environment
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 8000
+      
+      # Database connection string (uses Docker network DNS)
+      DATABASE_URL: postgresql://${POSTGRES_USER:-happyheads}:${POSTGRES_PASSWORD:-happyheads_secret_password}@postgres:5432/${POSTGRES_DB:-happyheads_db}?schema=public
+      
+      # Redis connection (for sessions/caching)
+      REDIS_URL: redis://redis:6379
+      
+      # JWT Configuration
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      
+      # Session Configuration
+      SESSION_SECRET: ${SESSION_SECRET:-your-session-secret-change-in-production}
+      
+      # CORS Configuration (Frontend URL)
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8080}
+      
+      # Backend URL (for generating avatar URLs)
+      BACKEND_URL: ${BACKEND_URL:-http://localhost:8000}
+      
+      # Google OAuth (optional)
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL:-http://localhost:8000/auth/google/callback}
+    
+    # Persistent storage for uploads
+    volumes:
+      - uploads_data:/app/uploads
+    
+    # Expose backend port
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    networks:
+      - happy-heads-network
+
+  # ===========================================================================
+  # Frontend Web Server
+  # ===========================================================================
+  # React SPA served via Nginx with API proxy to backend
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      # Build arguments for Vite environment variables
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:8000}
+        VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:8000}
+    container_name: happy-heads-frontend
+    restart: unless-stopped
+    
+    # Wait for backend to be healthy
+    depends_on:
+      backend:
+        condition: service_healthy
+    
+    # Expose frontend port
+    ports:
+      - "${FRONTEND_PORT:-8080}:8080"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    networks:
+      - happy-heads-network
+
+# =============================================================================
+# Named Volumes
+# =============================================================================
+# Persistent storage that survives container restarts
+volumes:
+  # PostgreSQL database files
+  postgres_data:
+    driver: local
+    name: happy-heads-postgres-data
+  
+  # Redis persistence
+  redis_data:
+    driver: local
+    name: happy-heads-redis-data
+  
+  # User uploaded files (avatars, post images)
+  uploads_data:
+    driver: local
+    name: happy-heads-uploads-data
+
+# =============================================================================
+# Networks
+# =============================================================================
+# Internal network for service communication
+networks:
+  happy-heads-network:
+    driver: bridge
+    name: happy-heads-network

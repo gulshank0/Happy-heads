@@ -1,0 +1,17 @@
+# =============================================================================
+# Railway Configuration
+# =============================================================================
+# This file configures Railway deployment for the Happy-Heads application
+# Railway will automatically detect this and configure the services
+#
+# Deploy: https://railway.app/new/github
+# =============================================================================
+
+[build]
+builder = "dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
