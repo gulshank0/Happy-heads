@@ -164,7 +164,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent hover:cursor-pointer" onClick={() => navigate('/')}>
+            <h1 className="text-2xl font-bold text-blue-400 font-bold hover:cursor-pointer" onClick={() => navigate('/')}>
               Happy Heads
             </h1>
           </div>
@@ -209,7 +209,7 @@ const Navbar = () => {
                     alt="User Avatar" 
                     fallbackText={user?.name || user?.email?.split('@')[0] || "U"}
                     size="sm"
-                    className="cursor-pointer hover:ring-2 hover:ring-violet-400/50 transition-all duration-200"
+                    className="cursor-pointer hover:ring-2 hover:ring-blue-400/50 transition-all duration-200"
                     lazy={false}
                   />
                 </div>
@@ -224,7 +224,7 @@ const Navbar = () => {
             ) : (
               <button 
                 onClick={handleGoogleLogin}
-                className="flex items-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25"
+                className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:bg-blue-600 transition-all duration-200 shadow-lg shadow-blue-500/25"
               >
                 <LogIn size={16} />
                 <span>Login with Google</span>
@@ -309,7 +309,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <button
-                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 shadow-lg shadow-pink-500/25"
+                  className="w-full flex items-center justify-center space-x-2 bg-blue-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:bg-blue-600 transition-all duration-200 shadow-lg shadow-blue-500/25"
                   onClick={handleGoogleLogin}
                 >
                   <LogIn size={16} />

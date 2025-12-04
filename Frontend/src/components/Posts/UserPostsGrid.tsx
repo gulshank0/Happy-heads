@@ -295,7 +295,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
           {!userId && onAddPost && (
             <button
               onClick={onAddPost}
-              className="mt-4 inline-flex items-center px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25"
+              className="mt-4 inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25"
             >
               <Plus className="w-4 h-4 mr-2" />
               Create Your First Post
@@ -333,7 +333,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
             >
               {/* New Post Badge */}
               {isAnimating && (
-                <div className="absolute top-2 right-2 z-10 bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg animate-pulse">
+                <div className="absolute top-2 right-2 z-10 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg animate-pulse">
                   New!
                 </div>
               )}
@@ -406,7 +406,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     }`}
                   />
                   {isAnimating && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-violet-500/20 to-transparent animate-pulse"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent animate-pulse"></div>
                   )}
                 </div>
               )}
@@ -432,7 +432,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleEditPost(editingPost.id, editingPost.content, editingPost.title)}
-                        className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all font-medium text-sm"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all font-medium text-sm"
                       >
                         Save
                       </button>

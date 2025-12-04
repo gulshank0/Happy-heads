@@ -40,14 +40,14 @@ export default function UserPostsPage({ user, userId }: UserPostsPageProps) {
       <div className="relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.3),transparent_50%)]"></div>
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-violet-600/20 to-pink-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-blue-700/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto p-6">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="font-poppins text-4xl md:text-5xl font-bold leading-tight mb-4">
-              <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-blue-500 bg-clip-text text-transparent">
                 {isCurrentUser ? 'Your Posts' : `${user?.name}'s Posts`}
               </span>
             </h1>
@@ -64,9 +64,9 @@ export default function UserPostsPage({ user, userId }: UserPostsPageProps) {
             <div className="mb-8 flex justify-center">
               <button
                 onClick={handleAddPostClick}
-                className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-2xl hover:from-violet-600 hover:to-pink-600 transition-all duration-300 font-semibold shadow-2xl shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-105"
+                className="group relative inline-flex items-center px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 transition-all duration-300 font-semibold shadow-2xl shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-pink-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <div className="absolute inset-0 bg-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 <Plus className="w-5 h-5 mr-2 relative z-10" />
                 <span className="relative z-10">Create New Post</span>
               </button>

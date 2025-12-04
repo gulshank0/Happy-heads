@@ -126,7 +126,7 @@ export default function PostCreation({ isOpen, onClose, onPostCreated }: PostCre
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="What's on your mind?"
-            className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 resize-none focus:outline-none focus:border-violet-500 transition-colors"
+            className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 resize-none focus:outline-none focus:border-blue-500 transition-colors"
             rows={4}
             maxLength={500}
           />
@@ -187,7 +187,7 @@ export default function PostCreation({ isOpen, onClose, onPostCreated }: PostCre
             <button
               type="submit"
               disabled={loading || (!content.trim() && !imageFile)}
-              className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
             >
               <Send className="w-4 h-4 mr-2" />
               {loading ? 'Posting...' : 'Post'}

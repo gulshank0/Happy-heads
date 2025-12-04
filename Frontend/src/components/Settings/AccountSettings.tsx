@@ -299,7 +299,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <label className="flex items-center text-sm font-semibold text-white/80">
-                <User className="w-4 h-4 mr-2 text-violet-400" />
+                <User className="w-4 h-4 mr-2 text-blue-400" />
                 Full Name
               </label>
               {isEditing ? (
@@ -308,7 +308,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                   name="name"
                   value={profile.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                   placeholder="Enter your full name"
                   required
                 />
@@ -330,7 +330,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                   name="email"
                   value={profile.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
                   placeholder="Enter your email"
                   required
                 />
@@ -343,7 +343,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
 
             <div className="space-y-3">
               <label className="flex items-center text-sm font-semibold text-white/80">
-                <Phone className="w-4 h-4 mr-2 text-violet-400" />
+                <Phone className="w-4 h-4 mr-2 text-blue-400" />
                 Phone Number
               </label>
               {isEditing ? (
@@ -352,7 +352,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                   name="phone"
                   value={profile.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                   placeholder="Enter your phone number"
                 />
               ) : (
@@ -373,7 +373,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                   name="age"
                   value={profile.age}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
                   placeholder="Enter your age"
                   min="18"
                   max="100"
@@ -390,7 +390,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
           <div className="mt-6 space-y-6">
             <div className="space-y-3">
               <label className="flex items-center text-sm font-semibold text-white/80">
-                <FileText className="w-4 h-4 mr-2 text-violet-400" />
+                <FileText className="w-4 h-4 mr-2 text-blue-400" />
                 Bio
               </label>
               {isEditing ? (
@@ -399,7 +399,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                   value={profile.bio}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 resize-none"
                   placeholder="Tell us about yourself..."
                 />
               ) : (
@@ -411,7 +411,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
 
             <div className="space-y-3">
               <label className="flex items-center text-sm font-semibold text-white/80">
-                <User className="w-4 h-4 mr-2 text-violet-400" />
+                <User className="w-4 h-4 mr-2 text-blue-400" />
                 Interests (comma separated)
               </label>
               {isEditing ? (
@@ -423,7 +423,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                     ...prev,
                     interests: e.target.value.split(',').map(interest => interest.trim()).filter(interest => interest)
                   }))}
-                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                  className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                   placeholder="e.g., Music, Sports, Art"
                 />
               ) : (
@@ -446,7 +446,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
               <button
                 disabled={loading}
                 type='submit'
-                className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25 disabled:opacity-50"
+                className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25 disabled:opacity-50"
               >
                 <Check className="w-4 h-4 mr-2 inline" />
                 {loading ? "Saving..." : "Save Changes"}
@@ -501,7 +501,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
                 }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   privacySettings[setting as keyof typeof privacySettings] 
-                    ? 'bg-gradient-to-r from-violet-500 to-pink-500' 
+                    ? 'bg-blue-500' 
                     : 'bg-white/20'
                 }`}
               >
@@ -542,7 +542,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ user, onUpdate }) => 
               <button
                 onClick={() => setNotificationPrefs(prev => ({ ...prev, [key]: !value }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  value ? 'bg-gradient-to-r from-violet-500 to-pink-500' : 'bg-white/20'
+                  value ? 'bg-blue-500' : 'bg-white/20'
                 }`}
               >
                 <span

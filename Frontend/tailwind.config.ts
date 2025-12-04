@@ -60,6 +60,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Brand colors for consistent theming
+        brand: {
+          DEFAULT: "#3b82f6", // blue-500
+          light: "#60a5fa",   // blue-400
+          dark: "#2563eb",    // blue-600
+          muted: "#3b82f6/20",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

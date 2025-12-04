@@ -158,7 +158,7 @@ const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({ user }) => {
             <button
               onClick={handleSavePreferences}
               disabled={loading}
-              className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-medium disabled:opacity-50"
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 font-medium disabled:opacity-50"
             >
               <Save className="w-4 h-4 mr-2 inline" />
               {loading ? 'Saving...' : 'Save Changes'}
@@ -186,7 +186,7 @@ const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({ user }) => {
       {/* Basic Preferences */}
       <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
         <h4 className="text-lg font-semibold text-white mb-6 flex items-center">
-          <User className="w-4 h-4 mr-2 text-violet-400" />
+          <User className="w-4 h-4 mr-2 text-blue-400" />
           Basic Preferences
         </h4>
 
@@ -247,7 +247,7 @@ const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({ user }) => {
                   />
                   <div className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
                     preferences.preferredGenders.includes(gender)
-                      ? 'bg-gradient-to-r from-violet-500 to-pink-500 border-violet-400 text-white'
+                      ? 'bg-blue-500 border-blue-400 text-white'
                       : 'bg-white/10 border-white/20 text-white/70 hover:bg-white/20'
                   }`}>
                     <span className="capitalize font-medium">{gender}</span>
@@ -408,7 +408,7 @@ const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({ user }) => {
         <button
           onClick={handleSavePreferences}
           disabled={loading}
-          className="px-8 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25 disabled:opacity-50"
+          className="px-8 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25 disabled:opacity-50"
         >
           <Save className="w-4 h-4 mr-2 inline" />
           {loading ? 'Saving Preferences...' : 'Save All Preferences'}

@@ -7,42 +7,42 @@ export default function Feedbacks() {
       college: "Sharda University",
       avatar: "P",
       feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
-      gradient: "from-pink-500 to-rose-500"
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       name: "Priya Sharma",
       college: "Sharda University",
       avatar: "P",
       feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
-      gradient: "from-pink-500 to-rose-500"
+      gradient: "from-blue-500 to-blue-600"
     },
     , {
       name: "Priya Sharma",
       college: "Sharda University",
       avatar: "P",
       feedback: "Yaar HappyHeads mst website hai! 💕 Finally mil gaya koi jo mere jaise hi studies me serious hai. Love it yr! 😍",
-      gradient: "from-pink-500 to-rose-500"
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       name: "Arjun Singh", 
       college: "Delhi University",
       avatar: "A",
       feedback: "Bro this app is actually legit! 🔥 Met so many cool people from my college. Campus dating scene sorted hai completely! 💯",
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       name: "Ananya Gupta",
       college: "Mumbai University", 
       avatar: "A",
       feedback: "Omg guys use kro isko! 😭💕 Itne ache matches aate hai yahan pe. Sab verified students hai so tension nhi lena pdta safety ka! ✨",
-      gradient: "from-purple-500 to-violet-500"
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       name: "Rohit Kumar",
       college: "IIT Delhi",
       avatar: "R", 
       feedback: "Finally ek platform jo sirf college students ke liye hai! No fake profiles, sab genuine hai. Highly recommended! 🙌",
-      gradient: "from-orange-500 to-red-500"
+      gradient: "from-blue-500 to-blue-600"
     }
   ];
 
@@ -52,7 +52,7 @@ export default function Feedbacks() {
         {/* Header */}
         <div className="text-center mb-16 ">
           <h2 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="text-blue-400">
               Real Stories from Real Students
             </span>
           </h2>

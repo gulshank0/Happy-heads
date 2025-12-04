@@ -7,7 +7,7 @@ export default function Pricing() {
         {/* Header */}
         <div className="text-center mb-16 ">
           <h2 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="text-blue-400">
               Premium Plans for College Boys
             </span>
           </h2>
@@ -23,7 +23,7 @@ export default function Pricing() {
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold mb-2">Starter</h3>
               <div className="text-4xl font-bold mb-2">
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="text-blue-400">
                   ₹99
                 </span>
               </div>
@@ -51,10 +51,10 @@ export default function Pricing() {
           </div>
 
           {/* Premium Plan */}
-          <div className="backdrop-blur-md bg-gradient-to-b from-pink-500/20 to-purple-500/20 border-2 border-pink-500/30 rounded-xl p-8 relative hover:scale-105 transition-transform duration-400">
+          <div className="backdrop-blur-md bg-blue-500/10 border-2 border-blue-500/30 rounded-xl p-8 relative hover:scale-105 transition-transform duration-400">
             {/* Popular Badge */}
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+              <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">
                 ⭐ MOST POPULAR
               </span>
             </div>
@@ -62,7 +62,7 @@ export default function Pricing() {
             <div className="text-center mb-6 mt-4">
               <h3 className="text-2xl font-bold mb-2">Premium</h3>
               <div className="text-4xl font-bold mb-2">
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="text-blue-400">
                   ₹249
                 </span>
               </div>
@@ -88,7 +88,7 @@ export default function Pricing() {
               </div>
             </div>
 
-            <button className="w-full inline-flex items-center justify-center h-12 px-6 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg text-lg font-medium text-white shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-all duration-300">
+            <button className="w-full inline-flex items-center justify-center h-12 px-6 bg-blue-500 rounded-lg text-lg font-medium text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300">
               🚀 Get Premium
             </button>
           </div>

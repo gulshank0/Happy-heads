@@ -26,18 +26,18 @@ export default function Index() {
 
         {/* Badge */}
         <div className="mb-6 text-center">
-          <span className="inline-block bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium text-pink-300 mb-6">
+          <span className="inline-block bg-blue-500/20 border border-blue-500/30 rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium text-blue-300 mb-6">
             🎓 The #1 College Dating Platform in India
           </span>
         </div>
 
         {/* Main Heading */}
         <h1 className="font-poppins text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-center">
-          <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-blue-400">
             Where Matches Are Meant
           </span>
           <br />
-          <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-blue-400">
             to Meet
           </span>
         </h1>
@@ -46,7 +46,7 @@ export default function Index() {
         <p className="text-lg sm:text-xl md:text-2xl leading-6 sm:leading-8 mb-12 text-white/70 max-w-4xl mx-auto px-4">
           Connect with genuine college students, build meaningful relationships, and discover your perfect study partner or soulmate.
           <br />
-          <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+          <span className="text-blue-400 font-semibold">
             Where campus romance meets real connections.
           </span>
         </p>
@@ -54,7 +54,7 @@ export default function Index() {
         {/* Statistics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-12 max-w-4xl mx-auto">
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400" >
-            <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+            <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
               1,600+
             </div>
             <div className="text-white/60 text-sm">
@@ -62,7 +62,7 @@ export default function Index() {
             </div>
           </div>
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400">
-            <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+            <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
               32+
             </div>
             <div className="text-white/60 text-sm">
@@ -70,7 +70,7 @@ export default function Index() {
             </div>
           </div>
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400" >
-            <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+            <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
               643+
             </div>
             <div className="text-white/60 text-sm">
@@ -78,7 +78,7 @@ export default function Index() {
             </div>
           </div>
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 hover:scale-105 transition-transform duration-400">
-            <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+            <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
               4.1/5
             </div>
             <div className="text-white/60 text-sm">
@@ -123,7 +123,7 @@ export default function Index() {
           {/* Join Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 max-w-md w-full">
             <div className="flex-1 hover:scale-105 transition-transform duration-400">
-              <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-red-500 to-pink-600 rounded-lg text-base sm:text-lg font-medium text-white shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-all duration-300 min-h-12" onClick={()=>window.location.href='/profile'}>
+              <button className="w-full inline-flex items-center justify-center h-12 sm:h-14 px-6 sm:px-8 bg-blue-500 hover:bg-blue-600 rounded-lg text-base sm:text-lg font-medium text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 min-h-12" onClick={()=>window.location.href='/profile'}>
                 <Heart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 College Girl
               </button>

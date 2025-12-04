@@ -121,7 +121,7 @@ const Notification: React.FC = () => {
       case 'match':
         return <Heart className="h-5 w-5 text-pink-400" />;
       default:
-        return <Bell className="h-5 w-5 text-violet-400" />;
+        return <Bell className="h-5 w-5 text-blue-400" />;
     }
   };
 
@@ -146,7 +146,7 @@ const Notification: React.FC = () => {
       <div className="min-h-screen bg-black text-white p-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-2 border-violet-400 border-t-transparent mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-blue-400 border-t-transparent mx-auto mb-4"></div>
             <p className="text-white/60">Loading notifications...</p>
           </div>
         </div>
@@ -160,11 +160,11 @@ const Notification: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold text-blue-400">
               Notifications
             </h1>
             {unreadCount > 0 && (
-              <div className="bg-gradient-to-r from-violet-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                 {unreadCount} new
               </div>
             )}
@@ -190,7 +190,7 @@ const Notification: React.FC = () => {
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
                 className={`backdrop-blur-md border border-white/10 rounded-xl p-6 cursor-pointer transition-all duration-200 hover:border-white/20 hover:bg-white/5 ${
-                  !notification.isRead ? 'bg-white/5 border-violet-500/30' : 'bg-white/5'
+                  !notification.isRead ? 'bg-white/5 border-blue-500/30' : 'bg-white/5'
                 }`}
               >
                 <div className="flex items-start space-x-4">
@@ -199,7 +199,7 @@ const Notification: React.FC = () => {
                     <img
                       src={notification.user.avatar || `https://api.dicebear.com/8.x/lorelei/svg?seed=${notification.user.name}`}
                       alt={notification.user.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-violet-400/50"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-blue-400/50"
                     />
                     <div className="absolute -bottom-1 -right-1 bg-black rounded-full p-1">
                       {getNotificationIcon(notification.type)}
@@ -224,7 +224,7 @@ const Notification: React.FC = () => {
                       {/* Read indicator */}
                       <div className="flex-shrink-0 ml-4">
                         {!notification.isRead ? (
-                          <div className="w-3 h-3 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full animate-pulse"></div>
+                          <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full animate-pulse"></div>
                         ) : (
                           <Check className="w-4 h-4 text-green-400" />
                         )}
@@ -240,7 +240,7 @@ const Notification: React.FC = () => {
                   </div>
                   <div className={`px-3 py-1 rounded-full text-xs font-medium ${
                     notification.type === 'match' 
-                      ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30'
+                      ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                       : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                   }`}>
                     {notification.type === 'match' ? 'Match' : 'Message'}

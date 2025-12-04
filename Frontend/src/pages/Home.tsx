@@ -182,7 +182,7 @@ const Home: React.FC = () => {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-400 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400 mx-auto mb-4"></div>
           <p className="text-lg">Loading your dashboard...</p>
         </div>
       </div>
@@ -203,8 +203,8 @@ const Home: React.FC = () => {
       onClick={() => handleSectionChange(item.id)}
       className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${
         activeSection === item.id
-          ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg'
-          : 'text-white/60 hover:bg-white/5 hover:text-violet-400'
+          ? 'bg-blue-500 text-white shadow-lg'
+          : 'text-white/60 hover:bg-white/5 hover:text-blue-400'
       }`}
     >
       <div className="flex items-center space-x-3">
@@ -212,7 +212,7 @@ const Home: React.FC = () => {
         <span className="font-medium">{item.label}</span>
       </div>
       {unreadCount > 0 && (
-        <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 animate-pulse">
+        <div className="bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 animate-pulse">
           {unreadCount > 99 ? '99+' : unreadCount}
         </div>
       )}
@@ -289,15 +289,15 @@ const Home: React.FC = () => {
             {activeSection === 'post' && (
               <div className="space-y-8">
                 <h1 className="text-3xl font-bold text-white mb-8 flex items-center">
-                  <Sparkle className="w-8 h-8 mr-3 text-violet-400" />
-                  <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                  <Sparkle className="w-8 h-8 mr-3 text-blue-400" />
+                  <span className="text-blue-400">
                     Update Profile Gallery
                   </span>
                 </h1>
                 
                 <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6 mb-6">
                   <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-3 bg-gradient-to-r from-violet-500 to-pink-500 rounded-xl">
+                    <div className="p-3 bg-blue-500 rounded-xl">
                       <User className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -335,8 +335,8 @@ const Home: React.FC = () => {
               <div className="space-y-8">
                 <div className="flex items-center justify-between mb-8">
                   <h1 className="text-3xl font-bold text-white flex items-center">
-                    <Settings className="w-8 h-8 mr-3 text-violet-400" />
-                    <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                    <Settings className="w-8 h-8 mr-3 text-blue-400" />
+                    <span className="text-blue-400">
                       Settings
                     </span>
                   </h1>
@@ -356,7 +356,7 @@ const Home: React.FC = () => {
                         onClick={() => setActiveSettingsTab(tab.id)}
                         className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                           activeSettingsTab === tab.id
-                            ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg'
+                            ? 'bg-blue-500 text-white shadow-lg'
                             : 'text-white/60 hover:bg-white/10 hover:text-white'
                         }`}
                       >
@@ -395,7 +395,7 @@ const Home: React.FC = () => {
                                 <span className="text-white font-medium">Show Profile to Everyone</span>
                                 <p className="text-white/60 text-sm">Your profile will be visible to all users</p>
                               </div>
-                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gradient-to-r from-violet-500 to-pink-500">
+                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-500">
                                 <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
                               </button>
                             </label>
@@ -405,7 +405,7 @@ const Home: React.FC = () => {
                                 <span className="text-white font-medium">Show Age</span>
                                 <p className="text-white/60 text-sm">Display your age on your profile</p>
                               </div>
-                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gradient-to-r from-violet-500 to-pink-500">
+                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-500">
                                 <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
                               </button>
                             </label>
@@ -415,7 +415,7 @@ const Home: React.FC = () => {
                                 <span className="text-white font-medium">Show Location</span>
                                 <p className="text-white/60 text-sm">Show your approximate location to others</p>
                               </div>
-                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gradient-to-r from-violet-500 to-pink-500">
+                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-500">
                                 <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
                               </button>
                             </label>
@@ -425,7 +425,7 @@ const Home: React.FC = () => {
                                 <span className="text-white font-medium">Allow Direct Messages</span>
                                 <p className="text-white/60 text-sm">Let matched users send you messages</p>
                               </div>
-                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gradient-to-r from-violet-500 to-pink-500">
+                              <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-500">
                                 <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
                               </button>
                             </label>
@@ -442,7 +442,7 @@ const Home: React.FC = () => {
                                   <span className="text-white font-medium">Change Password</span>
                                   <p className="text-white/60 text-sm">Update your account password</p>
                                 </div>
-                                <span className="text-violet-400">→</span>
+                                <span className="text-blue-400">→</span>
                               </div>
                             </button>
                             
@@ -462,7 +462,7 @@ const Home: React.FC = () => {
                                   <span className="text-white font-medium">Connected Accounts</span>
                                   <p className="text-white/60 text-sm">Manage linked social accounts</p>
                                 </div>
-                                <span className="text-violet-400">→</span>
+                                <span className="text-blue-400">→</span>
                               </div>
                             </button>
                           </div>
@@ -497,7 +497,7 @@ const Home: React.FC = () => {
                                 </div>
                                 <button className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                                   notification.enabled 
-                                    ? 'bg-gradient-to-r from-violet-500 to-pink-500' 
+                                    ? 'bg-blue-500' 
                                     : 'bg-white/20'
                                 }`}>
                                   <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -526,7 +526,7 @@ const Home: React.FC = () => {
                                 </div>
                                 <button className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                                   notification.enabled 
-                                    ? 'bg-gradient-to-r from-violet-500 to-pink-500' 
+                                    ? 'bg-blue-500' 
                                     : 'bg-white/20'
                                 }`}>
                                   <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${

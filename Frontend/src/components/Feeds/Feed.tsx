@@ -365,7 +365,7 @@ export default function Feed() {
             onClick={() => setActiveTab('discover')}
             className={`px-6 py-2 rounded-lg font-medium transition-all ${
               activeTab === 'discover'
-                ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg'
+                ? 'bg-blue-500 text-white shadow-lg'
                 : 'text-white/60 hover:text-white'
             }`}
           >
@@ -376,7 +376,7 @@ export default function Feed() {
             onClick={() => setActiveTab('posts')}
             className={`px-6 py-2 rounded-lg font-medium transition-all ${
               activeTab === 'posts'
-                ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg'
+                ? 'bg-blue-500 text-white shadow-lg'
                 : 'text-white/60 hover:text-white'
             }`}
           >
@@ -389,7 +389,7 @@ export default function Feed() {
           {activeTab === 'posts' && (
             <button
               onClick={() => setShowPostCreation(true)}
-              className="p-3 bg-gradient-to-r from-violet-500 to-pink-500 rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all shadow-lg shadow-violet-500/25"
+              className="p-3 bg-blue-500 rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/25"
             >
               <Plus className="w-5 h-5 text-white" />
             </button>
@@ -473,7 +473,7 @@ export default function Feed() {
           {profilesLoading ? (
             <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
               <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-16 w-16 border-2 border-violet-400 border-t-transparent mx-auto mb-4"></div>
+                <div className="animate-spin rounded-full h-16 w-16 border-2 border-blue-400 border-t-transparent mx-auto mb-4"></div>
                 <p className="text-white/60 text-lg mb-2">Finding your perfect matches...</p>
                 <p className="text-white/40 text-sm">Using our advanced compatibility algorithm</p>
               </div>
@@ -489,7 +489,7 @@ export default function Feed() {
                     setError('');
                     fetchProfiles();
                   }}
-                  className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25"
+                  className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25"
                 >
                   Try Again
                 </button>
@@ -506,7 +506,7 @@ export default function Feed() {
                     setCurrentProfileIndex(0);
                     fetchProfiles();
                   }}
-                  className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25"
+                  className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25"
                 >
                   Refresh Profiles
                 </button>
@@ -540,7 +540,7 @@ export default function Feed() {
                 )}
 
                 {/* Compatibility Score */}
-                <div className="absolute bottom-4 right-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-3 py-2 rounded-full text-sm font-bold">
+                <div className="absolute bottom-4 right-4 bg-blue-500 text-white px-3 py-2 rounded-full text-sm font-bold">
                   {currentProfile.compatibility}% Match
                 </div>
 
@@ -612,7 +612,7 @@ export default function Feed() {
 
                   <button
                     onClick={handleLike}
-                    className="w-14 h-14 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center hover:shadow-lg hover:shadow-violet-500/25 transition-all hover:scale-110 active:scale-95"
+                    className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center hover:shadow-lg hover:shadow-blue-500/25 transition-all hover:scale-110 active:scale-95"
                   >
                     <Heart className="w-6 h-6 text-white" />
                   </button>
@@ -638,7 +638,7 @@ export default function Feed() {
         <div className="space-y-6">
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-2 border-violet-500 border-t-transparent mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-blue-500 border-t-transparent mx-auto"></div>
               <p className="text-white/60 mt-4">Loading posts...</p>
             </div>
           ) : (
@@ -652,7 +652,7 @@ export default function Feed() {
                         <img
                           src={post.userAvatar}
                           alt={post.userName}
-                          className="w-12 h-12 rounded-full object-cover border-2 border-violet-400"
+                          className="w-12 h-12 rounded-full object-cover border-2 border-blue-400"
                         />
                         <div>
                           <div className="flex items-center space-x-2">
@@ -733,13 +733,13 @@ export default function Feed() {
                         <textarea
                           value={editingPost.content}
                           onChange={(e) => setEditingPost({...editingPost, content: e.target.value})}
-                          className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+                          className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
                           rows={4}
                         />
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleEditPost(editingPost.id, editingPost.content)}
-                            className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all font-medium"
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all font-medium"
                           >
                             Save
                           </button>
@@ -838,7 +838,7 @@ export default function Feed() {
                   <p className="text-white/60">No posts yet. Be the first to share something!</p>
                   <button
                     onClick={() => setShowPostCreation(true)}
-                    className="mt-4 px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25"
+                    className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25"
                   >
                     Create Your First Post
                   </button>

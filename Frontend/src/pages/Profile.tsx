@@ -372,7 +372,7 @@ const Profile: React.FC = () => {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-400 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400 mx-auto mb-4"></div>
           <p className="text-lg">Verifying authentication...</p>
         </div>
       </div>
@@ -420,7 +420,7 @@ const Profile: React.FC = () => {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-6">
             <h1 className="font-poppins text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-2">
-              <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-blue-400">
                 Your Profile
               </span>
             </h1>
@@ -430,7 +430,7 @@ const Profile: React.FC = () => {
           </div>
 
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-2xl mb-8">
-            <div className="bg-gradient-to-r from-violet-500/20 to-pink-500/20 border-b border-white/10 px-8 py-8">
+            <div className="bg-blue-500/10 border-b border-white/10 px-8 py-8">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-6">
                   <div className="relative group">
@@ -496,7 +496,7 @@ const Profile: React.FC = () => {
               {isEditing && (
                 <div className="mb-6 space-y-3">
                   <label className="flex items-center text-sm font-semibold text-white/80">
-                    <Camera className="w-4 h-4 mr-2 text-violet-400" />
+                    <Camera className="w-4 h-4 mr-2 text-blue-400" />
                     Profile Picture
                   </label>
                   <div className="flex items-center space-x-4">
@@ -523,7 +523,7 @@ const Profile: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <label className="flex items-center text-sm font-semibold text-white/80">
-                    <User className="w-4 h-4 mr-2 text-violet-400" />
+                    <User className="w-4 h-4 mr-2 text-blue-400" />
                     Full Name
                   </label>
                   {isEditing ? (
@@ -532,7 +532,7 @@ const Profile: React.FC = () => {
                       name="name"
                       value={profile.name}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                       placeholder="Enter your full name"
                       required
                     />
@@ -545,7 +545,7 @@ const Profile: React.FC = () => {
 
                 <div className="space-y-3">
                   <label className="flex items-center text-sm font-semibold text-white/80">
-                    <Mail className="w-4 h-4 mr-2 text-pink-400" />
+                    <Mail className="w-4 h-4 mr-2 text-blue-400" />
                     Email Address
                   </label>
                   {isEditing ? (
@@ -554,7 +554,7 @@ const Profile: React.FC = () => {
                       name="email"
                       value={profile.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
+                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                       placeholder="Enter your email"
                       required
                     />
@@ -567,7 +567,7 @@ const Profile: React.FC = () => {
 
                 <div className="space-y-3">
                   <label className="flex items-center text-sm font-semibold text-white/80">
-                    <Phone className="w-4 h-4 mr-2 text-violet-400" />
+                    <Phone className="w-4 h-4 mr-2 text-blue-400" />
                     Phone Number
                   </label>
                   {isEditing ? (
@@ -576,7 +576,7 @@ const Profile: React.FC = () => {
                       name="phone"
                       value={profile.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                       placeholder="Enter your phone number"
                     />
                   ) : (
@@ -588,7 +588,7 @@ const Profile: React.FC = () => {
 
                 <div className="space-y-3">
                   <label className="flex items-center text-sm font-semibold text-white/80">
-                    <Calendar className="w-4 h-4 mr-2 text-pink-400" />
+                    <Calendar className="w-4 h-4 mr-2 text-blue-400" />
                     Age
                   </label>
                   {isEditing ? (
@@ -597,7 +597,7 @@ const Profile: React.FC = () => {
                       name="age"
                       value={profile.age}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 transition-all duration-200"
+                      className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                       placeholder="Enter your age"
                       min="18"
                       max="100"
@@ -612,7 +612,7 @@ const Profile: React.FC = () => {
 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Gender
                 </label>
                 {isEditing ? (
@@ -620,7 +620,7 @@ const Profile: React.FC = () => {
                     name="gender"
                     value={profile.gender}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                   >
                     <option className='bg-gray-800' value="male">Male</option>
                     <option className='bg-gray-800' value="female">Female</option>
@@ -633,7 +633,7 @@ const Profile: React.FC = () => {
               </div>
 <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Year
                 </label>
                 {isEditing ? (
@@ -642,7 +642,7 @@ const Profile: React.FC = () => {
                     name="year"
                     value={profile.year}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="Enter your year (e.g., Freshman, Sophomore)"
                   />
                 ) : (
@@ -656,7 +656,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Location
                 </label>
                 {isEditing ? (
@@ -665,7 +665,7 @@ const Profile: React.FC = () => {
                     name="location"
                     value={profile.location}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="Enter your location"
                   />
                 ) : (
@@ -677,7 +677,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Personal URL
                 </label>
                 {isEditing ? (
@@ -686,7 +686,7 @@ const Profile: React.FC = () => {
                     name="url"
                     value={profile.url}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="Enter your personal URL"
                   />
                 ) : (
@@ -698,7 +698,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   College
                 </label>
                 {isEditing ? (
@@ -707,7 +707,7 @@ const Profile: React.FC = () => {
                     name="college"
                     value={profile.college}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="Enter your college"
                   />
                 ) : (
@@ -719,7 +719,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Major
                 </label>
                 {isEditing ? (
@@ -728,7 +728,7 @@ const Profile: React.FC = () => {
                     name="major"
                     value={profile.major}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="Enter your major"
                   />
                 ) : (
@@ -740,7 +740,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <User className="w-4 h-4 mr-2 text-violet-400" />
+                  <User className="w-4 h-4 mr-2 text-blue-400" />
                   Interests (comma separated)
                 </label>
                 {isEditing ? (
@@ -752,11 +752,11 @@ const Profile: React.FC = () => {
                       ...prev,
                       interests: e.target.value.split(',').map(interest => interest.trim()).filter(interest => interest)
                     }))}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200"
                     placeholder="e.g., Music, Sports, Art"
                   />
                 ) : (
-                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none min-h-[48px] flex items-center" >
+                  <div className="w-full px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none min-h-[48px] flex items-center" >
                     {profile.interests && profile.interests.length > 0 ? profile.interests.join(', ') : <span className="text-white/50">Not specified</span>}
                   </div>
                 )}
@@ -766,7 +766,7 @@ const Profile: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center text-sm font-semibold text-white/80">
-                  <FileText className="w-4 h-4 mr-2 text-violet-400" />
+                  <FileText className="w-4 h-4 mr-2 text-blue-400" />
                   Bio
                 </label>
                 {isEditing ? (
@@ -775,7 +775,7 @@ const Profile: React.FC = () => {
                     value={profile.bio}
                     onChange={handleInputChange}
                     rows={4}
-                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none"
+                    className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-blue-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-200 resize-none"
                     placeholder="Tell us about yourself..."
                   />
                 ) : (
@@ -797,7 +797,7 @@ const Profile: React.FC = () => {
                   <button
                     disabled={loading || uploadingAvatar}
                     type='submit'
-                    className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg shadow-violet-500/25 disabled:opacity-50"
+                    className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 font-semibold shadow-lg shadow-blue-500/25 disabled:opacity-50"
                   >
                     <Check className="w-4 h-4 mr-2 inline" />
                     {uploadingAvatar ? "Uploading..." : loading ? "Saving..." : "Save Changes"}
@@ -818,11 +818,11 @@ const Profile: React.FC = () => {
             <div className="flex items-center space-x-3">
               <div className="flex-1 bg-white/10 rounded-full h-3">
                 <div 
-                  className="bg-gradient-to-r from-violet-400 to-pink-400 h-3 rounded-full transition-all duration-500"
+                  className="bg-blue-500 h-3 rounded-full transition-all duration-500"
                   style={{ width: `${completionPercentage}%` }}
                 ></div>
               </div>
-              <span className="text-sm font-medium bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-sm font-medium text-blue-400">
                 {completionPercentage}%
               </span>
             </div>
@@ -834,7 +834,7 @@ const Profile: React.FC = () => {
           <div className="mt-8 text-center">
             <button 
               onClick={handleNext}
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white font-semibold rounded-2xl hover:from-violet-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-300 shadow-lg shadow-violet-500/25 group"
+              className="inline-flex items-center px-8 py-4 bg-blue-500 text-white font-semibold rounded-2xl hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/25 group"
             >
               <span className="mr-2">Continue to Home</span>
               <svg 

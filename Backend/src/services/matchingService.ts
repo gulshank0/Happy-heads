@@ -81,14 +81,10 @@ export class MatchingService {
       ...matchedUserIds.flatMap(match => [match.user1Id, match.user2Id])
     ];
 
+    // Get all users except excluded ones - no strict profile requirements
     const users = await prisma.user.findMany({
       where: {
-        id: { notIn: excludedIds },
-        age: { not: null },
-        gender: { not: null },
-        college: { not: null },
-        major: { not: null },
-        year: { not: null }
+        id: { notIn: excludedIds }
       },
       include: {
         userPreferences: true,
@@ -329,41 +325,61 @@ export class MatchingService {
   // Main matching algorithm
   async findMatches(userId: string, limit: number = 10): Promise<MatchResult[]> {
     const currentUser = await this.getCurrentUser(userId);
-    if (!currentUser || !currentUser.userPreferences) {
-      throw new Error('User not found or preferences not set');
+    if (!currentUser) {
+      throw new Error('User not found');
     }
 
     const candidates = await this.getUsersForMatching(userId);
     const matches: MatchResult[] = [];
 
-    for (const candidate of candidates) {
-      // Check for mutual gender preference
-      const currentUserGender = currentUser.gender;
-      const candidateGender = candidate.gender;
+    // If user has preferences, use the full matching algorithm
+    if (currentUser.userPreferences) {
+      for (const candidate of candidates) {
+        // Check for mutual gender preference
+        const currentUserGender = currentUser.gender;
+        const candidateGender = candidate.gender;
 
-      const currentUserLikesCandidateGender = currentUser.userPreferences.preferredGenders.includes(candidateGender);
-      
-      // Ensure candidate has preferences set to check reciprocation
-      const candidateLikesCurrentUserGender = candidate.userPreferences ? 
-        candidate.userPreferences.preferredGenders.includes(currentUserGender) : 
-        true; // Default to true if candidate has no preference set
+        const currentUserLikesCandidateGender = !currentUser.userPreferences.preferredGenders?.length || 
+          currentUser.userPreferences.preferredGenders.includes(candidateGender);
+        
+        // Ensure candidate has preferences set to check reciprocation
+        const candidateLikesCurrentUserGender = !candidate.userPreferences?.preferredGenders?.length || 
+          candidate.userPreferences.preferredGenders.includes(currentUserGender);
 
-      if (!currentUserLikesCandidateGender || !candidateLikesCurrentUserGender) {
-        continue;
+        if (!currentUserLikesCandidateGender || !candidateLikesCurrentUserGender) {
+          continue;
+        }
+
+        // Calculate compatibility scores using the new method
+        const matchResult = this.calculateCompatibility(currentUser, candidate);
+
+        if (matchResult && matchResult.score > 30) { // Only include matches above 30% compatibility
+          matches.push(matchResult);
+        }
       }
-
-      // Calculate compatibility scores using the new method
-      const matchResult = this.calculateCompatibility(currentUser, candidate);
-
-      if (matchResult && matchResult.score > 30) { // Only include matches above 30% compatibility
-        matches.push(matchResult);
+    } else {
+      // No preferences set - return all candidates with a default score
+      for (const candidate of candidates) {
+        matches.push({
+          user: candidate,
+          score: 50, // Default neutral score
+          breakdown: {
+            ageCompatibility: 50,
+            distanceScore: 50,
+            interestSimilarity: 50,
+            collegeCompatibility: 50,
+            majorCompatibility: 50,
+            yearCompatibility: 50,
+            personalityCompatibility: 50,
+            totalScore: 50
+          }
+        });
       }
     }
 
     // Sort by score descending and return top matches
-    return matches
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit);
+    const sortedMatches = [...matches].sort((a, b) => b.score - a.score);
+    return sortedMatches.slice(0, limit);
   }
 
   // Save a match when both users like each other
@@ -503,55 +519,79 @@ export class MatchingService {
       ...matchedUserIds.flatMap(match => [match.user1Id, match.user2Id])
     ];
 
-    // Get current user's preferences for filtering
+    // Get current user's preferences for filtering (optional)
     const currentUser = await this.getCurrentUser(currentUserId);
-    if (!currentUser?.userPreferences) {
-      throw new Error('User preferences not set');
+    const preferences = currentUser?.userPreferences;
+
+    // Build query based on whether user has preferences set
+    let whereClause: any = {
+      id: { notIn: excludedIds }
+    };
+
+    // If user has preferences, apply them; otherwise show all users
+    if (preferences) {
+      // Apply age filter only if user has set preferences
+      if (preferences.minAge && preferences.maxAge) {
+        whereClause.OR = [
+          {
+            age: {
+              gte: preferences.minAge,
+              lte: preferences.maxAge
+            }
+          },
+          { age: null } // Also include users without age set
+        ];
+      }
+      
+      // Apply gender filter only if user has set gender preferences
+      if (preferences.preferredGenders && preferences.preferredGenders.length > 0) {
+        whereClause.OR = [
+          ...(whereClause.OR || []),
+          {
+            gender: {
+              in: preferences.preferredGenders
+            }
+          },
+          { gender: null } // Also include users without gender set
+        ];
+      }
     }
 
-    const preferences = currentUser.userPreferences;
-
     const users = await prisma.user.findMany({
-      where: {
-        id: { notIn: excludedIds },
-        age: { 
-          gte: preferences.minAge,
-          lte: preferences.maxAge,
-          not: null 
-        },
-        gender: {
-          in: preferences.preferredGenders,
-          not: null
-        },
-        // Ensure users have complete profiles
-        name: { not: null },
-        college: { not: null },
-        major: { not: null },
-        year: { not: null }
-      },
+      where: whereClause,
       include: {
         userPreferences: true,
         personalityTraits: true
       },
-      take: limit * 2 // Get more to filter by mutual preference
+      take: limit * 3, // Get more to have buffer after filtering
+      orderBy: {
+        createdAt: 'desc' // Show newest users first
+      }
     });
 
-    // Filter by mutual gender preference
-    const mutuallyInterestedUsers = users.filter(user => {
-      if (!user.userPreferences) return true; // Include if no preferences set
-      return user.userPreferences.preferredGenders.includes(currentUser.gender);
-    });
+    // Light filtering - only exclude if both users have preferences and they conflict
+    let filteredUsers = users;
+    if (currentUser?.gender && preferences?.preferredGenders?.length) {
+      filteredUsers = users.filter(user => {
+        // If user has no preferences, include them
+        if (!user.userPreferences) return true;
+        // If user has no preferred genders set, include them
+        if (!user.userPreferences.preferredGenders?.length) return true;
+        // Check if they would be interested in current user
+        return user.userPreferences.preferredGenders.includes(currentUser.gender);
+      });
+    }
 
-    return mutuallyInterestedUsers.slice(0, limit).map(user => ({
+    return filteredUsers.slice(0, limit).map(user => ({
       id: user.id,
-      name: user.name || 'Unknown',
+      name: user.name || 'Unknown User',
       age: user.age || 0,
-      gender: user.gender || '',
-      college: user.college || '',
-      major: user.major || '',
+      gender: user.gender || 'Not specified',
+      college: user.college || 'Not specified',
+      major: user.major || 'Not specified',
       year: user.year || 0,
-      bio: user.bio || '',
-      avatar: user.avatar || `https://api.dicebear.com/8.x/lorelei/svg?seed=${user.name}`,
+      bio: user.bio || 'No bio yet',
+      avatar: user.avatar || `https://api.dicebear.com/8.x/lorelei/svg?seed=${user.name || user.id}`,
       location: (() => {
         if (!user.location) return null;
         try {

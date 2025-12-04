@@ -361,7 +361,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <h2 className="text-xl font-bold text-white">Your Posts</h2>
-            <span className="bg-violet-500/20 text-violet-300 px-3 py-1 rounded-full text-sm">
+            <span className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">
               {previousPosts.length} posts
             </span>
           </div>
@@ -380,7 +380,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded transition-all ${
                     viewMode === 'grid' 
-                      ? 'bg-violet-500 text-white' 
+                      ? 'bg-blue-500 text-white' 
                       : 'text-white/60 hover:text-white'
                   }`}
                 >
@@ -390,7 +390,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded transition-all ${
                     viewMode === 'list' 
-                      ? 'bg-violet-500 text-white' 
+                      ? 'bg-blue-500 text-white' 
                       : 'text-white/60 hover:text-white'
                   }`}
                 >
@@ -440,18 +440,18 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
                                 value={editingPost.title}
                                 onChange={(e) => setEditingPost({...editingPost, title: e.target.value})}
                                 placeholder="Post title..."
-                                className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 text-sm"
+                                className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                               />
                               <textarea
                                 value={editingPost.content}
                                 onChange={(e) => setEditingPost({...editingPost, content: e.target.value})}
-                                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none text-sm"
+                                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none text-sm"
                                 rows={4}
                               />
                               <div className="flex items-center space-x-2">
                                 <button
                                   onClick={() => handleEditPost(editingPost.id, editingPost.content, editingPost.title)}
-                                  className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all font-medium text-sm"
+                                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all font-medium text-sm"
                                 >
                                   Save
                                 </button>
@@ -569,18 +569,18 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
                               value={editingPost.title}
                               onChange={(e) => setEditingPost({...editingPost, title: e.target.value})}
                               placeholder="Post title..."
-                              className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 text-sm"
+                              className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                             />
                             <textarea
                               value={editingPost.content}
                               onChange={(e) => setEditingPost({...editingPost, content: e.target.value})}
-                              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none text-sm"
+                              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none text-sm"
                               rows={4}
                             />
                             <div className="flex items-center space-x-2">
                               <button
                                 onClick={() => handleEditPost(editingPost.id, editingPost.content, editingPost.title)}
-                                className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all font-medium text-sm"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all font-medium text-sm"
                               >
                                 Save
                               </button>
@@ -726,12 +726,12 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                                 placeholder="Add a comment..."
-                                className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 text-sm"
+                                className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                               />
                               <button
                                 type="submit"
                                 disabled={!newComment.trim()}
-                                className="px-3 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm flex items-center space-x-1"
+                                className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm flex items-center space-x-1"
                               >
                                 <Send className="w-3 h-3" />
                                 <span>Post</span>
@@ -783,7 +783,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
           <textarea
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-            className="w-full h-32 p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+            className="w-full h-32 p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
             placeholder="Add a caption to your image (optional)..."
             maxLength={1000}
           />
@@ -830,7 +830,7 @@ export default function CreatePost({ onPostCreated, user }: CreatePostProps) {
         <button
           onClick={handlePost}
           disabled={isPosting || images.length === 0}
-          className="w-full py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl hover:from-violet-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium flex items-center justify-center space-x-2"
+          className="w-full py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium flex items-center justify-center space-x-2"
         >
           {isPosting ? (
             <>

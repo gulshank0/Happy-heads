@@ -18,11 +18,11 @@ const Footer: React.FC = () => {
         {/* Top Section with Stats */}
         <div className="text-center mb-16">
           <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="text-blue-400">
               The premier college dating platform
             </span>
             <br />
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="text-blue-400">
               connecting students across India
             </span>
           </h2>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
           
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-2xl mx-auto">
             <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
-              <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+              <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
                 1.6K+
               </div>
               <div className="text-white/60 text-sm">
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
-              <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+              <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
                 32+
               </div>
               <div className="text-white/60 text-sm">
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
-              <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+              <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
                 643+
               </div>
               <div className="text-white/60 text-sm">
@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 transition-transform duration-400">
-              <div className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent text-3xl font-bold leading-9 mb-1">
+              <div className="text-blue-400 text-3xl font-bold leading-9 mb-1">
                 4.9/5
               </div>
               <div className="text-white/60 text-sm">
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Platform */}
           <div className="backdrop-blur-md ">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Platform</h3>
+            <h3 className="text-lg font-semibold mb-4 text-blue-400">Platform</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">How it Works</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">Safety</a></li>
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
 
           {/* Support */}
           <div className="backdrop-blur-md ">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Support</h3>
+            <h3 className="text-lg font-semibold mb-4 text-blue-400">Support</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">Help Center</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">Contact Us</a></li>
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
 
           {/* Community */}
           <div className="backdrop-blur-md ">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Community</h3>
+            <h3 className="text-lg font-semibold mb-4 text-blue-400">Community</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">College Partners</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm">Campus Events</a></li>
@@ -106,12 +106,12 @@ const Footer: React.FC = () => {
 
           {/* Follow Our Journey */}
           <div className="backdrop-blur-md ">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Follow Our Journey</h3>
+            <h3 className="text-lg font-semibold mb-4 text-blue-400">Follow Our Journey</h3>
             <p className="text-white/60 mb-4 text-sm">
               Stay updated with the latest features, success stories, and college events
             </p>
             <div className="flex space-x-3 mb-4">
-              <a href="#" className="backdrop-blur-md bg-white/10 border border-white/20 rounded-lg p-2 text-white/60 hover:text-pink-400 hover:bg-white/20 transition-all">
+              <a href="#" className="backdrop-blur-md bg-white/10 border border-white/20 rounded-lg p-2 text-white/60 hover:text-blue-400 hover:bg-white/20 transition-all">
                 <Instagram size={16} />
               </a>
               <a href="#" className="backdrop-blur-md bg-white/10 border border-white/20 rounded-lg p-2 text-white/60 hover:text-blue-400 hover:bg-white/20 transition-all">
@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex justify-between items-center mb-6">
  <div className="text-center pb-10">
-            <p className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent font-medium text-lg">
+            <p className="text-blue-400 font-medium text-lg">
               Matches are meant to meet. ✨
             </p>
           </div>

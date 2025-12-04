@@ -499,6 +499,7 @@ export default function Messenger() {
         // Fallback to HTTP
         console.log('📤 WebSocket not connected, falling back to HTTP');
         const sentMessage = await messageService.sendMessage(
+          selectedConversation,
           receiverId,
           messageToSend,
           'TEXT'
@@ -576,7 +577,7 @@ export default function Messenger() {
     return (
       <div className="h-[calc(100vh-100px)] flex items-center justify-center bg-white/10 rounded-xl">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-violet-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white">Loading conversations...</p>
         </div>
       </div>
@@ -604,8 +605,8 @@ export default function Messenger() {
           <div className="p-4 border-b border-gray-700">
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-xl font-bold text-white flex items-center">
-                <MessageCircle className="w-6 h-6 mr-2 text-pink-400" />
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                <MessageCircle className="w-6 h-6 mr-2 text-blue-400" />
+                <span className="text-blue-400">
                   Messages
                 </span>
                 {/* Connection Status Indicator */}
@@ -630,7 +631,7 @@ export default function Messenger() {
               </h1>
               <button
                 onClick={() => setShowStartConversation(true)}
-                className="p-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-colors"
+                className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
               >
                 <Plus className="w-5 h-5" />
               </button>
@@ -644,7 +645,7 @@ export default function Messenger() {
                 placeholder="Search conversations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-400"
+                className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
               />
             </div>
           </div>
@@ -653,7 +654,7 @@ export default function Messenger() {
           <div className="flex-1 overflow-y-auto">
             {filteredConversations.length === 0 ? (
               <div className="text-center py-16">
-                <div className="w-16 h-16 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <MessageCircle className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">No conversations yet</h3>
@@ -710,7 +711,7 @@ export default function Messenger() {
                           <p className="text-sm text-gray-500 italic">No messages yet</p>
                         )}
                         {conversation.unreadCount > 0 && (
-                          <span className="bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center ml-2 flex-shrink-0">
+                          <span className="bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center ml-2 flex-shrink-0">
                             {conversation.unreadCount}
                           </span>
                         )}
@@ -775,7 +776,7 @@ export default function Messenger() {
                       <div
                         className={`max-w-[70%] px-4 py-2 rounded-lg ${
                           isMyMessage
-                            ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white'
+                            ? 'bg-blue-500 text-white'
                             : 'bg-gray-700 text-white'
                         }`}
                       >
@@ -809,13 +810,13 @@ export default function Messenger() {
                         handleSendMessage();
                       }
                     }}
-                    className="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-400"
+                    className="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
                     disabled={sendingMessage}
                   />
                   <button
                     onClick={handleSendMessage}
                     disabled={!newMessage.trim() || sendingMessage}
-                    className="p-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {sendingMessage ? (
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -830,7 +831,7 @@ export default function Messenger() {
             /* No conversation selected */
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="w-24 h-24 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-24 h-24 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
                   <MessageCircle className="w-12 h-12 text-white" />
                 </div>
                 <h2 className="text-xl font-bold text-white mb-2">Select a conversation</h2>

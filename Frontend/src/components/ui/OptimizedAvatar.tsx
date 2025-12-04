@@ -181,7 +181,7 @@ const OptimizedAvatar: React.FC<OptimizedAvatarProps> = ({
     >
       {/* Loading state */}
       {isLoading && (
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-400/20 to-pink-400/20 flex items-center justify-center z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-500/20 flex items-center justify-center z-10">
           <div className="animate-spin rounded-full border-2 border-white/20 border-t-white/60 w-4 h-4"></div>
         </div>
       )}
@@ -203,7 +203,7 @@ const OptimizedAvatar: React.FC<OptimizedAvatarProps> = ({
 
       {/* Fallback */}
       {shouldShowFallback && (
-        <div className="w-full h-full bg-gradient-to-r from-violet-400 to-pink-400 flex items-center justify-center">
+        <div className="w-full h-full bg-blue-500 flex items-center justify-center">
           {fallbackText ? (
             <span className={`text-white font-bold ${
               size === 'sm' ? 'text-xs' : 

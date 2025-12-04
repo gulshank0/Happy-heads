@@ -215,15 +215,15 @@ const Matching: React.FC = () => {
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'from-green-400 to-emerald-500';
-    if (score >= 60) return 'from-yellow-400 to-orange-500';
-    if (score >= 40) return 'from-orange-400 to-red-500';
-    return 'from-red-400 to-pink-500';
+    if (score >= 60) return 'from-blue-400 to-blue-500';
+    if (score >= 40) return 'from-orange-400 to-orange-500';
+    return 'from-red-400 to-red-500';
   };
 
   const renderScoreBreakdown = (breakdown: MatchResult['breakdown']) => (
     <div className="mt-6 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
       <h4 className="font-semibold text-white mb-4 flex items-center">
-        <Star className="h-5 w-5 mr-2 text-violet-400" />
+        <Star className="h-5 w-5 mr-2 text-blue-400" />
         Compatibility Breakdown
       </h4>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -251,7 +251,7 @@ const Matching: React.FC = () => {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-400 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400 mx-auto mb-4"></div>
           <p className="text-lg">Loading...</p>
         </div>
       </div>
@@ -272,7 +272,7 @@ const Matching: React.FC = () => {
       {/* Header */}
       <div className="text-center">
         <div className="mb-4 flex items-center justify-center gap-4">
-          <span className="inline-block bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full px-6 py-2 text-sm font-medium text-pink-300">
+          <span className="inline-block bg-blue-500/20 border border-blue-500/30 rounded-full px-6 py-2 text-sm font-medium text-blue-300">
             💕 Smart Matching Algorithm
           </span>
           <button
@@ -285,7 +285,7 @@ const Matching: React.FC = () => {
         </div>
         
         <h1 className="text-3xl font-bold leading-tight mb-4">
-          <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-blue-400">
             Your Perfect College Matches
           </span>
         </h1>
@@ -300,7 +300,7 @@ const Matching: React.FC = () => {
         <button
           onClick={handleFindMatches}
           disabled={loading}
-          className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white font-bold rounded-xl hover:from-violet-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-lg shadow-violet-500/25"
+          className="inline-flex items-center px-8 py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/25"
         >
           {loading ? (
             <span className="flex items-center">
@@ -332,7 +332,7 @@ const Matching: React.FC = () => {
       {matches.length > 0 && (
         <div>
           <h2 className="text-2xl font-bold text-center mb-6">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="text-blue-400">
               Your Top Matches ✨
             </span>
           </h2>
@@ -415,7 +415,7 @@ const Matching: React.FC = () => {
                   <div className="flex justify-between items-center">
                     <button
                       onClick={() => toggleBreakdown(match.user.id)}
-                      className="text-violet-400 hover:text-violet-300 font-medium transition-colors duration-200 flex items-center backdrop-blur-md bg-violet-500/10 border border-violet-500/20 px-3 py-2 rounded-lg text-sm"
+                      className="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-200 flex items-center backdrop-blur-md bg-blue-500/10 border border-blue-500/20 px-3 py-2 rounded-lg text-sm"
                     >
                       {showBreakdown[match.user.id] ? (
                         <>
@@ -436,7 +436,7 @@ const Matching: React.FC = () => {
                       </button>
                       <button 
                         onClick={() => handleLikeUser(match.user.id)}
-                        className="px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transform hover:scale-105 text-sm"
+                        className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:scale-105 text-sm"
                       >
                         💕 Like
                       </button>
@@ -559,7 +559,7 @@ const Matching: React.FC = () => {
               </button>
               <button
                 onClick={handleUpdatePreferences}
-                className="px-4 py-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg hover:from-violet-600 hover:to-pink-600 transition-all"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
               >
                 Save Preferences
               </button>

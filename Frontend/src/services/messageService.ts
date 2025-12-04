@@ -207,7 +207,7 @@ class MessageService {
     try {
       console.log('🔍 Fetching conversations...');
       
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -232,7 +232,7 @@ class MessageService {
       console.log('🔍 Fetching messages for conversation:', conversationId);
       
       const response = await this.fetchWithTimeout(
-        `${API_BASE_URL}/api/conversations/${conversationId}/messages?page=${page}&limit=${limit}`,
+        `${API_BASE_URL}/api/messages/conversations/${conversationId}/messages?page=${page}&limit=${limit}`,
         { 
           method: 'GET',
           credentials: 'include',
@@ -300,7 +300,7 @@ class MessageService {
         throw new Error('Other user ID is required');
       }
 
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -329,7 +329,7 @@ class MessageService {
         throw new Error('Conversation ID is required');
       }
 
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations/${conversationId}/messages`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations/${conversationId}/read`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {
@@ -357,7 +357,7 @@ class MessageService {
         throw new Error('Conversation ID is required');
       }
 
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations/${conversationId}`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations/${conversationId}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -383,7 +383,7 @@ class MessageService {
         throw new Error('Conversation ID is required');
       }
 
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations/${conversationId}`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations/${conversationId}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -663,7 +663,7 @@ class MessageService {
         throw new Error('Message content is too long (max 10,000 characters)');
       }
 
-      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/conversations/${conversationId}/messages`, {
+      const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/messages/conversations/${conversationId}/messages`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -812,31 +812,36 @@ class MessageService {
   }
 
   // Send message with WebSocket first, fallback to HTTP
-  async sendMessage(conversationId: string, content: string, type: string = 'text'): Promise<Message> {
-    const tempMessage: Message = {
-      id: `temp-${Date.now()}`,
-      conversationId,
-      senderId: 'current-user', // This should be set properly
-      content,
-      type,
-      timestamp: new Date().toISOString(),
-      status: 'sending'
-    };
+  // Supports both (conversationId, receiverId, content, messageType) and (receiverId, content, messageType) signatures
+  async sendMessage(
+    conversationIdOrReceiverId: string, 
+    receiverIdOrContent: string, 
+    contentOrType: string = 'TEXT',
+    messageType?: string
+  ): Promise<Message> {
+    // Determine which signature is being used
+    let conversationId: string | undefined;
+    let receiverId: string;
+    let content: string;
+    let type: string;
+    
+    if (messageType !== undefined) {
+      // 4 args: (conversationId, receiverId, content, messageType)
+      conversationId = conversationIdOrReceiverId;
+      receiverId = receiverIdOrContent;
+      content = contentOrType;
+      type = messageType;
+    } else {
+      // 3 args: (receiverId, content, messageType)
+      receiverId = conversationIdOrReceiverId;
+      content = receiverIdOrContent;
+      type = contentOrType;
+    }
 
-    // Optimistically add to UI
-    this.notifyMessageReceived(tempMessage);
+    console.log('🔍 Sending message:', { conversationId, receiverId, content: content.substring(0, 50), type });
 
     try {
-      // Try WebSocket first if available
-      if (this.isRealTimeAvailable()) {
-        websocketService.send('send_message', {
-          conversationId,
-          content,
-          type
-        });
-      }
-
-      // Always send via HTTP as well for reliability
+      // Send via HTTP
       const response = await this.fetchWithTimeout(
         `${API_BASE_URL}/api/messages/send`,
         {
@@ -847,28 +852,18 @@ class MessageService {
           },
           body: JSON.stringify({
             conversationId,
-            content,
-            type
+            receiverId,
+            content: content.trim(),
+            messageType: type
           })
         }
       );
 
-      const data = await this.handleResponse<{ success: boolean; message: Message }>(response);
-      
-      if (data?.success && data.message) {
-        // Replace temp message with real message
-        this.notifyMessageReceived(data.message);
-        return data.message;
-      } else {
-        throw new Error('Failed to send message');
-      }
+      const data = await this.handleResponse<Message>(response);
+      console.log('✅ Message sent successfully:', data);
+      return data;
     } catch (error) {
       console.error('❌ Failed to send message:', error);
-      
-      // Update temp message to show error
-      tempMessage.status = 'failed';
-      this.notifyMessageReceived(tempMessage);
-      
       throw error;
     }
   }
