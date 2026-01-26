@@ -15,6 +15,7 @@ const corsOptions = {
       frontendUrl,
       frontendUrl?.endsWith('/') ? frontendUrl.slice(0, -1) : frontendUrl + '/', // Handle both with and without trailing slash
       'http://localhost:3000',
+      'http://happy-heads.vercel.app'
     ].filter(Boolean);
 
     console.log('CORS check - Origin:', origin);
