@@ -4,15 +4,24 @@
  */
 
 // Backend HTTP URL
-export const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 // Backend WebSocket URL
-export const WS_URL = import.meta.env.VITE_WS_URL || "ws://localhost:8000";
+export const WS_URL = import.meta.env.VITE_WS_URL;
 
 // Frontend URL
-export const FRONTEND_URL =
-  import.meta.env.VITE_FRONTEND_URL || "http://localhost:3000";
+export const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+
+// Validate required environment variables
+if (!BACKEND_URL) {
+  console.error("VITE_BACKEND_URL is not set in environment variables");
+}
+if (!WS_URL) {
+  console.error("VITE_WS_URL is not set in environment variables");
+}
+if (!FRONTEND_URL) {
+  console.error("VITE_FRONTEND_URL is not set in environment variables");
+}
 
 // Helper to construct API endpoints
 export const getApiUrl = (path: string): string => {
