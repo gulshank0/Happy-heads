@@ -14,7 +14,7 @@ const corsOptions = {
     const allowedOrigins = [
       frontendUrl,
       frontendUrl?.endsWith('/') ? frontendUrl.slice(0, -1) : frontendUrl + '/', // Handle both with and without trailing slash
-      'http://localhost:8080',
+      'http://localhost:3000',
     ].filter(Boolean);
 
     console.log('CORS check - Origin:', origin);

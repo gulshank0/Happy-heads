@@ -90,7 +90,7 @@ EXPOSE 8080
 
 # Health check for the frontend
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8080/ || exit 1
+    CMD curl -f http://localhost:3000/ || exit 1
 
 # Start nginx in foreground (required for Docker)
 # Using 'daemon off' to keep the container running

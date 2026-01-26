@@ -81,8 +81,8 @@ services:
       JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-change-in-production}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
       SESSION_SECRET: ${SESSION_SECRET:-dev-session-secret-change-in-production}
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8080}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       BACKEND_URL: ${BACKEND_URL:-http://localhost:8000}
       WS_URL: ${WS_URL:-ws://localhost:8000}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
@@ -119,7 +119,7 @@ services:
     ports:
       - "${FRONTEND_PORT:-8080}:8080"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
       interval: 30s
       timeout: 10s
       retries: 3
