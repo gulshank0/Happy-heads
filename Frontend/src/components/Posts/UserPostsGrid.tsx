@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Share, MoreHorizontal, MapPin, Plus, Edit, Trash2, X } from 'lucide-react';
-import OptimizedAvatar from '@/components/ui/OptimizedAvatar';
+import React, { useState, useEffect } from "react";
+import {
+  Heart,
+  MessageCircle,
+  Share,
+  MoreHorizontal,
+  MapPin,
+  Plus,
+  Edit,
+  Trash2,
+  X,
+} from "lucide-react";
+import OptimizedAvatar from "@/components/ui/OptimizedAvatar";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URI || 'http://localhost:8000';
+import { BACKEND_URL } from "../../config/api";
 
 interface UserPost {
   id: string;
@@ -32,15 +42,24 @@ interface UserPostsGridProps {
   onAddPost?: () => void; // Callback to add a new post
 }
 
-export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPost }: UserPostsGridProps) {
+export default function UserPostsGrid({
+  userId,
+  refreshTrigger,
+  newPost,
+  onAddPost,
+}: UserPostsGridProps) {
   const [posts, setPosts] = useState<UserPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [animatingPostId, setAnimatingPostId] = useState<string | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [editingPost, setEditingPost] = useState<{id: string, content: string, title: string} | null>(null);
+  const [editingPost, setEditingPost] = useState<{
+    id: string;
+    content: string;
+    title: string;
+  } | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   // Fetch current user info
@@ -48,14 +67,14 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
     const fetchCurrentUser = async () => {
       try {
         const response = await fetch(`${BACKEND_URL}/auth/me`, {
-          credentials: 'include'
+          credentials: "include",
         });
         if (response.ok) {
           const userData = await response.json();
           setCurrentUser(userData);
         }
       } catch (error) {
-        console.error('Error fetching current user:', error);
+        console.error("Error fetching current user:", error);
       }
     };
     fetchCurrentUser();
@@ -64,31 +83,31 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
   const fetchPosts = async (pageNum = 1, reset = false) => {
     try {
       setLoading(true);
-      
-      const endpoint = userId 
+
+      const endpoint = userId
         ? `/user-posts/user/${userId}?page=${pageNum}&limit=12`
         : `/user-posts/my-posts?page=${pageNum}&limit=12`;
-      
+
       const response = await fetch(`${BACKEND_URL}${endpoint}`, {
-        credentials: 'include'
+        credentials: "include",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch posts');
+        throw new Error("Failed to fetch posts");
       }
 
       const data = await response.json();
-      
+
       if (reset || pageNum === 1) {
         setPosts(data.userPosts);
       } else {
-        setPosts(prev => [...prev, ...data.userPosts]);
+        setPosts((prev) => [...prev, ...data.userPosts]);
       }
-      
+
       setHasMore(data.pagination.page < data.pagination.pages);
-      setError('');
+      setError("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load posts');
+      setError(err instanceof Error ? err.message : "Failed to load posts");
     } finally {
       setLoading(false);
     }
@@ -106,12 +125,12 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
         postType: newPost.backendData.postType,
         createdAt: newPost.backendData.createdAt || new Date().toISOString(),
         user: newPost.backendData.user,
-        post: newPost.backendData.post
+        post: newPost.backendData.post,
       };
 
       // Add the new post to the beginning of the list
-      setPosts(prev => [formattedNewPost, ...prev]);
-      
+      setPosts((prev) => [formattedNewPost, ...prev]);
+
       // Trigger entrance animation
       setAnimatingPostId(formattedNewPost.id);
       setTimeout(() => setAnimatingPostId(null), 1000);
@@ -134,8 +153,10 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
+    const diffInMinutes = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60),
+    );
+
     if (diffInMinutes < 60) {
       return `${diffInMinutes}m ago`;
     } else if (diffInMinutes < 1440) {
@@ -153,80 +174,90 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
   const extractTags = (content: string) => {
     const tagMatch = content.match(/🏷️\s*(.+?)(?=\n|$)/);
     if (tagMatch) {
-      return tagMatch[1].split(' ').filter(tag => tag.startsWith('#'));
+      return tagMatch[1].split(" ").filter((tag) => tag.startsWith("#"));
     }
     return [];
   };
 
   const cleanContent = (content: string) => {
     return content
-      .replace(/📍\s*.+/g, '')
-      .replace(/🏷️\s*.+/g, '')
+      .replace(/📍\s*.+/g, "")
+      .replace(/🏷️\s*.+/g, "")
       .trim();
   };
 
-  const handleEditPost = async (postId: string, newContent: string, newTitle: string) => {
+  const handleEditPost = async (
+    postId: string,
+    newContent: string,
+    newTitle: string,
+  ) => {
     try {
       const response = await fetch(`${BACKEND_URL}/user-posts/${postId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify({ 
+        credentials: "include",
+        body: JSON.stringify({
           content: newContent,
-          title: newTitle 
-        })
+          title: newTitle,
+        }),
       });
 
       if (response.ok) {
         // Update the post in the local state
-        setPosts(posts.map(post => 
-          post.id === postId 
-            ? { 
-                ...post, 
-                content: newContent,
-                title: newTitle,
-                post: {
-                  ...post.post,
+        setPosts(
+          posts.map((post) =>
+            post.id === postId
+              ? {
+                  ...post,
                   content: newContent,
-                  title: newTitle
+                  title: newTitle,
+                  post: {
+                    ...post.post,
+                    content: newContent,
+                    title: newTitle,
+                  },
                 }
-              }
-            : post
-        ));
+              : post,
+          ),
+        );
         setEditingPost(null);
         setActiveDropdown(null);
       } else {
-        alert('Failed to update post');
+        alert("Failed to update post");
       }
     } catch (error) {
-      console.error('Error updating post:', error);
-      alert('Failed to update post');
+      console.error("Error updating post:", error);
+      alert("Failed to update post");
     }
   };
 
   const handleDeletePost = async (postId: string) => {
-    if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this post? This action cannot be undone.",
+      )
+    ) {
       return;
     }
 
     try {
       const response = await fetch(`${BACKEND_URL}/user-posts/${postId}`, {
-        method: 'DELETE',
-        credentials: 'include'
+        method: "DELETE",
+        credentials: "include",
       });
 
       if (response.ok) {
         // Remove the post from local state
-        setPosts(posts.filter(post => post.id !== postId));
+        setPosts(posts.filter((post) => post.id !== postId));
         setActiveDropdown(null);
       } else {
-        alert('Failed to delete post');
+        alert("Failed to delete post");
       }
     } catch (error) {
-      console.error('Error deleting post:', error);
-      alert('Failed to delete post');
+      console.error("Error deleting post:", error);
+      alert("Failed to delete post");
     }
   };
 
@@ -237,20 +268,26 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (activeDropdown && !(event.target as Element).closest('.dropdown-container')) {
+      if (
+        activeDropdown &&
+        !(event.target as Element).closest(".dropdown-container")
+      ) {
         setActiveDropdown(null);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [activeDropdown]);
 
   if (loading && posts.length === 0) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 animate-pulse">
+          <div
+            key={i}
+            className="backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-4 animate-pulse"
+          >
             <div className="flex items-center space-x-3 mb-3">
               <div className="w-10 h-10 bg-white/10 rounded-full"></div>
               <div className="flex-1">
@@ -288,9 +325,13 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
           <div className="w-16 h-16 mx-auto mb-4 bg-white/10 rounded-full flex items-center justify-center">
             <MessageCircle className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">No posts yet</h3>
+          <h3 className="text-lg font-semibold text-white mb-2">
+            No posts yet
+          </h3>
           <p className="text-white/60">
-            {userId ? "This user hasn't shared anything yet." : "Share your first post to get started!"}
+            {userId
+              ? "This user hasn't shared anything yet."
+              : "Share your first post to get started!"}
           </p>
           {!userId && onAddPost && (
             <button
@@ -313,22 +354,24 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
           const location = extractLocation(userPost.content);
           const tags = extractTags(userPost.content);
           const cleanedContent = cleanContent(userPost.content);
-          const imageUrl = userPost.image ? `${BACKEND_URL}${userPost.image}` : null;
+          const imageUrl = userPost.image
+            ? `${BACKEND_URL}${userPost.image}`
+            : null;
           const isAnimating = animatingPostId === userPost.id;
           const showOptions = isOwner(userPost);
 
           return (
-            <div 
-              key={userPost.id} 
+            <div
+              key={userPost.id}
               className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group ${
-                isAnimating 
-                  ? 'animate-slide-in-from-top scale-105 shadow-2xl shadow-violet-500/20' 
-                  : index === 0 && animatingPostId === null 
-                    ? 'animate-fade-in' 
-                    : ''
+                isAnimating
+                  ? "animate-slide-in-from-top scale-105 shadow-2xl shadow-violet-500/20"
+                  : index === 0 && animatingPostId === null
+                    ? "animate-fade-in"
+                    : ""
               }`}
               style={{
-                animationDelay: isAnimating ? '0ms' : `${index * 100}ms`
+                animationDelay: isAnimating ? "0ms" : `${index * 100}ms`,
               }}
             >
               {/* New Post Badge */}
@@ -345,20 +388,28 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     <OptimizedAvatar
                       src={userPost.user.avatar}
                       alt={userPost.user.name}
-                      fallbackText={userPost.user.name?.charAt(0) || 'U'}
+                      fallbackText={userPost.user.name?.charAt(0) || "U"}
                       size="sm"
                     />
                     <div>
-                      <h4 className="font-medium text-white text-sm">{userPost.user.name}</h4>
-                      <p className="text-white/60 text-xs">{formatTime(userPost.createdAt)}</p>
+                      <h4 className="font-medium text-white text-sm">
+                        {userPost.user.name}
+                      </h4>
+                      <p className="text-white/60 text-xs">
+                        {formatTime(userPost.createdAt)}
+                      </p>
                     </div>
                   </div>
-                  
+
                   {/* Options Menu - Only show for post owner */}
                   {showOptions && (
                     <div className="dropdown-container relative">
-                      <button 
-                        onClick={() => setActiveDropdown(activeDropdown === userPost.id ? null : userPost.id)}
+                      <button
+                        onClick={() =>
+                          setActiveDropdown(
+                            activeDropdown === userPost.id ? null : userPost.id,
+                          )
+                        }
                         className="p-1 hover:bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-all"
                       >
                         <MoreHorizontal className="w-4 h-4 text-white/60" />
@@ -367,22 +418,22 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                       {/* Dropdown Menu */}
                       {activeDropdown === userPost.id && (
                         <div className="absolute right-0 top-8 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg shadow-lg z-50 min-w-[150px]">
-                          <button 
+                          <button
                             onClick={() => {
                               setEditingPost({
-                                id: userPost.id, 
+                                id: userPost.id,
                                 content: userPost.content,
-                                title: userPost.title
+                                title: userPost.title,
                               });
                               setActiveDropdown(null);
-                            }} 
+                            }}
                             className="w-full px-4 py-2 text-left text-white/80 hover:bg-white/10 hover:text-white transition-colors rounded-t-lg flex items-center space-x-2"
                           >
                             <Edit className="w-4 h-4" />
                             <span>Edit Post</span>
                           </button>
-                          <button 
-                            onClick={() => handleDeletePost(userPost.id)} 
+                          <button
+                            onClick={() => handleDeletePost(userPost.id)}
                             className="w-full px-4 py-2 text-left text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors rounded-b-lg flex items-center space-x-2"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -402,7 +453,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     src={imageUrl}
                     alt="Post"
                     className={`w-full h-full object-cover transition-transform duration-300 ${
-                      isAnimating ? 'scale-105' : 'group-hover:scale-105'
+                      isAnimating ? "scale-105" : "group-hover:scale-105"
                     }`}
                   />
                   {isAnimating && (
@@ -419,19 +470,35 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     <input
                       type="text"
                       value={editingPost.title}
-                      onChange={(e) => setEditingPost({...editingPost, title: e.target.value})}
+                      onChange={(e) =>
+                        setEditingPost({
+                          ...editingPost,
+                          title: e.target.value,
+                        })
+                      }
                       placeholder="Post title..."
                       className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 text-sm"
                     />
                     <textarea
                       value={editingPost.content}
-                      onChange={(e) => setEditingPost({...editingPost, content: e.target.value})}
+                      onChange={(e) =>
+                        setEditingPost({
+                          ...editingPost,
+                          content: e.target.value,
+                        })
+                      }
                       className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none text-sm"
                       rows={4}
                     />
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() => handleEditPost(editingPost.id, editingPost.content, editingPost.title)}
+                        onClick={() =>
+                          handleEditPost(
+                            editingPost.id,
+                            editingPost.content,
+                            editingPost.title,
+                          )
+                        }
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all font-medium text-sm"
                       >
                         Save
@@ -448,9 +515,11 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                   // Display Mode
                   <>
                     {cleanedContent && (
-                      <p className={`text-white text-sm mb-3 line-clamp-3 transition-all duration-300 ${
-                        isAnimating ? 'text-white animate-pulse' : ''
-                      }`}>
+                      <p
+                        className={`text-white text-sm mb-3 line-clamp-3 transition-all duration-300 ${
+                          isAnimating ? "text-white animate-pulse" : ""
+                        }`}
+                      >
                         {cleanedContent}
                       </p>
                     )}
@@ -459,7 +528,9 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                     {location && (
                       <div className="flex items-center space-x-1 mb-2">
                         <MapPin className="w-3 h-3 text-white/60" />
-                        <span className="text-xs text-white/60">{location}</span>
+                        <span className="text-xs text-white/60">
+                          {location}
+                        </span>
                       </div>
                     )}
 
@@ -470,7 +541,9 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                           <span
                             key={index}
                             className={`text-xs bg-violet-500/20 text-violet-300 px-2 py-1 rounded-full transition-all duration-300 ${
-                              isAnimating ? 'bg-violet-500/30 animate-pulse' : ''
+                              isAnimating
+                                ? "bg-violet-500/30 animate-pulse"
+                                : ""
                             }`}
                           >
                             {tag}
@@ -517,7 +590,7 @@ export default function UserPostsGrid({ userId, refreshTrigger, newPost, onAddPo
                 <span>Loading...</span>
               </div>
             ) : (
-              'Load More'
+              "Load More"
             )}
           </button>
         </div>

@@ -1,9 +1,19 @@
-const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8000';
+import { BACKEND_URL } from "../src/config/api";
 
-
-import React, { useState, useEffect } from 'react';
-import { Heart, Star, MapPin, GraduationCap, Calendar, User, Eye, EyeOff, ArrowLeft, Settings } from 'lucide-react';
-import dotenv from 'dotenv';
+import React, { useState, useEffect } from "react";
+import {
+  Heart,
+  Star,
+  MapPin,
+  GraduationCap,
+  Calendar,
+  User,
+  Eye,
+  EyeOff,
+  ArrowLeft,
+  Settings,
+} from "lucide-react";
+import dotenv from "dotenv";
 
 // Types and Interfaces (move these to the top)
 interface UserProfile {
@@ -59,24 +69,26 @@ const Matching: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [matches, setMatches] = useState<MatchResult[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [showBreakdown, setShowBreakdown] = useState<{ [key: string]: boolean }>({});
+  const [showBreakdown, setShowBreakdown] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [showPreferences, setShowPreferences] = useState<boolean>(false);
   const [preferences, setPreferences] = useState<UserPreferences>({
     minAge: 18,
     maxAge: 35,
-    preferredGenders: ['male', 'female'],
+    preferredGenders: ["male", "female"],
     maxDistance: 50,
-    collegePreference: 'any',
-    majorPreference: 'any',
+    collegePreference: "any",
+    majorPreference: "any",
     minYear: 1,
     maxYear: 4,
     ageWeight: 0.15,
-    distanceWeight: 0.10,
+    distanceWeight: 0.1,
     interestsWeight: 0.25,
-    collegeWeight: 0.10,
+    collegeWeight: 0.1,
     majorWeight: 0.15,
-    yearWeight: 0.10,
-    personalityWeight: 0.15
+    yearWeight: 0.1,
+    personalityWeight: 0.15,
   });
 
   // Check authentication and load user data
@@ -88,9 +100,9 @@ const Matching: React.FC = () => {
     try {
       setIsLoading(true);
       const response = await fetch(`${BACKEND_URL}/auth/me`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (response.ok) {
@@ -115,8 +127,8 @@ const Matching: React.FC = () => {
   const loadUserPreferences = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/matching/preferences`, {
-        method: 'GET',
-        credentials: 'include'
+        method: "GET",
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -126,33 +138,36 @@ const Matching: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Error loading preferences:', error);
+      console.error("Error loading preferences:", error);
     }
   };
 
   const handleFindMatches = async () => {
     if (!user) return;
-    
+
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/matching/matches?limit=10`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const response = await fetch(
+        `${BACKEND_URL}/api/matching/matches?limit=10`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
 
       if (response.ok) {
         const data = await response.json();
         setMatches(data.matches || []);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || 'Failed to find matches');
+        setError(errorData.error || "Failed to find matches");
       }
     } catch (error) {
-      console.error('Error finding matches:', error);
-      setError('Network error. Please try again.');
+      console.error("Error finding matches:", error);
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -161,10 +176,10 @@ const Matching: React.FC = () => {
   const handleLikeUser = async (targetUserId: string) => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/matching/like`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetUserId })
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetUserId }),
       });
 
       if (response.ok) {
@@ -174,56 +189,58 @@ const Matching: React.FC = () => {
         } else {
           alert("Like sent! 💖");
         }
-        
+
         // Remove the liked user from matches
-        setMatches(prev => prev.filter(match => match.user.id !== targetUserId));
+        setMatches((prev) =>
+          prev.filter((match) => match.user.id !== targetUserId),
+        );
       } else {
         const errorData = await response.json();
-        alert(errorData.error || 'Failed to like user');
+        alert(errorData.error || "Failed to like user");
       }
     } catch (error) {
-      console.error('Error liking user:', error);
-      alert('Network error. Please try again.');
+      console.error("Error liking user:", error);
+      alert("Network error. Please try again.");
     }
   };
 
   const handleUpdatePreferences = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/matching/preferences`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(preferences)
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(preferences),
       });
 
       if (response.ok) {
-        alert('Preferences updated successfully!');
+        alert("Preferences updated successfully!");
         setShowPreferences(false);
       } else {
         const errorData = await response.json();
-        alert(errorData.error || 'Failed to update preferences');
+        alert(errorData.error || "Failed to update preferences");
       }
     } catch (error) {
-      console.error('Error updating preferences:', error);
-      alert('Network error. Please try again.');
+      console.error("Error updating preferences:", error);
+      alert("Network error. Please try again.");
     }
   };
 
   const toggleBreakdown = (userId: string) => {
-    setShowBreakdown(prev => ({
+    setShowBreakdown((prev) => ({
       ...prev,
-      [userId]: !prev[userId]
+      [userId]: !prev[userId],
     }));
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'from-green-400 to-emerald-500';
-    if (score >= 60) return 'from-yellow-400 to-orange-500';
-    if (score >= 40) return 'from-orange-400 to-red-500';
-    return 'from-red-400 to-pink-500';
+    if (score >= 80) return "from-green-400 to-emerald-500";
+    if (score >= 60) return "from-yellow-400 to-orange-500";
+    if (score >= 40) return "from-orange-400 to-red-500";
+    return "from-red-400 to-pink-500";
   };
 
-  const renderScoreBreakdown = (breakdown: MatchResult['breakdown']) => (
+  const renderScoreBreakdown = (breakdown: MatchResult["breakdown"]) => (
     <div className="mt-6 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6">
       <h4 className="font-semibold text-white mb-4 flex items-center">
         <Star className="h-5 w-5 mr-2 text-violet-400" />
@@ -232,19 +249,27 @@ const Matching: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Age</div>
-          <div className="text-lg font-bold text-white">{breakdown.ageCompatibility.toFixed(1)}%</div>
+          <div className="text-lg font-bold text-white">
+            {breakdown.ageCompatibility.toFixed(1)}%
+          </div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Distance</div>
-          <div className="text-lg font-bold text-white">{breakdown.distanceScore.toFixed(1)}%</div>
+          <div className="text-lg font-bold text-white">
+            {breakdown.distanceScore.toFixed(1)}%
+          </div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Interests</div>
-          <div className="text-lg font-bold text-white">{breakdown.interestSimilarity.toFixed(1)}%</div>
+          <div className="text-lg font-bold text-white">
+            {breakdown.interestSimilarity.toFixed(1)}%
+          </div>
         </div>
         <div className="text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-3">
           <div className="text-sm text-white/60 mb-1">Personality</div>
-          <div className="text-lg font-bold text-white">{breakdown.personalityCompatibility.toFixed(1)}%</div>
+          <div className="text-lg font-bold text-white">
+            {breakdown.personalityCompatibility.toFixed(1)}%
+          </div>
         </div>
       </div>
     </div>
@@ -265,9 +290,11 @@ const Matching: React.FC = () => {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Please log in to find matches</h2>
-          <button 
-            onClick={() => window.location.href = '/'}
+          <h2 className="text-2xl font-bold mb-4">
+            Please log in to find matches
+          </h2>
+          <button
+            onClick={() => (window.location.href = "/")}
             className="px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg"
           >
             Go to Login
@@ -301,7 +328,7 @@ const Matching: React.FC = () => {
               Preferences
             </button>
           </div>
-          
+
           <h1 className="font-poppins text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
             <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
               Your Perfect
@@ -313,7 +340,8 @@ const Matching: React.FC = () => {
           </h1>
 
           <p className="text-lg sm:text-xl leading-8 mb-8 text-white/70 max-w-3xl mx-auto">
-            Discover meaningful connections with our advanced compatibility algorithm.
+            Discover meaningful connections with our advanced compatibility
+            algorithm.
             <br />
             <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent font-semibold">
               Where campus hearts find their perfect match.
@@ -330,9 +358,25 @@ const Matching: React.FC = () => {
           >
             {loading ? (
               <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
                 Finding Your Perfect Matches...
               </span>
@@ -362,7 +406,7 @@ const Matching: React.FC = () => {
                 Your Top Matches ✨
               </span>
             </h2>
-            
+
             <div className="space-y-8">
               {matches.map((match, index) => (
                 <div
@@ -376,8 +420,8 @@ const Matching: React.FC = () => {
                         <div className="relative">
                           <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/25 overflow-hidden">
                             {match.user.avatar ? (
-                              <img 
-                                src={match.user.avatar} 
+                              <img
+                                src={match.user.avatar}
                                 alt={match.user.name}
                                 className="w-full h-full object-cover"
                               />
@@ -392,7 +436,9 @@ const Matching: React.FC = () => {
                           </div>
                         </div>
                         <div>
-                          <h3 className="text-2xl font-bold text-white mb-2">{match.user.name}</h3>
+                          <h3 className="text-2xl font-bold text-white mb-2">
+                            {match.user.name}
+                          </h3>
                           <div className="flex flex-wrap gap-4 text-white/60 mb-2">
                             <div className="flex items-center">
                               <User className="h-4 w-4 mr-1" />
@@ -410,21 +456,29 @@ const Matching: React.FC = () => {
                         </div>
                       </div>
                       <div className="text-center">
-                        <div className={`inline-flex items-center px-6 py-3 rounded-full text-white font-bold text-xl bg-gradient-to-r ${getScoreColor(match.score)} shadow-lg`}>
+                        <div
+                          className={`inline-flex items-center px-6 py-3 rounded-full text-white font-bold text-xl bg-gradient-to-r ${getScoreColor(match.score)} shadow-lg`}
+                        >
                           {match.score.toFixed(1)}%
                         </div>
-                        <p className="text-sm text-white/60 mt-2">Match Score</p>
+                        <p className="text-sm text-white/60 mt-2">
+                          Match Score
+                        </p>
                       </div>
                     </div>
 
                     {/* Bio */}
                     <div className="mb-6">
-                      <p className="text-white/80 leading-relaxed text-lg">{match.user.bio}</p>
+                      <p className="text-white/80 leading-relaxed text-lg">
+                        {match.user.bio}
+                      </p>
                     </div>
 
                     {/* Interests */}
                     <div className="mb-6">
-                      <span className="text-white/60 font-medium mb-3 block">Interests:</span>
+                      <span className="text-white/60 font-medium mb-3 block">
+                        Interests:
+                      </span>
                       <div className="flex flex-wrap gap-3">
                         {match.user.interests.map((interest, idx) => (
                           <span
@@ -455,12 +509,12 @@ const Matching: React.FC = () => {
                           </>
                         )}
                       </button>
-                      
+
                       <div className="space-x-4">
                         <button className="px-6 py-3 backdrop-blur-md bg-red-500/20 border border-red-500/30 text-red-300 rounded-lg hover:bg-red-500/30 transition-all duration-200 shadow-lg shadow-red-500/10">
                           ❌ Pass
                         </button>
-                        <button 
+                        <button
                           onClick={() => handleLikeUser(match.user.id)}
                           className="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transform hover:scale-105"
                         >
@@ -470,7 +524,8 @@ const Matching: React.FC = () => {
                     </div>
 
                     {/* Score Breakdown */}
-                    {showBreakdown[match.user.id] && renderScoreBreakdown(match.breakdown)}
+                    {showBreakdown[match.user.id] &&
+                      renderScoreBreakdown(match.breakdown)}
                   </div>
                 </div>
               ))}
@@ -482,16 +537,25 @@ const Matching: React.FC = () => {
         {showPreferences && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
             <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <h3 className="text-2xl font-bold text-white mb-6">Matching Preferences</h3>
-              
+              <h3 className="text-2xl font-bold text-white mb-6">
+                Matching Preferences
+              </h3>
+
               {/* Age Range */}
               <div className="mb-6">
-                <label className="block text-white/80 font-medium mb-2">Age Range</label>
+                <label className="block text-white/80 font-medium mb-2">
+                  Age Range
+                </label>
                 <div className="flex gap-4">
                   <input
                     type="number"
                     value={preferences.minAge}
-                    onChange={(e) => setPreferences(prev => ({ ...prev, minAge: parseInt(e.target.value) }))}
+                    onChange={(e) =>
+                      setPreferences((prev) => ({
+                        ...prev,
+                        minAge: parseInt(e.target.value),
+                      }))
+                    }
                     className="flex-1 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
                     min="18"
                     max="100"
@@ -500,7 +564,12 @@ const Matching: React.FC = () => {
                   <input
                     type="number"
                     value={preferences.maxAge}
-                    onChange={(e) => setPreferences(prev => ({ ...prev, maxAge: parseInt(e.target.value) }))}
+                    onChange={(e) =>
+                      setPreferences((prev) => ({
+                        ...prev,
+                        maxAge: parseInt(e.target.value),
+                      }))
+                    }
                     className="flex-1 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
                     min="18"
                     max="100"
@@ -510,23 +579,30 @@ const Matching: React.FC = () => {
 
               {/* Gender Preferences */}
               <div className="mb-6">
-                <label className="block text-white/80 font-medium mb-2">Interested in</label>
+                <label className="block text-white/80 font-medium mb-2">
+                  Interested in
+                </label>
                 <div className="flex gap-4">
-                  {['male', 'female', 'other'].map(gender => (
+                  {["male", "female", "other"].map((gender) => (
                     <label key={gender} className="flex items-center">
                       <input
                         type="checkbox"
                         checked={preferences.preferredGenders.includes(gender)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setPreferences(prev => ({ 
-                              ...prev, 
-                              preferredGenders: [...prev.preferredGenders, gender] 
+                            setPreferences((prev) => ({
+                              ...prev,
+                              preferredGenders: [
+                                ...prev.preferredGenders,
+                                gender,
+                              ],
                             }));
                           } else {
-                            setPreferences(prev => ({ 
-                              ...prev, 
-                              preferredGenders: prev.preferredGenders.filter(g => g !== gender) 
+                            setPreferences((prev) => ({
+                              ...prev,
+                              preferredGenders: prev.preferredGenders.filter(
+                                (g) => g !== gender,
+                              ),
                             }));
                           }
                         }}
@@ -548,22 +624,40 @@ const Matching: React.FC = () => {
                   min="1"
                   max="200"
                   value={preferences.maxDistance}
-                  onChange={(e) => setPreferences(prev => ({ ...prev, maxDistance: parseInt(e.target.value) }))}
+                  onChange={(e) =>
+                    setPreferences((prev) => ({
+                      ...prev,
+                      maxDistance: parseInt(e.target.value),
+                    }))
+                  }
                   className="w-full"
                 />
               </div>
 
               {/* College Preference */}
               <div className="mb-6">
-                <label className="block text-white/80 font-medium mb-2">College Preference</label>
+                <label className="block text-white/80 font-medium mb-2">
+                  College Preference
+                </label>
                 <select
                   value={preferences.collegePreference}
-                  onChange={(e) => setPreferences(prev => ({ ...prev, collegePreference: e.target.value }))}
+                  onChange={(e) =>
+                    setPreferences((prev) => ({
+                      ...prev,
+                      collegePreference: e.target.value,
+                    }))
+                  }
                   className="w-full px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg text-white"
                 >
-                  <option value="any" className="bg-gray-800">Any College</option>
-                  <option value="same" className="bg-gray-800">Same College</option>
-                  <option value="different" className="bg-gray-800">Different College</option>
+                  <option value="any" className="bg-gray-800">
+                    Any College
+                  </option>
+                  <option value="same" className="bg-gray-800">
+                    Same College
+                  </option>
+                  <option value="different" className="bg-gray-800">
+                    Different College
+                  </option>
                 </select>
               </div>
 

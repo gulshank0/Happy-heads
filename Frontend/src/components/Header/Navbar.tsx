@@ -1,9 +1,9 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+import { BACKEND_URL } from "../../config/api";
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X, User, LogIn, LogOut } from "lucide-react";
-import OptimizedAvatar from '../ui/OptimizedAvatar';
+import OptimizedAvatar from "../ui/OptimizedAvatar";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,17 +27,17 @@ const Navbar = () => {
     try {
       setIsLoading(true);
       const response = await fetch(`${BACKEND_URL}/auth/me`, {
-        method: 'GET',
-        credentials: 'include', // Important: include cookies
+        method: "GET",
+        credentials: "include", // Important: include cookies
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
         // Check if response is JSON
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
           const data = await response.json();
           if (data.authenticated && data.user) {
             setUser(data.user);
@@ -49,9 +49,11 @@ const Navbar = () => {
           }
         } else {
           // Response is not JSON, likely an HTML error page
-          console.warn('Backend returned non-JSON response. Server might not be running or endpoint not found.');
-          console.warn('Response status:', response.status);
-          console.warn('Content-Type:', contentType);
+          console.warn(
+            "Backend returned non-JSON response. Server might not be running or endpoint not found.",
+          );
+          console.warn("Response status:", response.status);
+          console.warn("Content-Type:", contentType);
           setUser(null);
           localStorage.removeItem("user");
         }
@@ -60,29 +62,41 @@ const Navbar = () => {
         // Try to read the response as text to see what we got
         try {
           const text = await response.text();
-          if (text.startsWith('<!DOCTYPE') || text.startsWith('<html')) {
-            console.warn('Received HTML response instead of JSON. Backend server may not be running properly.');
+          if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) {
+            console.warn(
+              "Received HTML response instead of JSON. Backend server may not be running properly.",
+            );
           } else {
-            console.warn('Response body:', text.substring(0, 200));
+            console.warn("Response body:", text.substring(0, 200));
           }
         } catch (textError) {
-          console.warn('Could not read response body');
+          console.warn("Could not read response body");
         }
         setUser(null);
         localStorage.removeItem("user");
       }
     } catch (error) {
       console.error("Error checking auth status:", error);
-      
+
       // More specific error messaging
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        console.warn('Network error: Unable to connect to backend server.');
-        console.warn('Make sure the backend server is running at:', BACKEND_URL);
-      } else if (error instanceof SyntaxError && error.message.includes('JSON')) {
-        console.warn('Received invalid JSON response. Backend may be returning HTML error page.');
-        console.warn('This usually means the backend server is not running or the endpoint is not found.');
+      if (error instanceof TypeError && error.message.includes("fetch")) {
+        console.warn("Network error: Unable to connect to backend server.");
+        console.warn(
+          "Make sure the backend server is running at:",
+          BACKEND_URL,
+        );
+      } else if (
+        error instanceof SyntaxError &&
+        error.message.includes("JSON")
+      ) {
+        console.warn(
+          "Received invalid JSON response. Backend may be returning HTML error page.",
+        );
+        console.warn(
+          "This usually means the backend server is not running or the endpoint is not found.",
+        );
       }
-      
+
       setUser(null);
       localStorage.removeItem("user");
     } finally {
@@ -98,12 +112,12 @@ const Navbar = () => {
     if (success === "true") {
       // Clear URL parameters
       window.history.replaceState({}, document.title, window.location.pathname);
-      
+
       // Check auth status after successful login
       setTimeout(() => {
         checkAuthStatus();
       }, 500);
-      
+
       // Navigate to profile
       navigate("/home");
     } else {
@@ -117,35 +131,35 @@ const Navbar = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log('Backend URL:', BACKEND_URL); // Add this line for debugging
+    console.log("Backend URL:", BACKEND_URL); // Add this line for debugging
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
-  
+
   const handleLogout = async () => {
     try {
       // Call logout endpoint to clear server-side session
       const response = await fetch(`${BACKEND_URL}/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
+        method: "POST",
+        credentials: "include",
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
-        console.log('Server logout successful');
+        console.log("Server logout successful");
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     }
 
     // Clear client-side data
     localStorage.removeItem("user");
     setUser(null);
-    
+
     // Navigate to home
     navigate("/");
-    
+
     // Optional: reload to clear any cached data
     window.location.reload();
   };
@@ -164,7 +178,10 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-blue-400 font-bold hover:cursor-pointer" onClick={() => navigate('/')}>
+            <h1
+              className="text-2xl font-bold text-blue-400 font-bold hover:cursor-pointer"
+              onClick={() => navigate("/")}
+            >
               Happy Heads
             </h1>
           </div>
@@ -178,8 +195,8 @@ const Navbar = () => {
               >
                 Home
               </a>
-              
-                           <a
+
+              <a
                 href="#contact"
                 className="text-white/70 hover:text-white px-3 py-2 text-xl font-medium transition-colors duration-200 hover:bg-white/10 rounded-lg"
               >
@@ -203,17 +220,21 @@ const Navbar = () => {
             ) : isLoggedIn ? (
               <>
                 <div className="flex items-center space-x-3 text-white/70 text-xl">
-                  <span>Hi, {user?.name || user?.email?.split('@')[0] || "User"}</span>
-                  <OptimizedAvatar 
-                    src={user?.avatar} 
-                    alt="User Avatar" 
-                    fallbackText={user?.name || user?.email?.split('@')[0] || "U"}
+                  <span>
+                    Hi, {user?.name || user?.email?.split("@")[0] || "User"}
+                  </span>
+                  <OptimizedAvatar
+                    src={user?.avatar}
+                    alt="User Avatar"
+                    fallbackText={
+                      user?.name || user?.email?.split("@")[0] || "U"
+                    }
                     size="sm"
                     className="cursor-pointer hover:ring-2 hover:ring-blue-400/50 transition-all duration-200"
                     lazy={false}
                   />
                 </div>
-                <button 
+                <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 text-white/70 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/10 rounded-lg border border-white/20"
                 >
@@ -222,7 +243,7 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <button 
+              <button
                 onClick={handleGoogleLogin}
                 className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-2 text-sm font-medium rounded-lg hover:bg-blue-600 transition-all duration-200 shadow-lg shadow-blue-500/25"
               >
@@ -293,11 +314,13 @@ const Navbar = () => {
             {/* Mobile Auth Buttons */}
             <div className="pt-4 space-y-2">
               {isLoading ? (
-                <div className="text-white/70 text-sm text-center">Loading...</div>
+                <div className="text-white/70 text-sm text-center">
+                  Loading...
+                </div>
               ) : isLoggedIn ? (
                 <>
                   <div className="text-white/70 text-sm text-center pb-2">
-                    Hi, {user?.name || user?.email?.split('@')[0] || "User"}!
+                    Hi, {user?.name || user?.email?.split("@")[0] || "User"}!
                   </div>
                   <button
                     onClick={handleLogout}
@@ -325,4 +348,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
