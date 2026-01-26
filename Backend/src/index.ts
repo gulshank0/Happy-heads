@@ -81,7 +81,7 @@ app.use("/uploads/posts", express.static(postsUploadsDir));
 // Session configuration
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "your-secret-key",
+    secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -89,7 +89,7 @@ app.use(
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
-  })
+  }),
 );
 
 // Passport middleware
@@ -148,9 +148,9 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
     }
 
     const userId = (req.user as any).id;
-    
+
     // Generate the avatar URL
-    const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 8000}`;
+    const baseUrl = process.env.BACKEND_URL!;
     const avatarUrl = `${baseUrl}/uploads/avatars/${req.file.filename}`;
 
     // Update user's avatar in database
@@ -158,7 +158,7 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
       where: { id: userId },
       data: {
         avatar: avatarUrl,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       select: {
         id: true,
@@ -175,8 +175,8 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
         interests: true,
         location: true,
         url: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     console.log("Avatar uploaded and updated successfully:", {
@@ -203,7 +203,9 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
 app.use((error: any, req: any, res: any, next: any) => {
   if (error instanceof multer.MulterError) {
     if (error.code === "LIMIT_FILE_SIZE") {
-      return res.status(400).json({ error: "File too large. Maximum size is 5MB." });
+      return res
+        .status(400)
+        .json({ error: "File too large. Maximum size is 5MB." });
     }
   }
   if (error.message === "Only image files are allowed!") {
@@ -214,10 +216,15 @@ app.use((error: any, req: any, res: any, next: any) => {
 
 // Error handling middleware
 app.use(
-  (error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  (
+    error: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
-  }
+  },
 );
 
 // 404 handler
@@ -247,12 +254,34 @@ process.on("SIGINT", async () => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+// Validate required environment variables
+const PORT = process.env.PORT;
+const BACKEND_URL = process.env.BACKEND_URL;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+
+if (!PORT) {
+  console.error("❌ PORT is not set in environment variables");
+  process.exit(1);
+}
+
+if (!BACKEND_URL) {
+  console.error("❌ BACKEND_URL is not set in environment variables");
+  process.exit(1);
+}
+
+if (!SESSION_SECRET) {
+  console.error("❌ SESSION_SECRET is not set in environment variables");
+  process.exit(1);
+}
 
 server.listen(PORT, () => {
+  const wsUrl = BACKEND_URL.replace("http://", "ws://").replace(
+    "https://",
+    "wss://",
+  );
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🔌 WebSocket server ready at ws://localhost:${PORT}/ws`);
-  console.log(`🌐 HTTP server ready at http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket server ready at ${wsUrl}/ws`);
+  console.log(`🌐 HTTP server ready at ${BACKEND_URL}`);
 });
 
 export default app;
