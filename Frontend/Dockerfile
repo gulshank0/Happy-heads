@@ -62,7 +62,7 @@ ENV VITE_WS_URL=$VITE_WS_URL
 
 # Build the production bundle
 # Output goes to ./dist as configured in vite.config.ts
-RUN pnpm run build
+RUN npm run build
 
 # -----------------------------------------------------------------------------
 # Stage 3: Production with Nginx

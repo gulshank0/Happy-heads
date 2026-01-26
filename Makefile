@@ -56,11 +56,11 @@ help:
 
 # Build all images
 build:
-	docker compose build
+	docker compose -f docker/docker-compose.yml build
 
 # Build without cache
 build-no-cache:
-	docker compose build --no-cache
+	docker compose -f docker/docker-compose.yml build --no-cache
 
 # =============================================================================
 # Development Commands
@@ -68,7 +68,7 @@ build-no-cache:
 
 # Start development environment
 dev:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+	docker compose --env-file .env -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d
 	@echo ""
 	@echo "Development environment started!"
 	@echo "================================"
@@ -81,7 +81,7 @@ dev:
 
 # Build and start development
 dev-build:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+	docker compose --env-file .env -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --build
 
 # =============================================================================
 # Production Commands
@@ -89,7 +89,7 @@ dev-build:
 
 # Start production environment
 prod:
-	docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+	docker compose --env-file .env -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d
 	@echo ""
 	@echo "Production environment started!"
 	@echo "================================"
@@ -98,7 +98,7 @@ prod:
 
 # Build and start production
 prod-build:
-	docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+	docker compose --env-file .env -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d --build
 
 # =============================================================================
 # Container Management
@@ -106,19 +106,19 @@ prod-build:
 
 # Stop all containers
 down:
-	docker compose down
+	docker compose -f docker/docker-compose.yml down
 
 # Stop and remove volumes (WARNING: deletes data!)
 down-volumes:
-	docker compose down -v
+	docker compose -f docker/docker-compose.yml down -v
 
 # Restart all containers
 restart:
-	docker compose restart
+	docker compose -f docker/docker-compose.yml restart
 
 # Show container status
 status:
-	docker compose ps
+	docker compose -f docker/docker-compose.yml ps
 
 # =============================================================================
 # Logging Commands
@@ -126,19 +126,19 @@ status:
 
 # View all logs
 logs:
-	docker compose logs -f
+	docker compose -f docker/docker-compose.yml logs -f
 
 # View backend logs
 logs-backend:
-	docker compose logs -f backend
+	docker compose -f docker/docker-compose.yml logs -f backend
 
 # View frontend logs
 logs-frontend:
-	docker compose logs -f frontend
+	docker compose -f docker/docker-compose.yml logs -f frontend
 
 # View database logs
 logs-db:
-	docker compose logs -f postgres
+	docker compose -f docker/docker-compose.yml logs -f postgres
 
 # =============================================================================
 # Database Commands
@@ -146,25 +146,25 @@ logs-db:
 
 # Run Prisma migrations
 db-migrate:
-	docker compose exec backend npx prisma migrate deploy
+	docker compose -f docker/docker-compose.yml exec backend npx prisma migrate deploy
 
 # Generate Prisma client
 db-generate:
-	docker compose exec backend npx prisma generate
+	docker compose -f docker/docker-compose.yml exec backend npx prisma generate
 
 # Open Prisma Studio
 db-studio:
-	docker compose exec backend npx prisma studio
+	docker compose -f docker/docker-compose.yml exec backend npx prisma studio
 
 # Reset database (WARNING: deletes all data!)
 db-reset:
 	@echo "WARNING: This will delete all data in the database!"
 	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ] && \
-		docker compose exec backend npx prisma migrate reset --force
+		docker compose -f docker/docker-compose.yml exec backend npx prisma migrate reset --force
 
 # Push schema to database (development only)
 db-push:
-	docker compose exec backend npx prisma db push
+	docker compose -f docker/docker-compose.yml exec backend npx prisma db push
 
 # =============================================================================
 # Shell Access
@@ -172,19 +172,19 @@ db-push:
 
 # Open shell in backend container
 shell-backend:
-	docker compose exec backend sh
+	docker compose -f docker/docker-compose.yml exec backend sh
 
 # Open shell in frontend container
 shell-frontend:
-	docker compose exec frontend sh
+	docker compose -f docker/docker-compose.yml exec frontend sh
 
 # Open psql in postgres container
 shell-postgres:
-	docker compose exec postgres psql -U happyheads -d happyheads_db
+	docker compose -f docker/docker-compose.yml exec postgres psql -U happyheads -d happyheads_db
 
 # Open Redis CLI
 shell-redis:
-	docker compose exec redis redis-cli
+	docker compose -f docker/docker-compose.yml exec redis redis-cli
 
 # =============================================================================
 # Cleanup Commands
@@ -192,11 +192,11 @@ shell-redis:
 
 # Remove all containers and images
 clean:
-	docker compose down --rmi all --remove-orphans
+	docker compose -f docker/docker-compose.yml down --rmi all --remove-orphans
 
 # Remove all volumes (WARNING: deletes data!)
 clean-volumes:
-	docker compose down -v --remove-orphans
+	docker compose -f docker/docker-compose.yml down -v --remove-orphans
 
 # Docker system prune
 prune:
@@ -204,5 +204,5 @@ prune:
 
 # Full cleanup (WARNING: removes everything!)
 clean-all:
-	docker compose down -v --rmi all --remove-orphans
+	docker compose -f docker/docker-compose.yml down -v --rmi all --remove-orphans
 	docker system prune -af --volumes
