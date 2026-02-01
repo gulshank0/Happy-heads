@@ -247,11 +247,12 @@ process.on("SIGINT", async () => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = parseInt(process.env.PORT || '8000', 10);
+const HOST = '0.0.0.0'; // Required for Render/Docker deployments
 
-server.listen(PORT, () => {
+server.listen(PORT, HOST, () => {
   const backendUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on ${HOST}:${PORT}`);
   console.log(`🔌 WebSocket server ready at ${backendUrl.replace('http', 'ws')}/ws`);
   console.log(`🌐 HTTP server ready at ${backendUrl}`);
 });
