@@ -1,15 +1,6 @@
 /// <reference types="vite/client" />
 
-interface ImportMetaEnv {
-  readonly BACKEND_URL: string;
-  // add more env variables here as needed
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || import.meta.env.BACKEND_A_URL || 'http://localhost:8000';
+import { BACKEND_URL } from '../../config/env';
 
 import React, { useState, useEffect } from 'react';
 import { Heart, X, Filter, MapPin, GraduationCap, Calendar, MessageCircle, Star, Bookmark, Share2, MoreVertical, Zap, Users, Clock, Plus } from 'lucide-react';

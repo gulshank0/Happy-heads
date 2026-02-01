@@ -11,12 +11,13 @@ const corsOptions = {
     }
     
     const frontendUrl = process.env.FRONTEND_URL;
+    
+    // Build allowed origins from environment variables
     const allowedOrigins = [
       frontendUrl,
-      frontendUrl?.endsWith('/') ? frontendUrl.slice(0, -1) : frontendUrl + '/', // Handle both with and without trailing slash
-      'http://localhost:3000',
-      'http://happy-heads.vercel.app'
-    ].filter(Boolean);
+      frontendUrl?.endsWith('/') ? frontendUrl.slice(0, -1) : frontendUrl + '/',
+      process.env.CORS_ORIGIN, // Additional CORS origin from env
+    ].filter(Boolean) as string[];
 
     console.log('CORS check - Origin:', origin);
     console.log('CORS check - Allowed origins:', allowedOrigins);

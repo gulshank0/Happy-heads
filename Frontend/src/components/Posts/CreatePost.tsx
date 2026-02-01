@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, X, MapPin, Users, Globe, Lock, Image, Video, Smile, AtSign, Hash, Send, Grid, List, Heart, MessageCircle, MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import OptimizedAvatar from '@/components/ui/OptimizedAvatar';
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URI || 'http://localhost:8000';
+import { BACKEND_URL } from '../../config/env';
 
 interface CreatePostProps {
   onPostCreated: (post: any) => void;

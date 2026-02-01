@@ -250,9 +250,10 @@ process.on("SIGINT", async () => {
 const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () => {
+  const backendUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🔌 WebSocket server ready at ws://localhost:${PORT}/ws`);
-  console.log(`🌐 HTTP server ready at http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket server ready at ${backendUrl.replace('http', 'ws')}/ws`);
+  console.log(`🌐 HTTP server ready at ${backendUrl}`);
 });
 
 export default app;

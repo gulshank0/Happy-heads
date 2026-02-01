@@ -1,3 +1,5 @@
+import { BACKEND_URL } from '../config/env';
+
 // Avatar and image URL utilities
 export const getAvatarUrl = (avatar: string | null | undefined): string | null => {
   if (!avatar) return null;
@@ -9,8 +11,7 @@ export const getAvatarUrl = (avatar: string | null | undefined): string | null =
   
   // If it's a relative path (uploaded avatar), construct full URL
   if (avatar.startsWith('/uploads/')) {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.BACKEND_A_URL || 'http://localhost:8000';
-    return `${backendUrl}${avatar}`;
+    return `${BACKEND_URL}${avatar}`;
   }
   
   return avatar;

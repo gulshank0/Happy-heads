@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8000';
+import { BACKEND_URL } from '../src/config/env';
 
 
 import React, { useState, useEffect } from 'react';

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Search, MessageCircle, X, Users, CheckCircle } from 'lucide-react';
 import { messageService } from '../../services/messageService';
+import { BACKEND_URL } from '../../config/env';
 
 interface User {
   id: string;
@@ -87,7 +88,7 @@ export default function StartConversation({
       setError(null);
 
       console.log('🔄 Loading initial users...');
-      console.log('🌐 API Base URL:', import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000');
+      console.log('🌐 API Base URL:', BACKEND_URL);
 
       const users = await messageService.searchUsers('');
       console.log('✅ Initial users loaded:', users.length);
@@ -108,7 +109,7 @@ export default function StartConversation({
   const testBackendConnection = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'}/users/test-db`,
+        `${BACKEND_URL}/users/test-db`,
         { credentials: 'include' }
       );
       const data = await response.json();
@@ -123,7 +124,7 @@ export default function StartConversation({
   // -------------------------
   const testSimpleSearch = async () => {
     try {
-      const response = await fetch('http://localhost:8000/users/search-messaging?q=', {
+      const response = await fetch(`${BACKEND_URL}/users/search-messaging?q=`, {
         credentials: 'include',
         headers: {
           Accept: 'application/json',

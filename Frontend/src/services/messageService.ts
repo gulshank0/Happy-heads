@@ -1,8 +1,10 @@
-// Separate URLs for HTTP API and WebSocket connections
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-const WS_BASE_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8000';
-
+// Centralized environment configuration
+import { BACKEND_URL, WS_URL } from '../config/env';
 import websocketService from './websocketService';
+
+// Separate URLs for HTTP API and WebSocket connections
+const API_BASE_URL = BACKEND_URL;
+const WS_BASE_URL = WS_URL;
 
 export interface User {
   id: string;

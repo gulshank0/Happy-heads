@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { messageService, Conversation, Message } from "../../services/messageService";
 import websocketService from "../../services/websocketService";
 import StartConversation from './StartConversation';
+import { BACKEND_URL } from '../../config/env';
 
 interface TypingUser {
   userId: string;
@@ -39,10 +40,10 @@ export default function Messenger() {
         setLoading(true);
         
         const possibleEndpoints = [
-          'http://localhost:8000/auth/me',
-          'http://localhost:8000/api/auth/me', 
-          'http://localhost:8000/users/verify',
-          'http://localhost:8000/auth/profile'
+          `${BACKEND_URL}/auth/me`,
+          `${BACKEND_URL}/api/auth/me`, 
+          `${BACKEND_URL}/users/verify`,
+          `${BACKEND_URL}/auth/profile`
         ];
         
         let userData = null;

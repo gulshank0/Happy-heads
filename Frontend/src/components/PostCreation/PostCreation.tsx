@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || import.meta.env.BACKEND_A_URL || 'http://localhost:8000';
+import { BACKEND_URL } from '../../config/env';
 
 import React, { useState } from 'react';
 import { Camera, X, Send } from 'lucide-react';

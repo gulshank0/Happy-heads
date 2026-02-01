@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, MessageCircle, Share, MoreHorizontal, MapPin, Plus, Edit, Trash2, X } from 'lucide-react';
 import OptimizedAvatar from '@/components/ui/OptimizedAvatar';
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URI || 'http://localhost:8000';
+import { BACKEND_URL } from '../../config/env';
 
 interface UserPost {
   id: string;

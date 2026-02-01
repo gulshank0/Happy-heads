@@ -1,4 +1,5 @@
 import { Message, Conversation } from './messageService';
+import { BACKEND_URL } from '../config/env';
 
 interface WebSocketMessage {
   type: string;
@@ -65,11 +66,11 @@ class WebSocketService {
         }
 
         // Build WebSocket URL
-        const baseUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.BACKEND_A_URL || 'http://localhost:8000';
-        if (!baseUrl) {
-          throw new Error('API base URL is not defined');
+        // Use centralized config - will throw in production if not set
+        if (!BACKEND_URL) {
+          throw new Error('VITE_BACKEND_URL environment variable is not configured');
         }
-        const wsUrl = baseUrl.replace('http', 'ws') + '/ws';
+        const wsUrl = BACKEND_URL.replace('http', 'ws') + '/ws';
         const url = new URL(wsUrl);
         url.searchParams.set('userId', options.userId);
         if (options.token) {
