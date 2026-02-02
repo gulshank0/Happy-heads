@@ -27,8 +27,8 @@ export const BACKEND_URL: string = (() => {
   }
   
   // Development fallback - warn but allow
-  console.warn('⚠️ VITE_BACKEND_URL not set. Using localhost:8000 for development.');
-  return 'http://localhost:8000';
+  console.warn('⚠️ VITE_BACKEND_URL not set. Using hosted backend.');
+  return 'https://backend-happy-heads.onrender.com';
 })();
 
 // WebSocket URL - required in production, optional in development  
@@ -44,8 +44,8 @@ export const WS_URL: string = (() => {
   }
   
   // Development fallback - warn but allow
-  console.warn('⚠️ VITE_WS_URL not set. Using ws://localhost:8000 for development.');
-  return 'ws://localhost:8000';
+  console.warn('⚠️ VITE_WS_URL not set. Using hosted backend.');
+  return 'wss://backend-happy-heads.onrender.com';
 })();
 
 // Helper to check if environment is configured properly
