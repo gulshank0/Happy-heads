@@ -89,7 +89,7 @@ app.use(
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
-  })
+  }),
 );
 
 // Passport middleware
@@ -148,17 +148,25 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
     }
 
     const userId = (req.user as any).id;
-    
-    // Generate the avatar URL
-    const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 8000}`;
-    const avatarUrl = `${baseUrl}/uploads/avatars/${req.file.filename}`;
+
+    // Generate the avatar URL - BACKEND_URL must be set in .env for production
+    const backendUrl = process.env.BACKEND_URL;
+    const port = process.env.PORT || "8000";
+    const fallbackUrl = `http://localhost:${port}`;
+
+    if (!backendUrl) {
+      console.warn(
+        "⚠️ BACKEND_URL not set in environment. Avatar URLs may not work correctly in production.",
+      );
+    }
+    const avatarUrl = `${backendUrl || fallbackUrl}/uploads/avatars/${req.file.filename}`;
 
     // Update user's avatar in database
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         avatar: avatarUrl,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       select: {
         id: true,
@@ -175,8 +183,8 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
         interests: true,
         location: true,
         url: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     console.log("Avatar uploaded and updated successfully:", {
@@ -203,7 +211,9 @@ app.post("/users/upload-avatar", upload.single("avatar"), async (req, res) => {
 app.use((error: any, req: any, res: any, next: any) => {
   if (error instanceof multer.MulterError) {
     if (error.code === "LIMIT_FILE_SIZE") {
-      return res.status(400).json({ error: "File too large. Maximum size is 5MB." });
+      return res
+        .status(400)
+        .json({ error: "File too large. Maximum size is 5MB." });
     }
   }
   if (error.message === "Only image files are allowed!") {
@@ -214,10 +224,15 @@ app.use((error: any, req: any, res: any, next: any) => {
 
 // Error handling middleware
 app.use(
-  (error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  (
+    error: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
-  }
+  },
 );
 
 // 404 handler
@@ -247,14 +262,27 @@ process.on("SIGINT", async () => {
   });
 });
 
-const PORT = parseInt(process.env.PORT || '8000', 10);
-const HOST = '0.0.0.0'; // Required for Render/Docker deployments
+const PORT = parseInt(process.env.PORT || "8000", 10);
+const HOST = "0.0.0.0"; // Required for Render/Docker deployments
 
 server.listen(PORT, HOST, () => {
-  const backendUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+  const envBackendUrl = process.env.BACKEND_URL;
+  const backendUrl = envBackendUrl || `http://localhost:${PORT}`;
+
   console.log(`🚀 Server running on ${HOST}:${PORT}`);
-  console.log(`🔌 WebSocket server ready at ${backendUrl.replace('http', 'ws')}/ws`);
+  console.log(
+    `🔌 WebSocket server ready at ${backendUrl.replace("http", "ws")}/ws`,
+  );
   console.log(`🌐 HTTP server ready at ${backendUrl}`);
+
+  if (!envBackendUrl) {
+    console.warn(
+      "⚠️  Warning: BACKEND_URL is not set in .env - using localhost fallback",
+    );
+    console.warn(
+      "   For production hosting, set BACKEND_URL to your server's public URL",
+    );
+  }
 });
 
 export default app;

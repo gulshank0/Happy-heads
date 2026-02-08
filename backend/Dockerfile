@@ -104,8 +104,9 @@ EXPOSE 8000
 
 # Health check to ensure container is running properly
 # Checks /health endpoint every 30 seconds
+# Uses PORT env var (defaults to 8000) for flexibility
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8000/health || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT:-8000}/health || exit 1
 
 # Default environment variables
 # These can be overridden in docker-compose or at runtime
